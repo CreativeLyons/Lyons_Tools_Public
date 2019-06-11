@@ -1,6 +1,3 @@
-set cut_paste_input [stack 0]
-version 11.3 v4
-push $cut_paste_input
 Group {
 name GradMagic
 help "Creates a 4 point gradient that samples corners from the input. Ability to bake color results. Outputs Grad over BG or Grad Only.\n\nSet corners to:\n- default\n- format\n- input bbox\n- bbox from viewer\n- color Ssample box\n\n- can link or bake to exisiting\n cornerpin node, and you can use\n manually adjust points to further\n tweak the position of the ramp.\n\nChoose between output colors that are:\n- Live\n- Baked on current frame\n- Baked framerange\n\nCan adjust edge blur of gradient"
