@@ -1,7 +1,7 @@
 # Lyons_Tools_Public
 
-### The Foundry's Nuke Tools/Gizmos created/modified by Tony Lyons
-### Visit www.CompositingMentor.com or www.Creativelyons.com for more info
+#### The Foundry's Nuke Tools/Gizmos created/modified by Tony Lyons
+#### Visit www.CompositingMentor.com or www.Creativelyons.com for more info
 
 # Image:
 ## LabelFromRead
@@ -32,7 +32,7 @@ Noise with user friendly animation sliders and overscan.
 # Merge
 ## ContactSheetAuto
 
-<img src="http://www.nukepedia.com/images/users/CreativeLyons/ContactSheetAuto_SplashPage_v01.png" width="320" height="180"/>
+<img src="http://www.nukepedia.com/images/users/CreativeLyons/ContactSheetAuto_SplashPage_v01.png" width="320" />
 
 Contact Sheet that Automatically resizes according to number of inputs. Inspired by Ben McEwan's blog post.
 
