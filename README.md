@@ -5,6 +5,7 @@
 
 # Image:
 ## LabelFromRead
+Click for youtube Demo:
 
 <a href="http://www.youtube.com/watch?feature=player_embedded&v=dqzzT169GAc
 " target="_blank"><img src="http://img.youtube.com/vi/dqzzT169GAc/0.jpg" 
@@ -14,6 +15,7 @@ Displays Filepath of topmost read node over the image. Useful when viewing seque
 
 # Draw:
 ## GradMagic
+Click for youtube Demo:
 
 <a href="http://www.youtube.com/watch?feature=player_embedded&v=oge8jMR0LRw
 " target="_blank"><img src="http://img.youtube.com/vi/oge8jMR0LRw/0.jpg" 
@@ -22,6 +24,7 @@ alt="IMAGE ALT TEXT HERE" width="320" height="240" /></a>
 A live sampling 4 point gradient tool with ability to bake colors.
 
 ## NoiseAdvanced
+Click for youtube Demo:
 
 <a href="http://www.youtube.com/watch?feature=player_embedded&v=EsHDBGonwEs
 " target="_blank"><img src="http://img.youtube.com/vi/EsHDBGonwEs/0.jpg" 
