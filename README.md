@@ -1,4 +1,4 @@
-# Lyons_Tools_Public
+# Lyons Tools Public
 
 #### The Foundry's Nuke Tools/Gizmos created/modified by Tony Lyons
 #### Visit www.CompositingMentor.com or www.Creativelyons.com for more info
