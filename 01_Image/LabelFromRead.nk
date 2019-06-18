@@ -1,17 +1,17 @@
 Group {
  name LabelFromRead
  tile_color 0x1f1f1fff
- note_font "Verdana Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold"
+ note_font "Verdana Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold"
  note_font_color 0xe5e500ff
  selected true
- xpos 72
- ypos -375
+ xpos -3397
+ ypos -1957
  addUserKnob {20 LabelFromRead}
  addUserKnob {1 inputName l INVISIBLE +INVISIBLE}
  inputName "\[file tail \[value \[topnode].file]] \n"
  addUserKnob {6 filenameCheck l "Include FIle Name?" +STARTLINE}
  filenameCheck true
- addUserKnob {1 inputDesc l Decription}
+ addUserKnob {1 inputDesc l Description}
  addUserKnob {6 descCheck l "Include Description?" +STARTLINE}
  addUserKnob {26 ""}
  addUserKnob {6 color_rgb_panelDropped l "panel dropped state" +HIDDEN +STARTLINE}
@@ -21,6 +21,7 @@ Group {
  addUserKnob {6 color_panelDropped_1 l "panel dropped state" -STARTLINE +HIDDEN}
  addUserKnob {6 color_panelDropped_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
  addUserKnob {6 color_panelDropped_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 color_panelDropped_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
  addUserKnob {26 ""}
  addUserKnob {18 borderColor l "Border Color"}
  borderColor {0 0 0}
@@ -28,6 +29,7 @@ Group {
  addUserKnob {6 borderColor_panelDropped_1 l "panel dropped state" -STARTLINE +HIDDEN}
  addUserKnob {6 borderColor_panelDropped_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
  addUserKnob {6 borderColor_panelDropped_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 borderColor_panelDropped_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
  addUserKnob {6 color_rgb_panelDropped_1 l "panel dropped state" -STARTLINE +HIDDEN}
  addUserKnob {7 borderSize l "Border Size" R 0 5}
  borderSize 2
@@ -52,7 +54,7 @@ Group {
   xpos -161
   ypos -550
  }
-set N69f02f80 [stack 0]
+set Nf64aef80 [stack 0]
  Remove {
   operation keep
   channels rgba
@@ -144,7 +146,7 @@ set N69f02f80 [stack 0]
   xpos -305
   ypos -342
  }
-push $N69f02f80
+push $Nf64aef80
  Merge2 {
   inputs 2
   bbox B
