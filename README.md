@@ -4,13 +4,13 @@
 #### Visit www.CompositingMentor.com or www.Creativelyons.com for more info
 
 # Table of Contents:
-* [Image] (##image)
-  * [LabelFromRead] (###labelfromread)
-* [Draw] (##draw)
-  * [GradMagic] (###gradmagic)
-  * [NoiseAdvanced] (###noiseadvanced)
-* [Merge] (##merge)
-  * [ContactSheetAuto] (###contactsheetauto)
+- [Image:](#image-)
+  * [LabelFromRead](#labelfromread)
+- [Draw:](#draw-)
+  * [GradMagic](#gradmagic)
+  * [NoiseAdvanced](#noiseadvanced)
+- [Merge](#merge)
+  * [ContactSheetAuto](#contactsheetauto)
 
 ## Image:
 ### LabelFromRead
