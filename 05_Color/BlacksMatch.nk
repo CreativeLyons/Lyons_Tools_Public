@@ -6,33 +6,23 @@ Group {
  help "Choose a black point color or plug an image /constant you wish to be your blackpoint into BlackColor input.\n\nUse Mult Range to control how far above the blackpoint color to affect the lows\n\nUse the RollOff gamma to add fall off to the bottom of the curve\n\nTurn on the preview Plotscan and move the sampler over a region to see what your settings are doing to a linear 0-1 ramp.  This will help you see if you have weird curves, clamping or other funky problems as you adjust settings"
  knobChanged "n = nuke.thisNode()\nk = nuke.thisKnob()\n\nif k.name() == \"inputChange\":\n    nsd = nuke.toNode(\"SwitchDefault\")\n    n\[\"defaultBlack\"].setEnabled(nsd\[\"which\"].getValue()==1)\n\nif k.name() == \"previewPlotScan\":\n    p = n.knob(\"previewPlotScan\").value()\n    if p == True:\n        n.knob(\"plotscanSampler\").setVisible(True)\n    else:\n        n.knob(\"plotscanSampler\").setVisible(False)"
  tile_color 0x1c1c1cff
- note_font "Helvetica Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold"
+ note_font "Helvetica Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold"
  selected true
- xpos 85
- ypos -87
+ xpos 60
+ ypos -76
  addUserKnob {20 BlacksMatch}
  addUserKnob {6 default_black_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
  addUserKnob {6 premultInput l "Premultiplied Input?" +STARTLINE}
- addUserKnob {4 mergeOp l Operation: M {Plus/Screen Hypot ""}}
+ addUserKnob {4 mergeOp l Operation: t "Plus and Screen do the same thing with our operation, so I only included a hypot between plus/screen and hypot.  Hypot raises the mult by x2 because I thought that gave more pleasising results.  It will probably be a harsher curve (more towards clamp) than the plus/screen result)." M {Plus/Screen Hypot "" ""}}
  addUserKnob {18 defaultBlack l "Default Black"}
  defaultBlack {0.05 0.05 0.05}
  addUserKnob {6 defaultBlack_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
- addUserKnob {6 defaultBlack_panelDropped_1 l "panel dropped state" -STARTLINE +HIDDEN}
- addUserKnob {6 defaultBlack_panelDropped_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
- addUserKnob {6 defaultBlack_panelDropped_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
- addUserKnob {6 defaultBlack_panelDropped_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
- addUserKnob {6 defaultBlack_panelDropped_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
- addUserKnob {6 defaultBlack_panelDropped_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
- addUserKnob {6 defaultBlack_panelDropped_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
- addUserKnob {6 defaultBlack_panelDropped_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
- addUserKnob {6 defaultBlack_panelDropped_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
- addUserKnob {6 defaultBlack_panelDropped_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
  addUserKnob {26 ""}
- addUserKnob {7 multBase l "Mult Low Range" R 1 6}
+ addUserKnob {7 multBase l "Mult Low Range" t "This is the Multiplier for the top of the \"toe\" curve.  It is multiplying the BlackPoint color by this number and setting it as the highest point weird the curve will influence the midtones and the highlights" R 1 6}
  multBase 2
- addUserKnob {7 rolloffGamma l "Rolloff Gamma"}
+ addUserKnob {7 rolloffGamma l "Rolloff Gamma" t "This controls the bottom of the curve, the falloff to where it is bending toward the \"cut off point\" which is out black color.  A lower value will act more like a clamp and a higher value will act more like a plus."}
  rolloffGamma 0.5
- addUserKnob {6 previewPlotScan l "Preview PlotScan?" +STARTLINE}
+ addUserKnob {6 previewPlotScan l "Preview PlotScan?" t "Click to overlay a plotscan graph to show you how your black color is influenced by your settings." +STARTLINE}
  addUserKnob {12 plotscanSampler l "PlotScan Sampler" +HIDDEN}
  plotscanSampler {200 200}
  addUserKnob {6 color_rgb_panelDropped l "panel dropped state" +HIDDEN +STARTLINE}
@@ -110,7 +100,7 @@ Group {
   xpos 356
   ypos -418
  }
-set N3b7c3d40 [stack 0]
+set Nd41d7980 [stack 0]
  AddChannels {
   channels rgba
   color 1
@@ -124,7 +114,7 @@ set N3b7c3d40 [stack 0]
   xpos 356
   ypos -288
  }
-set N3b6e3380 [stack 0]
+set Nd4373ba0 [stack 0]
  Grade {
   channels rgba
   white 0
@@ -163,7 +153,7 @@ set N3b6e3380 [stack 0]
   xpos 1172
   ypos -124
  }
-set N3b7cefc0 [stack 0]
+set Nd41e2a50 [stack 0]
  Crop {
   box {{plotscanSampler.x-2} {plotscanSampler.y-2} {plotscanSampler.x+2} {plotscanSampler.x+2}}
   reformat true
@@ -195,7 +185,7 @@ set N3b7cefc0 [stack 0]
   xpos 1422
   ypos -22
  }
-set N3b6e8620 [stack 0]
+set Nd438a190 [stack 0]
  Dot {
   name Dot11
   note_font_size 41
@@ -208,8 +198,8 @@ set N3b6e8620 [stack 0]
   xpos 1565
   ypos 200
  }
-set N3b6ed1a0 [stack 0]
-push $N3b6e8620
+set Nd438eb10 [stack 0]
+push $Nd438a190
  Multiply {
   channels rgb
   value {{multBase}}
@@ -248,7 +238,7 @@ push $N3b6e8620
   xpos 1701
   ypos 107
  }
-set N3b6f2300 [stack 0]
+set Nd4393c70 [stack 0]
  MergeExpression {
   inputs 2
   expr0 Br/Ar
@@ -282,13 +272,13 @@ set N3b6f2300 [stack 0]
   xpos 1422
   ypos 286
  }
-set N3b7d20c0 [stack 0]
+set Nd43af080 [stack 0]
  Dot {
   name Dot9
   xpos 1422
   ypos 400
  }
-set N3b7d4580 [stack 0]
+set Nd43b1540 [stack 0]
  Dot {
   name Dot10
   xpos 1422
@@ -304,8 +294,8 @@ set N3b7d4580 [stack 0]
   xpos 1467
   ypos 501
  }
-push $N3b6ed1a0
-push $N3b7d4580
+push $Nd438eb10
+push $Nd43b1540
  Shuffle {
   red green
   blue green
@@ -316,8 +306,8 @@ push $N3b7d4580
   xpos 1467
   ypos 393
  }
-push $N3b6ed1a0
-push $N3b7d20c0
+push $Nd438eb10
+push $Nd43af080
  Shuffle {
   green red
   blue red
@@ -328,8 +318,8 @@ push $N3b7d20c0
   xpos 1473
   ypos 279
  }
-push $N3b6ed1a0
-push $N3b6f2300
+push $Nd438eb10
+push $Nd4393c70
  Merge2 {
   inputs 2+1
   operation {{parent.Settings.mergeOpNum}}
@@ -414,7 +404,7 @@ push $N3b6f2300
    xpos -480
    ypos 62
   }
-set N3c41d2b0 [stack 0]
+set Nd4405020 [stack 0]
   Expression {
    temp_name0 length
    temp_expr0 sqrt(r*r+g*g+b*b)
@@ -435,7 +425,7 @@ set N3c41d2b0 [stack 0]
    ypos 134
    disable {{1-parent.tonemap i}}
   }
-set N3c426f30 [stack 0]
+set Nd440ea60 [stack 0]
   Expression {
    temp_name0 rExpr
    temp_expr0 "min(max(0,\r\nceil(r(x,parent.p1.y)-((y/height+parent.lift)*parent.scale))),1)"
@@ -452,7 +442,7 @@ set N3c426f30 [stack 0]
    ypos 193
    addUserKnob {20 User}
   }
-push $N3c426f30
+push $Nd440ea60
   Expression {
    temp_name0 rExpr
    temp_expr0 "min(max(0,\r\nceil(r((x/width)*(parent.p2.x-parent.p1.x)+parent.p1.x,(x/width)*(parent.p2.y-parent.p1.y)+parent.p1.y,parent.sa,parent.sa)-((y/height+parent.lift)*parent.scale))),1)"
@@ -469,7 +459,7 @@ push $N3c426f30
    ypos 197
    addUserKnob {20 User}
   }
-push $N3c426f30
+push $Nd440ea60
   Expression {
    temp_name0 rExpr
    temp_expr0 "min(max(0,\r\nceil(r((x/width)*(parent.p2.x-parent.p1.x)+parent.p1.x,(x/width)*(parent.p2.y-parent.p1.y)+parent.p1.y)-((y/height+parent.lift)*parent.scale))),1)"
@@ -516,8 +506,8 @@ push $N3c426f30
    xpos -480
    ypos 383
   }
-set N3c4541a0 [stack 0]
-push $N3c41d2b0
+set Nd43db040 [stack 0]
+push $Nd4405020
   Dot {
    name Dot1
    xpos -556
@@ -542,7 +532,7 @@ push $N3c41d2b0
    xpos -556
    ypos 433
   }
-push $N3c4541a0
+push $Nd43db040
   Switch {
    inputs 2
    which {{parent.add2image i}}
@@ -562,7 +552,7 @@ push $N3c4541a0
   xpos 1701
   ypos 785
  }
-set N3c473510 [stack 0]
+set Nd43fa3b0 [stack 0]
  Shuffle {
   red white
   green white
@@ -590,7 +580,7 @@ set N3c473510 [stack 0]
   xpos 1777
   ypos 862
  }
-push $N3c473510
+push $Nd43fa3b0
  Merge2 {
   inputs 2
   name Merge9
@@ -696,7 +686,7 @@ push $N3c473510
   xpos 898
   ypos 1015
  }
-push $N3b7cefc0
+push $Nd41e2a50
  Dot {
   name Dot23
   xpos 706
@@ -709,28 +699,28 @@ push $N3b7cefc0
   xpos 706
   ypos 293
  }
-set N3c35f0a0 [stack 0]
+set Nd4556870 [stack 0]
  Dot {
   name Dot2
   note_font_size 41
   xpos 706
   ypos 404
  }
-set N3c2cd710 [stack 0]
+set Nd4558d30 [stack 0]
  Dot {
   name Dot3
   note_font_size 41
   xpos 706
   ypos 523
  }
-set N3b7eb320 [stack 0]
+set Nd455b1f0 [stack 0]
  Dot {
   name Dot7
   note_font_size 41
   xpos 706
   ypos 731
  }
-push $N3b7cefc0
+push $Nd41e2a50
  Multiply {
   channels rgb
   value {{multBase}}
@@ -748,7 +738,7 @@ push $N3b7cefc0
   ypos 84
   disable {{"mergeOp == 1 ? 0 : 1"}}
  }
-push $N3b6e3380
+push $Nd4373ba0
  Unpremult {
   name Unpremult1
   xpos 322
@@ -760,7 +750,7 @@ push $N3b6e3380
   xpos 356
   ypos 145
  }
-set N3c2d9e70 [stack 0]
+set Nd443a190 [stack 0]
  MergeExpression {
   inputs 2
   expr0 Br/Ar
@@ -794,13 +784,13 @@ set N3c2d9e70 [stack 0]
   xpos 1172
   ypos 364
  }
-set N3c48c560 [stack 0]
+set Nd4455950 [stack 0]
  Dot {
   name Dot20
   xpos 1172
   ypos 478
  }
-set N3c48ea20 [stack 0]
+set Nd4457e10 [stack 0]
  Dot {
   name Dot21
   xpos 1172
@@ -816,8 +806,8 @@ set N3c48ea20 [stack 0]
   xpos 1022
   ypos 579
  }
-push $N3b7eb320
-push $N3c48ea20
+push $Nd455b1f0
+push $Nd4457e10
  Shuffle {
   red green
   blue green
@@ -828,8 +818,8 @@ push $N3c48ea20
   xpos 1022
   ypos 471
  }
-push $N3c2cd710
-push $N3c48c560
+push $Nd4558d30
+push $Nd4455950
  Shuffle {
   green red
   blue red
@@ -840,8 +830,8 @@ push $N3c48c560
   xpos 1016
   ypos 357
  }
-push $N3c35f0a0
-push $N3c2d9e70
+push $Nd4556870
+push $Nd443a190
  Merge2 {
   inputs 2+1
   operation {{parent.Settings.mergeOpNum}}
@@ -899,7 +889,7 @@ push $N3c2d9e70
   ypos 881
   disable {{"! premultInput"}}
  }
-push $N3b7c3d40
+push $Nd41d7980
  Dot {
   name Dot28
   xpos -146
