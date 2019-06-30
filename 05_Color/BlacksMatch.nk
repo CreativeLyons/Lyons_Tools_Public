@@ -1,0 +1,948 @@
+set cut_paste_input [stack 0]
+version 11.3 v4
+push $cut_paste_input
+Group {
+ name BlacksMatch
+ help "Choose a black point color or plug an image /constant you wish to be your blackpoint into BlackColor input.\n\nUse Mult Range to control how far above the blackpoint color to affect the lows\n\nUse the RollOff gamma to add fall off to the bottom of the curve\n\nTurn on the preview Plotscan and move the sampler over a region to see what your settings are doing to a linear 0-1 ramp.  This will help you see if you have weird curves, clamping or other funky problems as you adjust settings"
+ knobChanged "n = nuke.thisNode()\nk = nuke.thisKnob()\n\nif k.name() == \"inputChange\":\n    nsd = nuke.toNode(\"SwitchDefault\")\n    n\[\"defaultBlack\"].setEnabled(nsd\[\"which\"].getValue()==1)\n\nif k.name() == \"previewPlotScan\":\n    p = n.knob(\"previewPlotScan\").value()\n    if p == True:\n        n.knob(\"plotscanSampler\").setVisible(True)\n    else:\n        n.knob(\"plotscanSampler\").setVisible(False)"
+ tile_color 0x1c1c1cff
+ note_font "Helvetica Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold"
+ selected true
+ xpos 85
+ ypos -87
+ addUserKnob {20 BlacksMatch}
+ addUserKnob {6 default_black_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 premultInput l "Premultiplied Input?" +STARTLINE}
+ addUserKnob {4 mergeOp l Operation: M {Plus/Screen Hypot ""}}
+ addUserKnob {18 defaultBlack l "Default Black"}
+ defaultBlack {0.05 0.05 0.05}
+ addUserKnob {6 defaultBlack_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 defaultBlack_panelDropped_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 defaultBlack_panelDropped_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 defaultBlack_panelDropped_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 defaultBlack_panelDropped_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 defaultBlack_panelDropped_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 defaultBlack_panelDropped_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 defaultBlack_panelDropped_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 defaultBlack_panelDropped_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 defaultBlack_panelDropped_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 defaultBlack_panelDropped_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {26 ""}
+ addUserKnob {7 multBase l "Mult Low Range" R 1 6}
+ multBase 2
+ addUserKnob {7 rolloffGamma l "Rolloff Gamma"}
+ rolloffGamma 0.5
+ addUserKnob {6 previewPlotScan l "Preview PlotScan?" +STARTLINE}
+ addUserKnob {12 plotscanSampler l "PlotScan Sampler" +HIDDEN}
+ plotscanSampler {200 200}
+ addUserKnob {6 color_rgb_panelDropped l "panel dropped state" +HIDDEN +STARTLINE}
+ addUserKnob {26 ""}
+ addUserKnob {41 maskChannelMask l mask -STARTLINE T MergeKeymix.maskChannelMask}
+ addUserKnob {41 inject -STARTLINE T MergeKeymix.inject}
+ addUserKnob {41 invert_mask l invert -STARTLINE T MergeKeymix.invert_mask}
+ addUserKnob {41 fringe -STARTLINE T MergeKeymix.fringe}
+ addUserKnob {41 mix T MergeKeymix.mix}
+ addUserKnob {20 info l Info}
+ addUserKnob {26 creator l Creator: T "<b><big>Tony Lyons"}
+ addUserKnob {26 desc l Name: T BlacksMatch}
+ addUserKnob {26 ver l Version: T v09}
+}
+ BackdropNode {
+  inputs 0
+  name BackdropNode1
+  tile_color 0x556a5000
+  label "This Creates a \nPer Channel Key\nBased on the Blackpoint"
+  note_font_size 30
+  note_font_color 0xffffffff
+  xpos 991
+  ypos -77
+  bdwidth 303
+  bdheight 381
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote2
+  tile_color 0xff
+  label green
+  note_font_size 41
+  note_font_color 0xffffffff
+  xpos 177
+  ypos 466
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote1
+  tile_color 0xff
+  label red
+  note_font_size 41
+  note_font_color 0xffffffff
+  xpos 188
+  ypos 350
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote3
+  tile_color 0xff
+  label blue
+  note_font_size 41
+  note_font_color 0xffffffff
+  xpos 186
+  ypos 570
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote4
+  tile_color 0xff
+  label "min will be \nblack color"
+  note_font_size 31
+  note_font_color 0xffffffff
+  xpos 143
+  ypos 704
+ }
+ Input {
+  inputs 0
+  name Inputimg
+  xpos 322
+  ypos -550
+ }
+ Dot {
+  name Dot17
+  xpos 356
+  ypos -418
+ }
+set N3b7c3d40 [stack 0]
+ AddChannels {
+  channels rgba
+  color 1
+  name AddChannels1
+  xpos 322
+  ypos -365
+ }
+ Dot {
+  name Dot5
+  note_font_size 41
+  xpos 356
+  ypos -288
+ }
+set N3b6e3380 [stack 0]
+ Grade {
+  channels rgba
+  white 0
+  multiply 0
+  add {{defaultBlack.r} {defaultBlack.g} {defaultBlack.b} 0}
+  black_clamp false
+  name Grade1
+  label color
+  xpos 922
+  ypos -295
+ }
+ Input {
+  inputs 0
+  name InputBlackColor
+  xpos 1138
+  ypos -569
+  number 1
+ }
+ Switch {
+  inputs 2
+  which {{"!\[exists parent.input1]"}}
+  name SwitchDefault
+  xpos 1138
+  ypos -291
+ }
+ Dot {
+  name Dot26
+  label "Black Color"
+  note_font_size 41
+  xpos 1172
+  ypos -212
+ }
+ Dot {
+  name Dot4
+  note_font_size 41
+  xpos 1172
+  ypos -124
+ }
+set N3b7cefc0 [stack 0]
+ Crop {
+  box {{plotscanSampler.x-2} {plotscanSampler.y-2} {plotscanSampler.x+2} {plotscanSampler.x+2}}
+  reformat true
+  crop false
+  name Crop1
+  xpos 1388
+  ypos -127
+  addUserKnob {20 User}
+  addUserKnob {22 cropToBbox l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+  addUserKnob {22 cropToBbox_1 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+ }
+ Blur {
+  channels rgb
+  size 16
+  name Blur1
+  label "\[value size]"
+  xpos 1388
+  ypos -103
+ }
+ Reformat {
+  format "512 512 0 0 512 512 1 square_512"
+  name Reformat4
+  xpos 1388
+  ypos -65
+ }
+ Dot {
+  name Dot12
+  note_font_size 41
+  xpos 1422
+  ypos -22
+ }
+set N3b6e8620 [stack 0]
+ Dot {
+  name Dot11
+  note_font_size 41
+  xpos 1565
+  ypos -22
+ }
+ Dot {
+  name Dot13
+  note_font_size 41
+  xpos 1565
+  ypos 200
+ }
+set N3b6ed1a0 [stack 0]
+push $N3b6e8620
+ Multiply {
+  channels rgb
+  value {{multBase}}
+  name Multiply3
+  label "mult black color"
+  xpos 1388
+  ypos 16
+ }
+ Multiply {
+  channels rgb
+  value 2
+  name Multiply4
+  label "hypot Extra Mult\n"
+  xpos 1388
+  ypos 48
+  disable {{"mergeOp == 1 ? 0 : 1"}}
+ }
+ Reformat {
+  inputs 0
+  format "512 512 0 0 512 512 1 square_512"
+  pbb true
+  name Reformat1
+  xpos 1667
+  ypos -20
+ }
+ Ramp {
+  p0 {0 0}
+  p1 {512 0}
+  name Ramp1
+  xpos 1667
+  ypos 51
+ }
+ Dot {
+  name Dot1
+  note_font_size 41
+  xpos 1701
+  ypos 107
+ }
+set N3b6f2300 [stack 0]
+ MergeExpression {
+  inputs 2
+  expr0 Br/Ar
+  expr1 Bg/Ag
+  expr2 Bb/Ab
+  name MergeDivide1
+  xpos 1388
+  ypos 104
+ }
+ Invert {
+  channels rgb
+  name Invert2
+  xpos 1388
+  ypos 128
+ }
+ Clamp {
+  channels rgb
+  name Clamp2
+  xpos 1388
+  ypos 152
+ }
+ Gamma {
+  channels rgb
+  value {{rolloffGamma}}
+  name Gamma2
+  xpos 1388
+  ypos 176
+ }
+ Dot {
+  name Dot6
+  xpos 1422
+  ypos 286
+ }
+set N3b7d20c0 [stack 0]
+ Dot {
+  name Dot9
+  xpos 1422
+  ypos 400
+ }
+set N3b7d4580 [stack 0]
+ Dot {
+  name Dot10
+  xpos 1422
+  ypos 508
+ }
+ Shuffle {
+  red blue
+  green blue
+  alpha blue
+  name Shuffle4
+  tile_color 0x3fbfff
+  label "\[value in] \[ expr \{ \[value out2] == \"none\" ? \" \" : \[concat --> \[value out2]] \}]"
+  xpos 1467
+  ypos 501
+ }
+push $N3b6ed1a0
+push $N3b7d4580
+ Shuffle {
+  red green
+  blue green
+  alpha green
+  name Shuffle5
+  tile_color 0xbf00ff
+  label "\[value in] \[ expr \{ \[value out2] == \"none\" ? \" \" : \[concat --> \[value out2]] \}]"
+  xpos 1467
+  ypos 393
+ }
+push $N3b6ed1a0
+push $N3b7d20c0
+ Shuffle {
+  green red
+  blue red
+  alpha red
+  name Shuffle6
+  tile_color 0xbf0000ff
+  label "\[value in] \[ expr \{ \[value out2] == \"none\" ? \" \" : \[concat --> \[value out2]] \}]"
+  xpos 1473
+  ypos 279
+ }
+push $N3b6ed1a0
+push $N3b6f2300
+ Merge2 {
+  inputs 2+1
+  operation {{parent.Settings.mergeOpNum}}
+  bbox B
+  Achannels {rgba.red -rgba.green -rgba.blue -rgba.alpha}
+  Bchannels {rgba.red -rgba.green -rgba.blue -rgba.alpha}
+  output {rgba.red -rgba.green -rgba.blue -rgba.alpha}
+  maskChannelInput -rgba.red
+  name Merge2
+  label red
+  xpos 1667
+  ypos 279
+ }
+ Merge2 {
+  inputs 2+1
+  operation {{parent.Settings.mergeOpNum}}
+  bbox B
+  Achannels {-rgba.red rgba.green -rgba.blue -rgba.alpha}
+  Bchannels {-rgba.red rgba.green -rgba.blue -rgba.alpha}
+  output {-rgba.red rgba.green -rgba.blue -rgba.alpha}
+  maskChannelInput -rgba.red
+  name Merge6
+  label green
+  xpos 1667
+  ypos 393
+ }
+ Merge2 {
+  inputs 2+1
+  operation {{parent.Settings.mergeOpNum}}
+  bbox B
+  Achannels {-rgba.red -rgba.green rgba.blue -rgba.alpha}
+  Bchannels {-rgba.red -rgba.green rgba.blue -rgba.alpha}
+  output {-rgba.red -rgba.green rgba.blue -rgba.alpha}
+  maskChannelInput -rgba.red
+  name Merge7
+  label blue
+  xpos 1667
+  ypos 501
+ }
+ Merge2 {
+  inputs 2
+  operation max
+  bbox B
+  Achannels rgb
+  Bchannels rgb
+  output rgb
+  name Merge8
+  label "Set Min Color\nto Blackpoint"
+  xpos 1667
+  ypos 641
+ }
+ Group {
+  name PlotScanline
+  tile_color 0x9c0000ff
+  xpos 1667
+  ypos 700
+  addUserKnob {20 Controls}
+  addUserKnob {4 mode l "Sampling method" M {"Slice Per Pixel (faster)" "Slice Area (slower)" "Full Scanline" "" "" ""}}
+  mode "Full Scanline"
+  addUserKnob {6 add2image l "Add to original" +STARTLINE}
+  addUserKnob {6 Normalize -STARTLINE}
+  addUserKnob {6 tonemap l "Tone Map (HDRI)" -STARTLINE}
+  addUserKnob {6 curve l "Plot as curve" +STARTLINE}
+  curve true
+  addUserKnob {3 curveFat l "Curve Thickness" -STARTLINE}
+  addUserKnob {3 sa l "Sample Area" t "Disabled when using pr pixel method."}
+  sa 1
+  addUserKnob {7 lift l Lift R -1 1}
+  addUserKnob {7 scale l Scale R 0 5}
+  scale 1
+  addUserKnob {26 ""}
+  addUserKnob {12 p1 l "Start Point"}
+  p1 {376 418}
+  addUserKnob {12 p2 l "End Point" -STARTLINE}
+  p2 {428.5 425.5}
+  addUserKnob {26 ""}
+  addUserKnob {26 "" l "About " T "Plot Scanline v0.4 | theo@euqahuba.com\nUse P1 to select your scanline and/or you start slice."}
+ }
+  Input {
+   inputs 0
+   name Input1
+   xpos -480
+   ypos 62
+  }
+set N3c41d2b0 [stack 0]
+  Expression {
+   temp_name0 length
+   temp_expr0 sqrt(r*r+g*g+b*b)
+   expr0 r/length
+   expr1 g/length
+   expr2 b/length
+   name Normalize
+   xpos -480
+   ypos 108
+   disable {{1-parent.Normalize i}}
+  }
+  Expression {
+   expr0 r/(r+1)
+   expr1 g/(g+1)
+   expr2 b/(b+1)
+   name tonamap
+   xpos -480
+   ypos 134
+   disable {{1-parent.tonemap i}}
+  }
+set N3c426f30 [stack 0]
+  Expression {
+   temp_name0 rExpr
+   temp_expr0 "min(max(0,\r\nceil(r(x,parent.p1.y)-((y/height+parent.lift)*parent.scale))),1)"
+   temp_name1 gExpr
+   temp_expr1 "min(max(0,\r\nceil(g(x,parent.p1.y)-((y/height+parent.lift)*parent.scale))),1)"
+   temp_name2 bExpr
+   temp_expr2 "min(max(0,\r\nceil(b(x,parent.p1.y)-((y/height+parent.lift)*parent.scale))),1)"
+   expr0 rExpr
+   expr1 gExpr
+   expr2 bExpr
+   expr3 0
+   name scanline
+   xpos -302
+   ypos 193
+   addUserKnob {20 User}
+  }
+push $N3c426f30
+  Expression {
+   temp_name0 rExpr
+   temp_expr0 "min(max(0,\r\nceil(r((x/width)*(parent.p2.x-parent.p1.x)+parent.p1.x,(x/width)*(parent.p2.y-parent.p1.y)+parent.p1.y,parent.sa,parent.sa)-((y/height+parent.lift)*parent.scale))),1)"
+   temp_name1 gExpr
+   temp_expr1 "min(max(0,\r\nceil(g((x/width)*(parent.p2.x-parent.p1.x)+parent.p1.x,(x/width)*(parent.p2.y-parent.p1.y)+parent.p1.y,parent.sa,parent.sa)-((y/height+parent.lift)*parent.scale))),1)"
+   temp_name2 bExpr
+   temp_expr2 "min(max(0,\r\nceil(b((x/width)*(parent.p2.x-parent.p1.x)+parent.p1.x,(x/width)*(parent.p2.y-parent.p1.y)+parent.p1.y,parent.sa,parent.sa)-((y/height+parent.lift)*parent.scale))),1)"
+   expr0 rExpr
+   expr1 gExpr
+   expr2 bExpr
+   expr3 0
+   name Expression_highQuality
+   xpos -515
+   ypos 197
+   addUserKnob {20 User}
+  }
+push $N3c426f30
+  Expression {
+   temp_name0 rExpr
+   temp_expr0 "min(max(0,\r\nceil(r((x/width)*(parent.p2.x-parent.p1.x)+parent.p1.x,(x/width)*(parent.p2.y-parent.p1.y)+parent.p1.y)-((y/height+parent.lift)*parent.scale))),1)"
+   temp_name1 gExpr
+   temp_expr1 "min(max(0,\r\nceil(g((x/width)*(parent.p2.x-parent.p1.x)+parent.p1.x,(x/width)*(parent.p2.y-parent.p1.y)+parent.p1.y)-((y/height+parent.lift)*parent.scale))),1)"
+   temp_name2 bExpr
+   temp_expr2 "min(max(0,\r\nceil(b((x/width)*(parent.p2.x-parent.p1.x)+parent.p1.x,(x/width)*(parent.p2.y-parent.p1.y)+parent.p1.y)-((y/height+parent.lift)*parent.scale))),1)"
+   expr0 rExpr
+   expr1 gExpr
+   expr2 bExpr
+   expr3 0
+   name perPixel
+   xpos -419
+   ypos 201
+   addUserKnob {20 User}
+  }
+  Switch {
+   inputs 3
+   which {{parent.mode i}}
+   name Switch2
+   xpos -480
+   ypos 253
+  }
+  Matrix {
+   matrix {
+       {0 1 0}
+       {1 -4 1}
+       {0 1 0}
+     }
+   name Matrix2
+   xpos -480
+   ypos 284
+   disable {{-1+parent.curve i x70 1}}
+  }
+  Dilate {
+   size {{parent.curveFat}}
+   name Dilate1
+   xpos -480
+   ypos 326
+   disable {{-1+parent.curve.main}}
+  }
+  Clamp {
+   name Clamp1
+   xpos -480
+   ypos 383
+  }
+set N3c4541a0 [stack 0]
+push $N3c41d2b0
+  Dot {
+   name Dot1
+   xpos -556
+   ypos 66
+  }
+  Clamp {
+   maximum 331
+   name Clamp2
+   xpos -590
+   ypos 352
+  }
+  Merge2 {
+   inputs 2
+   operation plus
+   bbox intersection
+   name Merge1
+   xpos -590
+   ypos 394
+  }
+  Dot {
+   name Dot2
+   xpos -556
+   ypos 433
+  }
+push $N3c4541a0
+  Switch {
+   inputs 2
+   which {{parent.add2image i}}
+   name Switch1
+   xpos -480
+   ypos 430
+  }
+  Output {
+   name Output1
+   xpos -480
+   ypos 470
+  }
+ end_group
+ Dot {
+  name Dot15
+  note_font_size 41
+  xpos 1701
+  ypos 785
+ }
+set N3c473510 [stack 0]
+ Shuffle {
+  red white
+  green white
+  blue white
+  alpha white
+  name Shuffle7
+  label "\[value in] \[ expr \{ \[value out2] == \"none\" ? \" \" : \[concat --> \[value out2]] \}]"
+  xpos 1777
+  ypos 778
+ }
+ BlackOutside {
+  name BlackOutside1
+  xpos 1777
+  ypos 810
+ }
+ Dilate {
+  channels rgba
+  size -2
+  name Dilate1
+  xpos 1777
+  ypos 838
+ }
+ Invert {
+  name Invert3
+  xpos 1777
+  ypos 862
+ }
+push $N3c473510
+ Merge2 {
+  inputs 2
+  name Merge9
+  label "\[ expr \{ \[value mix] == 1 ? \" \" : \[concat Mix: \[value mix]] \}]"
+  xpos 1667
+  ypos 866
+ }
+ Group {
+  name BinaryAlpha
+  tile_color 0x2a2a2aff
+  label "(\[value an] --> \[value output1])"
+  note_font Verdana
+  note_font_color 0xfffff9ff
+  xpos 1667
+  ypos 919
+  addUserKnob {20 BinaryAlpha}
+  addUserKnob {4 an l Analyze: M {rgb rgba alpha "" "" ""}}
+  addUserKnob {4 output1 l Output: M {rgba alpha "" "" "" ""}}
+  output1 alpha
+  addUserKnob {20 info l Info}
+  addUserKnob {26 creator l Creator: T "<b><big>Tony Lyons"}
+  addUserKnob {26 desc l Description: t "Analyzes channel input and creates a binary result 0 or 1 and outputs it into output channel" T BinaryAlpha}
+  addUserKnob {26 ver l Version: T v03}
+ }
+  Input {
+   inputs 0
+   name Input
+   xpos -398
+   ypos 275
+  }
+  Expression {
+   temp_name0 rgb_an
+   temp_expr0 "r !=0 || g!=0 || b!=0?1:0"
+   temp_name1 rgba_an
+   temp_expr1 "r!=0 || g!=0 || b!=0 || a!=0?1:0"
+   temp_name2 alpha_an
+   temp_expr2 a!=0?1:0
+   expr3 "parent.an == 0 ? rgb_an : parent.an == 1 ? rgba_an : alpha_an"
+   name Expression
+   xpos -398
+   ypos 341
+  }
+  Shuffle {
+   red alpha
+   green alpha
+   blue alpha
+   name Shuffle
+   label "\[value in]"
+   xpos -398
+   ypos 367
+   disable {{parent.output1}}
+  }
+  Output {
+   name Output1
+   xpos -398
+   ypos 456
+  }
+ end_group
+ Reformat {
+  type "to box"
+  box_height {{"\[exists parent.input0] ? parent.input.height : root.format.height"}}
+  resize height
+  filter Impulse
+  pbb true
+  name Reformat2
+  xpos 1667
+  ypos 968
+ }
+ Reformat {
+  type "to box"
+  box_width {{"\[exists parent.input0] ? parent.input.width : root.format.width"}}
+  box_height {{input.height}}
+  resize none
+  filter Impulse
+  black_outside true
+  pbb true
+  name Reformat3
+  xpos 1667
+  ypos 994
+ }
+ Dilate {
+  channels rgba
+  size 1
+  name Dilate2
+  xpos 1667
+  ypos 1040
+ }
+ Dot {
+  name Dot14
+  note_font_size 41
+  xpos 1701
+  ypos 1192
+ }
+ Input {
+  inputs 0
+  name Inputmask
+  xpos 864
+  ypos 836
+  number 2
+ }
+ Dot {
+  name Dot29
+  xpos 898
+  ypos 1015
+ }
+push $N3b7cefc0
+ Dot {
+  name Dot23
+  xpos 706
+  ypos -124
+ }
+ Dot {
+  name Dot8
+  label "Black Color"
+  note_font_size 41
+  xpos 706
+  ypos 293
+ }
+set N3c35f0a0 [stack 0]
+ Dot {
+  name Dot2
+  note_font_size 41
+  xpos 706
+  ypos 404
+ }
+set N3c2cd710 [stack 0]
+ Dot {
+  name Dot3
+  note_font_size 41
+  xpos 706
+  ypos 523
+ }
+set N3b7eb320 [stack 0]
+ Dot {
+  name Dot7
+  note_font_size 41
+  xpos 706
+  ypos 731
+ }
+push $N3b7cefc0
+ Multiply {
+  channels rgb
+  value {{multBase}}
+  name Multiply1
+  label "mult black color"
+  xpos 1138
+  ypos 52
+ }
+ Multiply {
+  channels rgb
+  value 2
+  name Multiply2
+  label "hypot Extra Mult\n"
+  xpos 1138
+  ypos 84
+  disable {{"mergeOp == 1 ? 0 : 1"}}
+ }
+push $N3b6e3380
+ Unpremult {
+  name Unpremult1
+  xpos 322
+  ypos -16
+  disable {{"! premultInput"}}
+ }
+ Dot {
+  name Dot18
+  xpos 356
+  ypos 145
+ }
+set N3c2d9e70 [stack 0]
+ MergeExpression {
+  inputs 2
+  expr0 Br/Ar
+  expr1 Bg/Ag
+  expr2 Bb/Ab
+  name MergeDivide
+  xpos 1138
+  ypos 142
+ }
+ Invert {
+  channels rgb
+  name Invert1
+  xpos 1138
+  ypos 185
+ }
+ Clamp {
+  channels rgb
+  name Clamp1
+  xpos 1138
+  ypos 209
+ }
+ Gamma {
+  channels rgb
+  value {{rolloffGamma}}
+  name Gamma1
+  xpos 1138
+  ypos 233
+ }
+ Dot {
+  name Dot19
+  xpos 1172
+  ypos 364
+ }
+set N3c48c560 [stack 0]
+ Dot {
+  name Dot20
+  xpos 1172
+  ypos 478
+ }
+set N3c48ea20 [stack 0]
+ Dot {
+  name Dot21
+  xpos 1172
+  ypos 586
+ }
+ Shuffle {
+  red blue
+  green blue
+  alpha blue
+  name Shuffle3
+  tile_color 0x3fbfff
+  label "\[value in] \[ expr \{ \[value out2] == \"none\" ? \" \" : \[concat --> \[value out2]] \}]"
+  xpos 1022
+  ypos 579
+ }
+push $N3b7eb320
+push $N3c48ea20
+ Shuffle {
+  red green
+  blue green
+  alpha green
+  name Shuffle2
+  tile_color 0xbf00ff
+  label "\[value in] \[ expr \{ \[value out2] == \"none\" ? \" \" : \[concat --> \[value out2]] \}]"
+  xpos 1022
+  ypos 471
+ }
+push $N3c2cd710
+push $N3c48c560
+ Shuffle {
+  green red
+  blue red
+  alpha red
+  name Shuffle1
+  tile_color 0xbf0000ff
+  label "\[value in] \[ expr \{ \[value out2] == \"none\" ? \" \" : \[concat --> \[value out2]] \}]"
+  xpos 1016
+  ypos 357
+ }
+push $N3c35f0a0
+push $N3c2d9e70
+ Merge2 {
+  inputs 2+1
+  operation {{parent.Settings.mergeOpNum}}
+  bbox B
+  Achannels {rgba.red -rgba.green -rgba.blue -rgba.alpha}
+  Bchannels {rgba.red -rgba.green -rgba.blue -rgba.alpha}
+  output {rgba.red -rgba.green -rgba.blue -rgba.alpha}
+  maskChannelInput -rgba.red
+  name Merge3
+  label red
+  xpos 322
+  ypos 357
+ }
+ Merge2 {
+  inputs 2+1
+  operation {{parent.Settings.mergeOpNum}}
+  bbox B
+  Achannels {-rgba.red rgba.green -rgba.blue -rgba.alpha}
+  Bchannels {-rgba.red rgba.green -rgba.blue -rgba.alpha}
+  output {-rgba.red rgba.green -rgba.blue -rgba.alpha}
+  maskChannelInput -rgba.red
+  name Merge4
+  label green
+  xpos 322
+  ypos 471
+ }
+ Merge2 {
+  inputs 2+1
+  operation {{parent.Settings.mergeOpNum}}
+  bbox B
+  Achannels {-rgba.red -rgba.green rgba.blue -rgba.alpha}
+  Bchannels {-rgba.red -rgba.green rgba.blue -rgba.alpha}
+  output {-rgba.red -rgba.green rgba.blue -rgba.alpha}
+  maskChannelInput -rgba.red
+  name Merge5
+  label blue
+  xpos 322
+  ypos 579
+ }
+ Merge2 {
+  inputs 2
+  operation max
+  bbox B
+  Achannels rgb
+  Bchannels rgb
+  output rgb
+  name Merge1
+  label "Set Min Color\nto Blackpoint"
+  xpos 322
+  ypos 719
+ }
+ Premult {
+  name Premult4
+  xpos 322
+  ypos 881
+  disable {{"! premultInput"}}
+ }
+push $N3b7c3d40
+ Dot {
+  name Dot28
+  xpos -146
+  ypos -418
+ }
+ Dot {
+  name Dot30
+  xpos -146
+  ypos 1015
+ }
+ Merge2 {
+  inputs 2+1
+  operation copy
+  bbox B
+  Achannels {rgba.red rgba.green rgba.blue -rgba.alpha}
+  Bchannels {rgba.red rgba.green rgba.blue -rgba.alpha}
+  output {rgba.red rgba.green rgba.blue -rgba.alpha}
+  name MergeKeymix
+  label "\[ expr \{ \[value mix] == 1 ? \" \" : \[concat Mix: \[value mix]] \}]"
+  xpos 322
+  ypos 1012
+ }
+ Merge2 {
+  inputs 2
+  name Merge10
+  label "\[ expr \{ \[value mix] == 1 ? \" \" : \[concat Mix: \[value mix]] \}]"
+  xpos 322
+  ypos 1189
+  disable {{!previewPlotScan}}
+ }
+ Output {
+  name Output1
+  xpos 322
+  ypos 1395
+ }
+ NoOp {
+  inputs 0
+  name Settings
+  note_font_size 51
+  xpos 10
+  ypos 249
+  addUserKnob {20 User}
+  addUserKnob {7 mergeOpNum l "Merge Op Num"}
+  mergeOpNum {{"mergeOp == 0 ? 24 : 13"}}
+ }
+end_group
