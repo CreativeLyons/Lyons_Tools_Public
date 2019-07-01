@@ -1,5 +1,4 @@
 set cut_paste_input [stack 0]
-version 11.3 v4
 push $cut_paste_input
 Group {
  name BinaryAlpha
