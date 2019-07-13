@@ -52,6 +52,13 @@ Noise with user friendly animation sliders and overscan.
 Analyzes a choice of the RGB, RGBA, or Alpha input and outputs an Alpha Channel (or RGBA) that is Binary, 0 or 1. Any Pixels that are not 0 will be turned into 1 (negative numbers also), and 0 will remain 0. This is perfect for those blur + unpremult tricks or if you need a quick matte for finding any rgb color above or below 0, in a CG render passes for example.
 
 ## 05_Color
+### BlacksMatch
+
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=Kw3bcsmkGuk
+" target="_blank"><img src="http://img.youtube.com/vi/Kw3bcsmkGuk/0.jpg" 
+alt="IMAGE ALT TEXT HERE" width="320" height="240" /></a>
+
+This tool recreates a toe operation that's able to input an external image as it's black point and has controls for the multiply (the amount above the blackpoint that the operation stops affecting the midtones and highlights), and a control for the Gamma, or falloff, which is the bottom part of the curve and how it's blending with the blackpoint. You can toggle a preview overlay of a plotscanline and see how your blackpoint is affecting the rest of your image.
 
 ## 08_Merge
 ### ContactSheetAuto
