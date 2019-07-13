@@ -13,7 +13,7 @@
 - [Merge](#merge)
   * [ContactSheetAuto](#contactsheetauto)
 
-## Image:
+## 01_Image:
 ### LabelFromRead
 Click for youtube Demo:
 
@@ -24,7 +24,7 @@ alt="IMAGE ALT TEXT HERE" width="320" height="240" /></a>
 
 Displays Filepath of topmost read node over the image. Useful when viewing sequence contact sheets / matching shots.
 
-## Draw:
+## 02_Draw:
 ### GradMagic
 Click for youtube Demo:
 
@@ -43,10 +43,20 @@ alt="IMAGE ALT TEXT HERE" width="320" height="240" /></a>
 
 Noise with user friendly animation sliders and overscan.
 
-## Merge
+
+## 04_Channel
+### Binary Alpha
+
+<img src="http://www.nukepedia.com/images/users/CreativeLyons/BinaryAlpha_SplashPage_v01.jpg" width="340" "border="1" />
+
+Analyzes a choice of the RGB, RGBA, or Alpha input and outputs an Alpha Channel (or RGBA) that is Binary, 0 or 1. Any Pixels that are not 0 will be turned into 1 (negative numbers also), and 0 will remain 0. This is perfect for those blur + unpremult tricks or if you need a quick matte for finding any rgb color above or below 0, in a CG render passes for example.
+
+## 05_Color
+
+## 08_Merge
 ### ContactSheetAuto
 
-<img src="http://www.nukepedia.com/images/users/CreativeLyons/ContactSheetAuto_SplashPage_v01.png" width="320" />
+<img src="http://www.nukepedia.com/images/users/CreativeLyons/ContactSheetAuto_SplashPage_v01.png" width="340" />
 
 Contact Sheet that Automatically resizes according to number of inputs. Inspired by Ben McEwan's blog post.
 
