@@ -47,7 +47,7 @@ Noise with user friendly animation sliders and overscan.
 ## 04_Channel
 ### Binary Alpha
 
-<img src="http://www.nukepedia.com/images/users/CreativeLyons/BinaryAlpha_SplashPage_v01.jpg" width="340" "border="1" />
+<img src="http://www.nukepedia.com/images/users/CreativeLyons/BinaryAlpha_SplashPage_v01.jpg" width="340" border="1" />
 
 Analyzes a choice of the RGB, RGBA, or Alpha input and outputs an Alpha Channel (or RGBA) that is Binary, 0 or 1. Any Pixels that are not 0 will be turned into 1 (negative numbers also), and 0 will remain 0. This is perfect for those blur + unpremult tricks or if you need a quick matte for finding any rgb color above or below 0, in a CG render passes for example.
 
