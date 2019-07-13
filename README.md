@@ -5,12 +5,16 @@
 
 ---
 **Table of Contents:**
-- [Image:](#image-)
+- [01_Image:](#01-image-)
   * [LabelFromRead](#labelfromread)
-- [Draw:](#draw-)
+- [02_Draw:](#02-draw-)
   * [GradMagic](#gradmagic)
   * [NoiseAdvanced](#noiseadvanced)
-- [Merge](#merge)
+- [04_Channel](#04-channel)
+  * [Binary Alpha](#binary-alpha)
+- [05_Color](#05-color)
+  * [BlacksMatch](#blacksmatch)
+- [08_Merge](#08-merge)
   * [ContactSheetAuto](#contactsheetauto)
 
 ## 01_Image:
