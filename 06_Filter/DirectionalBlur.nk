@@ -4,25 +4,30 @@ push $cut_paste_input
 Group {
  name DirectionalBlur
  tile_color 0xcc804eff
- note_font "Lucida Grande Bold Bold Bold Bold Bold Bold Bold Bold Bold"
+ note_font "Lucida Grande Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold"
  note_font_color 0xffffffff
  selected true
- xpos 1180
- ypos -20
+ xpos -437
+ ypos -272
  addUserKnob {20 DirectionalBlur}
  addUserKnob {41 channels T MergeKeymix.also_merge}
  addUserKnob {26 ""}
  addUserKnob {4 type l Type M {Blur Defocus}}
+ type Defocus
  addUserKnob {4 filter -STARTLINE M {Impulse Cubic Keys Simon Rifman Mitchell Parzen Notch Lanczos4 Lancsos6 Sinc4 ""}}
  filter Cubic
  addUserKnob {6 clampNeg l "Clamp Negatives (if changing filters)" +STARTLINE}
+ addUserKnob {6 blackOutsideBefore l "Black Outside Before Rotation" +STARTLINE}
+ blackOutsideBefore true
  addUserKnob {7 rotate l Rotate R -180 180}
  addUserKnob {7 size l Size R 0 100}
  size 25
  addUserKnob {7 additionalBlur l "Perpendicular Blur" R 0 100}
  addUserKnob {26 ""}
  addUserKnob {4 bbox l "Set BBox to" M {Union "Mask Intersect" B "Input Format" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" ""}}
+ bbox "Input Format"
  addUserKnob {6 blackOutside l "Black Outside" -STARTLINE}
+ blackOutside true
  addUserKnob {14 adjustBBox l "Adjust BBox" R 0 100}
  addUserKnob {26 ""}
  addUserKnob {41 maskChannelMask l mask T MergeKeymix.maskChannelMask}
@@ -59,21 +64,21 @@ Group {
   xpos 34
   ypos -421
  }
-set N5c407690 [stack 0]
+set Nc0c4c890 [stack 0]
  Dot {
   name Dot20
   note_font_size 41
   xpos -135
   ypos -421
  }
-set N5c409b50 [stack 0]
+set Nd58da160 [stack 0]
  Dot {
   name Dot22
   note_font_size 41
   xpos -135
   ypos 31
  }
-set N5c40c010 [stack 0]
+set Nc0c22050 [stack 0]
  AdjBBox {
   numpixels {{ceil((parent.BBoxCalculator.widthResult*1.5)+(parent.BBoxCalculator.widthResult/4))} {ceil(parent.BBoxCalculator.heightResult*1.5)+(parent.BBoxCalculator.heightResult/4)}}
   name AdjBBoxSizeRotated
@@ -98,22 +103,23 @@ set N5c40c010 [stack 0]
   xpos -135
   ypos 254
  }
-push $N5c40c010
-push $N5c407690
+push $Nc0c22050
+push $Nc0c4c890
  Transform {
   rotate {{parent.rotate}}
   center {{input.width/2} {input.height/2}}
   filter {{parent.filter}}
+  black_outside {{parent.blackOutsideBefore}}
   name Transform1
   xpos 0
-  ypos -345
+  ypos -351
  }
  Dot {
   name Dot125
   xpos 34
   ypos -293
  }
-set N5c423170 [stack 0]
+set Nc0c37920 [stack 0]
  Dot {
   name Dot126
   xpos 170
@@ -131,7 +137,7 @@ set N5c423170 [stack 0]
   xpos 170
   ypos -199
  }
-push $N5c423170
+push $Nc0c37920
  Blur {
   size {{parent.size} 0}
   crop false
@@ -153,7 +159,7 @@ push $N5c423170
   name Blur1
   label "\[value size]"
   xpos 0
-  ypos -178
+  ypos -161
  }
  Transform {
   rotate {{-parent.Transform1.rotate}}
@@ -199,7 +205,7 @@ push $N5c423170
   xpos 34
   ypos 443
  }
-set N5c4382c0 [stack 0]
+set Nd5b57880 [stack 0]
  Dot {
   name Dot12
   note_font_size 41
@@ -220,7 +226,7 @@ set N5c4382c0 [stack 0]
   xpos -516
   ypos 759
  }
-push $N5c409b50
+push $Nd58da160
  Dot {
   name Dot2
   note_font_size 41
@@ -240,7 +246,7 @@ push $N5c409b50
   xpos -768
   ypos 512
  }
-set N5c44b840 [stack 0]
+set Nd5b7c2a0 [stack 0]
  Dot {
   name Dot8
   note_font_size 41
@@ -253,7 +259,7 @@ set N5c44b840 [stack 0]
   xpos -864
   ypos 711
  }
-push $N5c44b840
+push $Nd5b7c2a0
  Input {
   inputs 0
   name Inputmask
@@ -268,14 +274,14 @@ push $N5c44b840
   xpos 380
   ypos 332
  }
-set N5c457210 [stack 0]
+set Nd5ac94e0 [stack 0]
  Dot {
   name Dot10
   note_font_size 41
   xpos 270
   ypos 332
  }
-push $N5c4382c0
+push $Nd5b57880
  Merge2 {
   inputs 2
   bbox intersection
@@ -305,22 +311,22 @@ push $N5c4382c0
   xpos 270
   ypos 669
  }
-push $N5c457210
+push $Nd5ac94e0
  Dot {
   name Dot4
   note_font_size 41
   xpos 380
   ypos 564
  }
-push $N5c4382c0
-push $N5c44b840
+push $Nd5b57880
+push $Nd5b7c2a0
  Dot {
   name Dot3
   note_font_size 41
   xpos -768
   ypos 564
  }
-set N5c44dd00 [stack 0]
+set Nd5aaffc0 [stack 0]
  Merge2 {
   inputs 2+1
   operation copy
@@ -338,8 +344,8 @@ set N5c44dd00 [stack 0]
   xpos 34
   ypos 623
  }
-set N5c477310 [stack 0]
-push $N5c44dd00
+set Nd5a99a60 [stack 0]
+push $Nd5aaffc0
  CopyBBox {
   inputs 2
   name CopyBBoxUnion
@@ -381,7 +387,7 @@ push $N5c44dd00
   xpos -768
   ypos 910
  }
-push $N5c477310
+push $Nd5a99a60
  CopyBBox {
   inputs 2
   name CopyBBox
