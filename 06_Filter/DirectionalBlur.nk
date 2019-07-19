@@ -1,13 +1,14 @@
 set cut_paste_input [stack 0]
+version 11.3 v4
 push $cut_paste_input
 Group {
  name DirectionalBlur
  tile_color 0xcc804eff
- note_font "Lucida Grande Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold"
+ note_font "Lucida Grande Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold"
  note_font_color 0xffffffff
  selected true
- xpos -437
- ypos -272
+ xpos 127
+ ypos -94
  addUserKnob {20 DirectionalBlur}
  addUserKnob {41 channels T MergeKeymix.also_merge}
  addUserKnob {26 ""}
@@ -24,9 +25,7 @@ Group {
  addUserKnob {7 additionalBlur l "Perpendicular Blur" R 0 100}
  addUserKnob {26 ""}
  addUserKnob {4 bbox l "Set BBox to" M {Union "Mask Intersect" B "Input Format" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" ""}}
- bbox "Input Format"
  addUserKnob {6 blackOutside l "Black Outside" -STARTLINE}
- blackOutside true
  addUserKnob {14 adjustBBox l "Adjust BBox" R 0 100}
  addUserKnob {26 ""}
  addUserKnob {41 maskChannelMask l mask T MergeKeymix.maskChannelMask}
@@ -63,21 +62,21 @@ Group {
   xpos 34
   ypos -421
  }
-set Nc0c4c890 [stack 0]
+set N1d135e0 [stack 0]
  Dot {
   name Dot20
   note_font_size 41
   xpos -135
   ypos -421
  }
-set Nd58da160 [stack 0]
+set N1d171a0 [stack 0]
  Dot {
   name Dot22
   note_font_size 41
   xpos -135
   ypos 31
  }
-set Nc0c22050 [stack 0]
+set N1d1ae30 [stack 0]
  AdjBBox {
   numpixels {{ceil((parent.BBoxCalculator.widthResult*1.5)+(parent.BBoxCalculator.widthResult/4))} {ceil(parent.BBoxCalculator.heightResult*1.5)+(parent.BBoxCalculator.heightResult/4)}}
   name AdjBBoxSizeRotated
@@ -102,8 +101,8 @@ set Nc0c22050 [stack 0]
   xpos -135
   ypos 254
  }
-push $Nc0c22050
-push $Nc0c4c890
+push $N1d1ae30
+push $N1d135e0
  Transform {
   rotate {{parent.rotate}}
   center {{input.width/2} {input.height/2}}
@@ -118,7 +117,7 @@ push $Nc0c4c890
   xpos 34
   ypos -293
  }
-set Nc0c37920 [stack 0]
+set N1d26e70 [stack 0]
  Dot {
   name Dot126
   xpos 170
@@ -136,7 +135,7 @@ set Nc0c37920 [stack 0]
   xpos 170
   ypos -199
  }
-push $Nc0c37920
+push $N1d26e70
  Blur {
   size {{parent.size} 0}
   crop false
@@ -204,7 +203,7 @@ push $Nc0c37920
   xpos 34
   ypos 443
  }
-set Nd5b57880 [stack 0]
+set N1caf510 [stack 0]
  Dot {
   name Dot12
   note_font_size 41
@@ -225,7 +224,7 @@ set Nd5b57880 [stack 0]
   xpos -516
   ypos 759
  }
-push $Nd58da160
+push $N1d171a0
  Dot {
   name Dot2
   note_font_size 41
@@ -245,7 +244,7 @@ push $Nd58da160
   xpos -768
   ypos 512
  }
-set Nd5b7c2a0 [stack 0]
+set N1d39c80 [stack 0]
  Dot {
   name Dot8
   note_font_size 41
@@ -258,7 +257,7 @@ set Nd5b7c2a0 [stack 0]
   xpos -864
   ypos 711
  }
-push $Nd5b7c2a0
+push $N1d39c80
  Input {
   inputs 0
   name Inputmask
@@ -273,14 +272,14 @@ push $Nd5b7c2a0
   xpos 380
   ypos 332
  }
-set Nd5ac94e0 [stack 0]
+set N1d48d30 [stack 0]
  Dot {
   name Dot10
   note_font_size 41
   xpos 270
   ypos 332
  }
-push $Nd5b57880
+push $N1caf510
  Merge2 {
   inputs 2
   bbox intersection
@@ -310,22 +309,22 @@ push $Nd5b57880
   xpos 270
   ypos 669
  }
-push $Nd5ac94e0
+push $N1d48d30
  Dot {
   name Dot4
   note_font_size 41
   xpos 380
   ypos 564
  }
-push $Nd5b57880
-push $Nd5b7c2a0
+push $N1caf510
+push $N1d39c80
  Dot {
   name Dot3
   note_font_size 41
   xpos -768
   ypos 564
  }
-set Nd5aaffc0 [stack 0]
+set N1d650c0 [stack 0]
  Merge2 {
   inputs 2+1
   operation copy
@@ -343,8 +342,8 @@ set Nd5aaffc0 [stack 0]
   xpos 34
   ypos 623
  }
-set Nd5a99a60 [stack 0]
-push $Nd5aaffc0
+set N1d75b30 [stack 0]
+push $N1d650c0
  CopyBBox {
   inputs 2
   name CopyBBoxUnion
@@ -386,7 +385,7 @@ push $Nd5aaffc0
   xpos -768
   ypos 910
  }
-push $Nd5a99a60
+push $N1d75b30
  CopyBBox {
   inputs 2
   name CopyBBox
