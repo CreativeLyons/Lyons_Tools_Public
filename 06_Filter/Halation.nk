@@ -1,0 +1,320 @@
+set cut_paste_input [stack 0]
+version 11.3 v4
+push $cut_paste_input
+Group {
+ name Halation
+ tile_color 0xcc804eff
+ note_font "Verdana Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold"
+ note_font_color 0xffffffff
+ selected true
+ xpos 1644
+ ypos 1253
+ addUserKnob {20 Halation}
+ addUserKnob {26 ""}
+ addUserKnob {4 outputView l "Output View" M {"Final Output" "Luma Key" "Effect Only"}}
+ addUserKnob {20 lumaKey l "Luma Key" n 1}
+ lumaKey 0
+ addUserKnob {41 range T Keyer2.range}
+ addUserKnob {20 endGroup n -1}
+ addUserKnob {26 ""}
+ addUserKnob {41 size_1 l size T Glow1.size}
+ addUserKnob {26 ""}
+ addUserKnob {7 red R 0 4}
+ red 1
+ addUserKnob {7 green R 0 4}
+ green 0.25
+ addUserKnob {7 blue R 0 4}
+ blue 0.08
+ addUserKnob {26 ""}
+ addUserKnob {7 globalAmount l "Global Amount" R 0 4}
+ globalAmount 1
+ addUserKnob {26 ""}
+ addUserKnob {7 mix}
+ mix 1
+ addUserKnob {20 info l Info}
+ addUserKnob {26 creator l Creator: T "<b><big>Tony Lyons"}
+ addUserKnob {26 desc l Description: T Halation}
+ addUserKnob {26 ver l Version: T v01}
+}
+ Input {
+  inputs 0
+  name Input
+  xpos -852
+  ypos 177
+ }
+ Dot {
+  name Dot45
+  note_font_size 41
+  xpos -818
+  ypos 236
+ }
+set N981c7030 [stack 0]
+ Keyer {
+  operation "luminance key"
+  range {2 6 10 10}
+  name Keyer2
+  xpos -661
+  ypos 226
+ }
+ Shuffle {
+  red alpha
+  green alpha
+  blue alpha
+  name Shuffle1
+  label "\[value in]"
+  xpos -661
+  ypos 282
+ }
+ Dot {
+  name Dot48
+  note_font_size 41
+  xpos -627
+  ypos 352
+ }
+set N980bb9d0 [stack 0]
+push $N980bb9d0
+ Dot {
+  name Dot49
+  note_font_size 41
+  xpos -420
+  ypos 352
+ }
+set N980bf730 [stack 0]
+ Dot {
+  name Dot51
+  note_font_size 41
+  xpos -310
+  ypos 352
+ }
+set N980c3680 [stack 0]
+ Dot {
+  name Dot52
+  note_font_size 41
+  xpos -200
+  ypos 352
+ }
+ Glow2 {
+  effect_only true
+  size {{parent.Glow1.size.w*4} {parent.Glow1.size.h*4}}
+  name Glow3
+  xpos -234
+  ypos 403
+ }
+ Dot {
+  name Dot54
+  note_font_size 41
+  xpos -200
+  ypos 496
+ }
+push $N980c3680
+ Glow2 {
+  effect_only true
+  size {{parent.Glow1.size.w*2} {parent.Glow1.size.h*2}}
+  name Glow2
+  xpos -344
+  ypos 404
+ }
+ Dot {
+  name Dot53
+  note_font_size 41
+  xpos -310
+  ypos 453
+ }
+push $N980bf730
+ Glow2 {
+  effect_only true
+  size 1.2
+  name Glow1
+  xpos -454
+  ypos 401
+ }
+ Merge2 {
+  inputs 2
+  operation screen
+  name Merge8
+  xpos -454
+  ypos 449
+ }
+ Merge2 {
+  inputs 2
+  operation screen
+  name Merge13
+  xpos -454
+  ypos 492
+ }
+ Merge2 {
+  inputs 2
+  operation from
+  name Merge9
+  xpos -661
+  ypos 492
+ }
+ Clamp {
+  channels rgba
+  maximum_enable false
+  name Clamp4
+  xpos -661
+  ypos 529
+ }
+ Shuffle {
+  green red
+  blue red
+  alpha red
+  name Shuffle3
+  label "\[value in]"
+  xpos -661
+  ypos 555
+ }
+ Dot {
+  name Dot50
+  note_font_size 41
+  xpos -627
+  ypos 628
+ }
+set N981e3d20 [stack 0]
+ Dot {
+  name Dot55
+  note_font_size 41
+  xpos -517
+  ypos 628
+ }
+ Blur {
+  channels rgba
+  size {{parent.Glow1.size.w} {parent.Glow1.size.h}}
+  name Blur11
+  label "\[value size]"
+  xpos -551
+  ypos 681
+ }
+push $N981e3d20
+ Merge2 {
+  inputs 2
+  operation max
+  name Merge7
+  xpos -661
+  ypos 687
+ }
+ Grade {
+  multiply {{parent.red} {parent.green} {parent.blue} 1}
+  gamma {1 1 1 1}
+  name Grade17
+  xpos -661
+  ypos 754
+ }
+ Multiply {
+  channels rgba
+  value {{parent.globalAmount}}
+  name Multiply2
+  label "\[value value]"
+  xpos -661
+  ypos 795
+ }
+ Shuffle {
+  alpha black
+  name Shuffle2
+  label "\[value in]"
+  xpos -661
+  ypos 867
+ }
+ Dot {
+  name Dot57
+  note_font_size 41
+  xpos -627
+  ypos 961
+ }
+set N9822bf00 [stack 0]
+ Multiply {
+  value {{parent.Keymix1.mix}}
+  name Multiply1
+  label "\[value value]"
+  xpos -661
+  ypos 1136
+ }
+push $N980bb9d0
+ Input {
+  inputs 0
+  name Inputmask
+  selected true
+  xpos -380
+  ypos 686
+  number 1
+ }
+ Dot {
+  name Dot60
+  xpos -346
+  ypos 788
+ }
+ Invert {
+  name Invert3
+  xpos -380
+  ypos 934
+ }
+ AddChannels {
+  channels rgba
+  name AddChannels2
+  xpos -380
+  ypos 989
+ }
+ Invert {
+  name Invert4
+  xpos -380
+  ypos 1032
+ }
+push $N9822bf00
+push $N981c7030
+ Dot {
+  name Dot56
+  note_font_size 41
+  xpos -818
+  ypos 617
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  bbox B
+  name Merge14
+  xpos -852
+  ypos 957
+ }
+push $N981c7030
+ Dot {
+  name Dot58
+  note_font_size 41
+  xpos -969
+  ypos 236
+ }
+ Dot {
+  name Dot59
+  note_font_size 41
+  xpos -962
+  ypos 1042
+ }
+ Keymix {
+  inputs 3
+  channels rgba
+  mix {{parent.mix}}
+  bbox B
+  name Keymix1
+  xpos -852
+  ypos 1038
+ }
+ Switch {
+  inputs 3
+  which {{parent.outputView}}
+  name OutputView
+  label "\[value which]"
+  xpos -852
+  ypos 1142
+ }
+ Dot {
+  name OUT
+  note_font_size 41
+  xpos -818
+  ypos 1255
+ }
+ Output {
+  name Output1
+  xpos -852
+  ypos 1307
+ }
+end_group

@@ -1,0 +1,55 @@
+set cut_paste_input [stack 0]
+version 11.3 v4
+push $cut_paste_input
+Group {
+ name TimeOffsetRandom
+ tile_color 0xb0a45dff
+ note_font "Verdana Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold"
+ note_font_color 0xffffffff
+ selected true
+ xpos 584
+ ypos 430
+ addUserKnob {20 TimeOffsetRandom}
+ addUserKnob {41 start l Start T NoOp1.start}
+ addUserKnob {41 end l End -STARTLINE T NoOp1.end}
+ addUserKnob {41 randomNum l "Random Number" T NoOp1.randomNum}
+ addUserKnob {41 seed l "time offset (frames)" T NoOp1.seed}
+ addUserKnob {41 reverse_input l "reverse input" -STARTLINE T TimeOffset2.reverse_input}
+ addUserKnob {20 info l Info}
+ addUserKnob {26 creator l Creator: T "<b><big>Tony Lyons"}
+ addUserKnob {26 desc l Description: t "Generates random time offset between given start and end frames" T TimeOffsetRandom}
+ addUserKnob {26 ver l Version: T v03}
+}
+ Input {
+  inputs 0
+  name Input
+  xpos 149
+  ypos 473
+ }
+ TimeOffset {
+  time_offset {{parent.NoOp1.seed}}
+  time ""
+  name TimeOffset2
+  selected true
+  xpos 149
+  ypos 550
+ }
+ Output {
+  name Output1
+  xpos 149
+  ypos 647
+ }
+ NoOp {
+  inputs 0
+  name NoOp1
+  xpos 34
+  ypos 518
+  addUserKnob {20 User}
+  addUserKnob {3 start}
+  start 1
+  addUserKnob {3 end}
+  end 10
+  addUserKnob {22 randomNum l "Random Number" T "import random\nnuke.thisNode().knob('seed').setValue(random.randint(nuke.thisNode()\['start'].value() , nuke.thisNode()\['end'].value()) )" +STARTLINE}
+  addUserKnob {3 seed l "time offset (frames)"}
+ }
+end_group

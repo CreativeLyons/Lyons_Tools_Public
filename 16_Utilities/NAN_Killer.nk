@@ -1,0 +1,267 @@
+set cut_paste_input [stack 0]
+version 11.3 v4
+push $cut_paste_input
+Group {
+ name NAN_Killer
+ tile_color 0xff6200ff
+ label "\[value which]"
+ note_font "Bitstream Vera Sans Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold"
+ note_font_color 0xffffffff
+ selected true
+ xpos 1147
+ ypos 2897
+ addUserKnob {20 NAN_Killer}
+ addUserKnob {4 which l Method M {"Replace with 0" "Clone Over" "Blur Unpremult" "" ""}}
+ addUserKnob {26 ""}
+ addUserKnob {20 Translate n 1}
+ addUserKnob {41 translate l Translate T Transform1.translate}
+ addUserKnob {20 endGroup n -1}
+ addUserKnob {26 ""}
+ addUserKnob {41 size l "Blur/Unpremult size" T Blur1.size}
+ addUserKnob {20 info l Info}
+ addUserKnob {26 creator l Creator: T "<b><big>Tony Lyons"}
+ addUserKnob {26 desc l Description: t "kills NANs with options of how to replace" T NAN_Killer}
+ addUserKnob {26 ver l Version: T v03}
+}
+ Input {
+  inputs 0
+  name Input1
+  xpos 312
+  ypos 175
+ }
+ Reformat {
+  type scale
+  scale 2
+  resize none
+  pbb true
+  name Reformat142
+  xpos 312
+  ypos 233
+ }
+ AddChannels {
+  channels rgba
+  name AddChannels1
+  xpos 312
+  ypos 259
+ }
+ Dot {
+  name Dot1301
+  note_font_size 41
+  xpos 346
+  ypos 304
+ }
+set N9874ce30 [stack 0]
+ Expression {
+  expr0 (isnan(r)||isnan(g)||isnan(b)||isnan(a))||(isinf(r)||isinf(g)||isinf(b)||isinf(a))?0:r
+  expr1 (isnan(r)||isnan(g)||isnan(b)||isnan(a))||(isinf(r)||isinf(g)||isinf(b)||isinf(a))?0:g
+  expr2 (isnan(r)||isnan(g)||isnan(b)||isnan(a))||(isinf(r)||isinf(g)||isinf(b)||isinf(a))?0:b
+  expr3 (isnan(r)||isnan(g)||isnan(b)||isnan(a))||(isinf(r)||isinf(g)||isinf(b)||isinf(a))?0:a
+  name nan_killer_ReplaceWithZero
+  xpos 312
+  ypos 406
+ }
+ Dot {
+  name Dot11
+  note_font_size 41
+  xpos 346
+  ypos 490
+ }
+set N9875d080 [stack 0]
+ Dot {
+  name Dot7
+  note_font_size 41
+  xpos 203
+  ypos 490
+ }
+ Dot {
+  name Dot9
+  note_font_size 41
+  xpos 203
+  ypos 841
+ }
+set N984885a0 [stack 0]
+ Dot {
+  name Dot10
+  note_font_size 41
+  xpos 203
+  ypos 873
+ }
+push $N984885a0
+push $N9874ce30
+ Dot {
+  name Dot2
+  note_font_size 41
+  xpos 540
+  ypos 304
+ }
+set N98490460 [stack 0]
+ Dot {
+  name Dot3
+  note_font_size 41
+  xpos 675
+  ypos 304
+ }
+set N98494310 [stack 0]
+ Expression {
+  expr3 (isnan(r)||isnan(g)||isnan(b)||isnan(a))||(isinf(r)||isinf(g)||isinf(b)||isinf(a))
+  name nan_killer_v01_32
+  xpos 641
+  ypos 401
+ }
+ Dot {
+  name Dot1
+  note_font_size 41
+  xpos 675
+  ypos 458
+ }
+set N984a4590 [stack 0]
+ Dot {
+  name Dot13
+  note_font_size 41
+  xpos 675
+  ypos 543
+ }
+push $N98494310
+ Dot {
+  name Dot5
+  note_font_size 41
+  xpos 885
+  ypos 304
+ }
+set N984ac310 [stack 0]
+ Dot {
+  name Dot6
+  note_font_size 41
+  xpos 1120
+  ypos 304
+ }
+ Expression {
+  expr3 !(isnan(r)||isnan(g)||isnan(b)||isnan(a))||(isinf(r)||isinf(g)||isinf(b)||isinf(a)
+  name nan_killer_v01_1
+  xpos 1086
+  ypos 447
+ }
+push $N984ac310
+ Expression {
+  expr0 (isnan(r)||isnan(g)||isnan(b)||isnan(a))||(isinf(r)||isinf(g)||isinf(b)||isinf(a))?0:r
+  expr1 (isnan(r)||isnan(g)||isnan(b)||isnan(a))||(isinf(r)||isinf(g)||isinf(b)||isinf(a))?0:g
+  expr2 (isnan(r)||isnan(g)||isnan(b)||isnan(a))||(isinf(r)||isinf(g)||isinf(b)||isinf(a))?0:b
+  expr3 (isnan(r)||isnan(g)||isnan(b)||isnan(a))||(isinf(r)||isinf(g)||isinf(b)||isinf(a))?0:a
+  name nan_killer_ReplaceWithZero2
+  xpos 851
+  ypos 404
+ }
+ Dot {
+  name Dot12
+  note_font_size 41
+  xpos 885
+  ypos 451
+ }
+set N984cc880 [stack 0]
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy2
+  selected true
+  xpos 961
+  ypos 441
+ }
+ Blur {
+  channels rgb
+  size 3
+  name Blur1
+  label "\[value size]"
+  xpos 961
+  ypos 479
+ }
+ Unpremult {
+  name Unpremult1
+  xpos 961
+  ypos 539
+ }
+push $N984cc880
+ Keymix {
+  inputs 3
+  channels rgba
+  name Keymix1
+  xpos 851
+  ypos 539
+ }
+ Dot {
+  name Dot8
+  note_font_size 41
+  xpos 885
+  ypos 767
+ }
+push $N984a4590
+push $N98490460
+ Expression {
+  expr0 (isnan(r)||isnan(g)||isnan(b)||isnan(a))||(isinf(r)||isinf(g)||isinf(b)||isinf(a))?0:r
+  expr1 (isnan(r)||isnan(g)||isnan(b)||isnan(a))||(isinf(r)||isinf(g)||isinf(b)||isinf(a))?0:g
+  expr2 (isnan(r)||isnan(g)||isnan(b)||isnan(a))||(isinf(r)||isinf(g)||isinf(b)||isinf(a))?0:b
+  expr3 (isnan(r)||isnan(g)||isnan(b)||isnan(a))||(isinf(r)||isinf(g)||isinf(b)||isinf(a))?0:a
+  name nan_killer_ReplaceWithZero1
+  xpos 506
+  ypos 404
+ }
+ TransformMasked {
+  inputs 1+1
+  channels rgba
+  translate {4 4}
+  center {2362 1116}
+  shutteroffset centred
+  name Transform1
+  xpos 506
+  ypos 454
+ }
+ Dot {
+  name Dot4
+  note_font_size 41
+  xpos 540
+  ypos 627
+ }
+push $N9875d080
+ Switch {
+  inputs 3
+  which {{parent.which}}
+  name Switch20
+  label "\[value which]"
+  xpos 312
+  ypos 757
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy1
+  xpos 313
+  ypos 831
+ }
+ CopyBBox {
+  inputs 2
+  name CopyBBox1
+  xpos 313
+  ypos 869
+ }
+ Reformat {
+  type scale
+  scale {{1/parent.Reformat142.scale}}
+  resize none
+  pbb true
+  name Reformat143
+  xpos 313
+  ypos 958
+ }
+ Dot {
+  name Dot1302
+  note_font_size 41
+  xpos 347
+  ypos 1008
+ }
+ Output {
+  name Output1
+  xpos 313
+  ypos 1088
+ }
+end_group

@@ -1,0 +1,159 @@
+set cut_paste_input [stack 0]
+version 11.3 v4
+push $cut_paste_input
+Group {
+ name BiasedSaturation
+ tile_color 0x5c7fc0ff
+ note_font "Verdana Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold"
+ note_font_color 0xffffffff
+ selected true
+ xpos 544
+ ypos 987
+ addUserKnob {20 BiasedSaturation}
+ addUserKnob {41 channels T MergeKeymix.also_merge}
+ addUserKnob {26 ""}
+ addUserKnob {41 source l "bias colour" T targetMult.source}
+ addUserKnob {41 saturation T Saturation1.saturation}
+ addUserKnob {41 mode l "luminance math" T Saturation1.mode}
+ addUserKnob {26 ""}
+ addUserKnob {41 maskChannelMask l mask -STARTLINE T MergeKeymix.maskChannelMask}
+ addUserKnob {41 inject -STARTLINE T MergeKeymix.inject}
+ addUserKnob {41 invert_mask l invert -STARTLINE T MergeKeymix.invert_mask}
+ addUserKnob {41 fringe -STARTLINE T MergeKeymix.fringe}
+ addUserKnob {41 unpremult l "(un)premult? by" T Unpremult1.alpha}
+ addUserKnob {41 mix T MergeKeymix.mix}
+ addUserKnob {20 info l Info}
+ addUserKnob {26 creator l "Modified By:" T "Tony Lyons"}
+ addUserKnob {26 desc l Description: t "desaturates towards target color" T BiasedSaturation}
+ addUserKnob {26 ver l Version: T v02}
+}
+ Input {
+  inputs 0
+  name Inputmask
+  xpos 346
+  ypos 202
+  number 1
+ }
+ Dot {
+  name Dot5
+  label Mask
+  note_font_size 41
+  xpos 380
+  ypos 464
+ }
+ Dot {
+  name Dot4
+  note_font_size 41
+  xpos 380
+  ypos 564
+ }
+ Input {
+  inputs 0
+  name Input
+  xpos 0
+  ypos -50
+ }
+ Dot {
+  name Dot1
+  note_font_size 41
+  xpos 34
+  ypos 117
+ }
+set N99ad9cf0 [stack 0]
+ Unpremult {
+  channels all
+  alpha -rgba.alpha
+  name Unpremult1
+  xpos 0
+  ypos 226
+ }
+ Multiply {
+  value {{target/source} {target/source} {target/source} {target/source}}
+  name targetMult
+  xpos 0
+  ypos 258
+  addUserKnob {20 User}
+  addUserKnob {19 source l "bias colour"}
+  source {0.03229996562 0.1138856411 0.2395002097 0.218351528}
+  addUserKnob {6 source_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 source_panelDropped_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 source_panelDropped_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 source_panelDropped_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 source_panelDropped_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 source_panelDropped_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {19 target}
+  target {{(source.r*.3)+(source.g*.59)+(source.b*.11)}}
+  addUserKnob {6 target_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 target_panelDropped_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 target_panelDropped_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 target_panelDropped_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 target_panelDropped_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 target_panelDropped_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ }
+ Saturation {
+  channels all
+  saturation 0.5
+  unpremult -rgba.alpha
+  name Saturation1
+  xpos 0
+  ypos 290
+ }
+ Multiply {
+  value {{1/targetMult.value} {1/targetMult.value} {1/targetMult.value} {1/targetMult.value}}
+  name MultiBack
+  xpos 0
+  ypos 322
+ }
+ Premult {
+  channels all
+  alpha {{{parent.Unpremult1.alpha}}}
+  name Premult1
+  xpos 0
+  ypos 354
+ }
+ Dot {
+  name Dot17
+  label A
+  note_font_size 41
+  xpos 34
+  ypos 476
+ }
+push $N99ad9cf0
+ Dot {
+  name Dot2
+  note_font_size 41
+  xpos -252
+  ypos 117
+ }
+ Dot {
+  name Dot18
+  label B
+  note_font_size 41
+  xpos -252
+  ypos 473
+ }
+ Dot {
+  name Dot3
+  note_font_size 41
+  xpos -252
+  ypos 564
+ }
+ Merge2 {
+  inputs 2+1
+  operation copy
+  bbox B
+  Achannels none
+  Bchannels none
+  output none
+  also_merge rgb
+  mix 0.5
+  name MergeKeymix
+  xpos 0
+  ypos 557
+ }
+ Output {
+  name Output1
+  xpos 0
+  ypos 738
+ }
+end_group

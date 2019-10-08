@@ -1,0 +1,191 @@
+set cut_paste_input [stack 0]
+version 11.3 v4
+push $cut_paste_input
+Group {
+ name MergeAtmos
+ tile_color 0x4b5ec6ff
+ note_font "Verdana Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold"
+ note_font_color 0xffffffff
+ selected true
+ xpos 537
+ ypos 1790
+ addUserKnob {20 MergeAtmos}
+ addUserKnob {4 channels M {rgb rgba}}
+ addUserKnob {4 bbox l BBox -STARTLINE M {union A B "" ""}}
+ bbox B
+ addUserKnob {26 ""}
+ addUserKnob {41 size l "Blur size" T Blur15.size}
+ addUserKnob {41 plusmix l "plus mix" T Merge27.mix}
+ addUserKnob {41 mix_1 l "over mix" T Merge32.mix}
+ addUserKnob {26 ""}
+ addUserKnob {41 value l "Gamma FG Alpha" T Gamma1.value}
+ addUserKnob {26 ""}
+ addUserKnob {41 mix T Keymix1.mix}
+ addUserKnob {20 info l Info}
+ addUserKnob {26 creator l Creator: T "<b><big>Tony Lyons"}
+ addUserKnob {26 desc l Description: t "For merging Dust, Smoke, Atmos\n\nMix between plus and over\n\nUses alpha of FG to blur the BG which mimicks diffusion." T MergeAtmos}
+ addUserKnob {26 ver l Version: T v02}
+}
+ Input {
+  inputs 0
+  name InputBG
+  xpos 155
+  ypos -46
+ }
+ Dot {
+  name Dot4
+  xpos 189
+  ypos 71
+ }
+set N97356ed0 [stack 0]
+ Dot {
+  name Dot5
+  xpos 34
+  ypos 71
+ }
+ Dot {
+  name Dot6
+  xpos 34
+  ypos 725
+ }
+set N9735ec70 [stack 0]
+ Dot {
+  name Dot8
+  xpos 34
+  ypos 812
+ }
+ Input {
+  inputs 0
+  name Inputmask
+  xpos 508
+  ypos 505
+  number 2
+ }
+ Invert {
+  name Invert1
+  xpos 508
+  ypos 570
+ }
+ AddChannels {
+  channels rgba
+  name AddChannels1
+  xpos 508
+  ypos 608
+ }
+ Invert {
+  name Invert2
+  xpos 508
+  ypos 634
+ }
+ Dot {
+  name Dot7
+  xpos 542
+  ypos 725
+ }
+ Input {
+  inputs 0
+  name InputFG
+  xpos 358
+  ypos -45
+  number 1
+ }
+ AddChannels {
+  channels rgba
+  name AddChannels2
+  xpos 358
+  ypos 91
+ }
+ Dot {
+  name Dot3
+  xpos 392
+  ypos 138
+ }
+set N97394e80 [stack 0]
+push $N97356ed0
+ CopyBBox {
+  inputs 2
+  name CopyBBox2
+  xpos 155
+  ypos 134
+  disable {{!(parent.bbox==1) i}}
+ }
+ Dot {
+  name Dot2
+  xpos 189
+  ypos 189
+ }
+set N95b63240 [stack 0]
+push $N97394e80
+ CopyBBox {
+  inputs 2
+  name CopyBBox1
+  xpos 358
+  ypos 185
+  disable {{"!(parent.bbox == 2)" i}}
+ }
+ Gamma {
+  channels alpha
+  name Gamma1
+  xpos 358
+  ypos 263
+ }
+ Dot {
+  name Dot87
+  xpos 392
+  ypos 377
+ }
+set N973a8df0 [stack 0]
+ Dot {
+  name Dot1
+  xpos 392
+  ypos 519
+ }
+push $N973a8df0
+push $N973a8df0
+push $N95b63240
+ Blur {
+  inputs 1+1
+  size 10
+  name Blur15
+  label "\[value size]"
+  xpos 155
+  ypos 361
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  mix 0.5
+  name Merge27
+  xpos 155
+  ypos 459
+ }
+ Merge2 {
+  inputs 2
+  mix 0.5
+  name Merge32
+  xpos 155
+  ypos 515
+ }
+push $N9735ec70
+ Keymix {
+  inputs 3
+  bbox A
+  name Keymix1
+  xpos 155
+  ypos 715
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy1
+  xpos 155
+  ypos 802
+  disable {{parent.channels i}}
+ }
+ Output {
+  name Output1
+  xpos 155
+  ypos 989
+ }
+end_group

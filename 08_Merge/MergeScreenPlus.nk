@@ -1,0 +1,144 @@
+set cut_paste_input [stack 0]
+version 11.3 v4
+push $cut_paste_input
+push 0
+Group {
+ inputs 2
+ name MergeScreenPlus
+ tile_color 0x4b5ec6ff
+ note_font "Verdana Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold"
+ note_font_color 0xffffffff
+ selected true
+ xpos 713
+ ypos 1789
+ addUserKnob {20 MergeScreenPlus}
+ addUserKnob {4 channels M {rgb rgba "" ""}}
+ channels rgba
+ addUserKnob {41 bbox_1 l "set bbox to " -STARTLINE T Merge9.bbox}
+ addUserKnob {41 which l "Screen --> Plus" T Dissolve1.which}
+ addUserKnob {26 ""}
+ addUserKnob {41 mix T Dissolve2.which}
+ addUserKnob {20 info l Info}
+ addUserKnob {26 creator l Creator: T "<b><big>Tony Lyons"}
+ addUserKnob {26 desc l Description: t "Mix between a screen and plus" T MergeScreenPlus}
+ addUserKnob {26 ver l Version: T v02}
+}
+ Input {
+  inputs 0
+  name InputB
+  xpos -569
+  ypos 353
+ }
+ Dot {
+  name Dot15
+  xpos -535
+  ypos 458
+ }
+set N986177d0 [stack 0]
+ Dot {
+  name Dot1
+  xpos -784
+  ypos 458
+ }
+ AddChannels {
+  channels rgba
+  name AddChannels1
+  xpos -818
+  ypos 528
+ }
+ Dot {
+  name Dot2
+  xpos -784
+  ypos 803
+ }
+ Input {
+  inputs 0
+  name Inputmask
+  xpos -465
+  ypos 481
+  number 2
+ }
+set N9862a8a0 [stack 0]
+ Input {
+  inputs 0
+  name InputA
+  xpos -341
+  ypos 364
+  number 1
+ }
+ Dot {
+  name Dot20
+  xpos -307
+  ypos 450
+ }
+ Dot {
+  name Dot16
+  xpos -307
+  ypos 506
+ }
+set N98636430 [stack 0]
+push $N986177d0
+ Dot {
+  name Dot19
+  xpos -535
+  ypos 513
+ }
+set N9863a360 [stack 0]
+ Merge2 {
+  inputs 2+1
+  operation plus
+  bbox {{Merge9.bbox i}}
+  name Merge8
+  xpos -443
+  ypos 572
+ }
+push $N9862a8a0
+push $N98636430
+push $N9863a360
+ Merge2 {
+  inputs 2+1
+  operation screen
+  name Merge9
+  xpos -569
+  ypos 572
+ }
+ Dissolve {
+  inputs 2
+  which 0.5
+  name Dissolve1
+  xpos -569
+  ypos 635
+ }
+push $N9863a360
+ Dot {
+  name Dot17
+  xpos -664
+  ypos 513
+ }
+ Dot {
+  name Dot18
+  xpos -664
+  ypos 728
+ }
+ Dissolve {
+  inputs 2
+  which 1
+  name Dissolve2
+  xpos -569
+  ypos 721
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy1
+  xpos -573
+  ypos 793
+  disable {{parent.channels i}}
+ }
+ Output {
+  name Output1
+  xpos -573
+  ypos 920
+ }
+end_group

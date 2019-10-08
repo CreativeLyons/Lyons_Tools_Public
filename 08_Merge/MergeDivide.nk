@@ -1,0 +1,20 @@
+set cut_paste_input [stack 0]
+version 11.3 v4
+push $cut_paste_input
+push 0
+MergeExpression {
+ inputs 2
+ expr0 Br/Ar
+ expr1 Bg/Ag
+ expr2 Bb/Ab
+ name MergeDivide
+ note_font "Verdana Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold"
+ note_font_color 0xffffffff
+ selected true
+ xpos 887
+ ypos 1791
+ addUserKnob {20 info l Info}
+ addUserKnob {26 creator l Creator: T "<b><big>Tony Lyons"}
+ addUserKnob {26 desc l Description: T MergeDivide}
+ addUserKnob {26 ver l Version: T v01}
+}

@@ -1,0 +1,189 @@
+set cut_paste_input [stack 0]
+version 11.3 v4
+push $cut_paste_input
+Group {
+ name BeautifulSkin
+ tile_color 0xb2776dff
+ note_font "Verdana Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold"
+ note_font_color 0xffffffff
+ selected true
+ xpos 541
+ ypos 1248
+ addUserKnob {20 BeautifulSkin}
+ addUserKnob {26 ""}
+ addUserKnob {41 size l "Dilate size" T Dilate5.size}
+ addUserKnob {26 ""}
+ addUserKnob {4 blurType l "Blur Type" M {Blur Defocus Median}}
+ blurType Median
+ addUserKnob {7 blurDefocusSize l "Blur/Defocus size" R 0 100}
+ blurDefocusSize 5
+ addUserKnob {41 size_2 l "Median size" T Median2.size}
+ addUserKnob {6 guiblur l "use blur in gui, switch to defocus/median at render time" +STARTLINE}
+ guiblur true
+ addUserKnob {26 ""}
+ addUserKnob {41 mixMax l "mix Max back in" T Merge8.mix}
+ addUserKnob {41 mixMin l "mix Min back in" T Merge7.mix}
+ addUserKnob {26 ""}
+ addUserKnob {7 mix l OveralMix}
+ mix 1
+ addUserKnob {20 info l Info}
+ addUserKnob {26 creator l Creator: T "<b><big>Tony Lyons"}
+ addUserKnob {26 desc l Description: T BeautifulSkin}
+ addUserKnob {26 ver l Version: T v01}
+}
+ Input {
+  inputs 0
+  name Input
+  xpos 462
+  ypos -1126
+ }
+ Dot {
+  name Dot9
+  xpos 496
+  ypos -1018
+ }
+set N98d58860 [stack 0]
+ Dot {
+  name Dot10
+  xpos 708
+  ypos -1018
+ }
+ Dot {
+  name Dot12
+  xpos 708
+  ypos -530
+ }
+set N98d60600 [stack 0]
+ Dot {
+  name Dot13
+  xpos 708
+  ypos -454
+ }
+set N98d644e0 [stack 0]
+ Dot {
+  name Dot11
+  xpos 708
+  ypos -367
+ }
+set N98d68390 [stack 0]
+ Dot {
+  name Dot1
+  xpos 708
+  ypos -292
+ }
+ Input {
+  inputs 0
+  name Inputmask
+  xpos 261
+  ypos -544
+  number 1
+ }
+ AddChannels {
+  channels rgba
+  color 1
+  name AddChannels1
+  xpos 261
+  ypos -451
+ }
+ Invert {
+  name Invert1
+  xpos 261
+  ypos -377
+ }
+push $N98d68390
+push $N98d644e0
+push $N98d60600
+push $N98d58860
+ Dilate {
+  size 3
+  name Dilate5
+  xpos 462
+  ypos -959
+ }
+ Dilate {
+  size {{-parent.Dilate5.size i}}
+  name Dilate6
+  xpos 462
+  ypos -895
+ }
+ Dot {
+  name Dot14
+  xpos 496
+  ypos -819
+ }
+set N98b6a450 [stack 0]
+ Blur {
+  size {{parent.blurDefocusSize}}
+  name Blur10
+  label "\[value size]"
+  xpos 343
+  ypos -736
+ }
+set N98b6e2f0 [stack 0]
+push $N98b6a450
+ Median {
+  size 2
+  ignore_top_line false
+  name Median2
+  xpos 561
+  ypos -720
+ }
+push $N98b6a450
+ Defocus {
+  defocus {{parent.blurDefocusSize i}}
+  name Defocus1
+  xpos 462
+  ypos -728
+ }
+push $N98b6e2f0
+ Switch {
+  inputs 3
+  which {{parent.blurType i}}
+  name Switch1
+  xpos 462
+  ypos -660
+ }
+ Switch {
+  inputs 2
+  which {{guiblur i}}
+  name Switch2
+  xpos 462
+  ypos -602
+ }
+ Merge2 {
+  inputs 2
+  operation max
+  mix 0.5
+  name Merge8
+  xpos 462
+  ypos -534
+ }
+ Merge2 {
+  inputs 2
+  operation min
+  mix 0.2
+  name Merge7
+  xpos 462
+  ypos -458
+ }
+ Keymix {
+  inputs 3
+  bbox A
+  name Keymix2
+  xpos 462
+  ypos -377
+ }
+ Dissolve {
+  inputs 2
+  which {{abs(parent.OverallMix-1)}}
+  name Dissolve1
+  selected true
+  xpos 462
+  ypos -302
+ }
+ Output {
+  name Output1
+  xpos 462
+  ypos -225
+ }
+end_group

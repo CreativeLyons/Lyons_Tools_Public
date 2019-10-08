@@ -1,0 +1,237 @@
+set cut_paste_input [stack 0]
+version 11.3 v4
+push $cut_paste_input
+Group {
+ name DeepSoften
+ tile_color 0x60ff
+ selected true
+ xpos -20117
+ ypos 4384
+ addUserKnob {20 DeepSoften}
+ addUserKnob {7 size R 0 0.0001}
+ size 1.5e-05
+ addUserKnob {7 subSample l "Sub Sample" R 0 10}
+ subSample 1
+ addUserKnob {7 offset}
+ offset 1
+}
+ Input {
+  inputs 0
+  name Input1
+  xpos -285
+  ypos 161
+ }
+ Dot {
+  name Dot20
+  note_font_size 41
+  xpos -251
+  ypos 229
+ }
+set Nb73fcc70 [stack 0]
+ Dot {
+  name Dot48
+  note_font_size 41
+  xpos 309
+  ypos 229
+ }
+ DeepCShuffle {
+  in0 rgba.alpha
+  in1 rgba.alpha
+  in2 rgba.alpha
+  name DeepCShuffle1
+  xpos 275
+  ypos 329
+ }
+ DeepToImage {
+  name DeepToImage3
+  xpos 275
+  ypos 379
+ }
+ Dot {
+  name Dot1
+  note_font_size 41
+  xpos 309
+  ypos 614
+ }
+push $Nb73fcc70
+ DeepToImage {
+  name DeepToImage2
+  xpos -285
+  ypos 294
+ }
+ Dot {
+  name Dot19
+  note_font_size 41
+  xpos -251
+  ypos 362
+ }
+set Nbc83d260 [stack 0]
+ Grade {
+  channels depth
+  add {{size}}
+  black_clamp false
+  name Grade9
+  xpos 121
+  ypos 435
+ }
+ Grade {
+  channels depth
+  add {{-size*abs(offset-1)}}
+  black_clamp false
+  name Grade2
+  xpos 121
+  ypos 473
+ }
+push $Nbc83d260
+ Grade {
+  channels depth
+  add {{size*.75}}
+  black_clamp false
+  name Grade21
+  xpos 13
+  ypos 435
+ }
+ Grade {
+  channels depth
+  add {{-size*abs(offset-1)}}
+  black_clamp false
+  name Grade3
+  xpos 13
+  ypos 473
+ }
+push $Nbc83d260
+ Grade {
+  channels depth
+  add {{size*.5}}
+  black_clamp false
+  name Grade19
+  xpos -106
+  ypos 433
+ }
+ Grade {
+  channels depth
+  add {{-size*abs(offset-1)}}
+  black_clamp false
+  name Grade4
+  xpos -106
+  ypos 471
+ }
+push $Nbc83d260
+ Grade {
+  channels depth
+  add {{size*.25}}
+  black_clamp false
+  name Grade20
+  xpos -214
+  ypos 434
+ }
+ Grade {
+  channels depth
+  add {{-size*abs(offset-1)}}
+  black_clamp false
+  name Grade6
+  xpos -214
+  ypos 472
+ }
+push $Nbc83d260
+push $Nbc83d260
+ Grade {
+  channels depth
+  add {{-size*.25}}
+  black_clamp false
+  name Grade14
+  xpos -372
+  ypos 432
+ }
+ Grade {
+  channels depth
+  add {{-size*abs(offset-1)}}
+  black_clamp false
+  name Grade8
+  xpos -372
+  ypos 470
+ }
+push $Nbc83d260
+ Grade {
+  channels depth
+  add {{-size*.5}}
+  black_clamp false
+  name Grade15
+  xpos -474
+  ypos 431
+ }
+ Grade {
+  channels depth
+  add {{-size*abs(offset-1)}}
+  black_clamp false
+  name Grade7
+  xpos -474
+  ypos 469
+ }
+push $Nbc83d260
+ Grade {
+  channels depth
+  add {{-size*.75}}
+  black_clamp false
+  name Grade16
+  xpos -583
+  ypos 428
+ }
+ Grade {
+  channels depth
+  add {{-size*abs(offset-1)}}
+  black_clamp false
+  name Grade10
+  xpos -583
+  ypos 466
+ }
+push $Nbc83d260
+ Grade {
+  channels depth
+  add {{-size}}
+  black_clamp false
+  name Grade5
+  xpos -703
+  ypos 428
+ }
+ Grade {
+  channels depth
+  add {{-size*abs(offset-1)}}
+  black_clamp false
+  name Grade1
+  xpos -703
+  ypos 466
+ }
+ DeepFromImage {
+  inputs 9
+  name DeepFromImage2
+  xpos -285
+  ypos 551
+ }
+ DeepRecolor {
+  inputs 2
+  targetInputAlpha true
+  name DeepRecolor3
+  xpos -285
+  ypos 610
+ }
+ DeepExpression {
+  temp_name0 size
+  temp_expr0 "\[value size]"
+  chans1 deep
+  rgba.alpha rgba.alpha*0.99
+  deep.front deep.front-size
+  deep.back deep.back+size
+  name sub_Sample_1
+  xpos -285
+  ypos 664
+  addUserKnob {20 User}
+  addUserKnob {7 size R 0 10}
+  size {{subSample}}
+ }
+ Output {
+  name Output1
+  xpos -285
+  ypos 739
+ }
+end_group

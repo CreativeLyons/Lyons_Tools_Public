@@ -1,0 +1,497 @@
+set cut_paste_input [stack 0]
+version 11.3 v4
+push $cut_paste_input
+Group {
+ name ImagePlanePro
+ help "This node lets yuo project a texture onto a card to fit the frustum of the connected camera at the reference frame.\n\nThis is useful to either matchmove or stabilise a plate based on a camera rather than 2D tracking data.\n\n"
+ knobChanged "\nn = nuke.thisNode()\nk = nuke.thisKnob()\n\nif k.name() == 'use_input':\n    n\['knob'].setEnabled( not k.value() )\n\nif k.name() == 'inputChange':\n    n\['distanceAxis'].setVisible(n\[\"isOn\"].value())\n    n.knob('distanceAxis').setEnabled(not n\[\"isOn\"].value())\n    n.knob('distance').setVisible(not n\[\"isOn\"].value())"
+ tile_color 0x672f88ff
+ note_font_size 14
+ note_font_color 0xcec7ffff
+ selected true
+ xpos 147
+ ypos -160
+ addUserKnob {20 ImagePlane}
+ addUserKnob {6 use_input l "use input" t "if checked the camera hooked up to the cam pipe is used\ninstead of the internal one.\nIf unchecked, make sure to set the correct aperture in the CameraKnobs tab before importing the chan file!" -STARTLINE}
+ use_input true
+ addUserKnob {32 knob l "import chan file" t "when importing a chan file instead of hooking up a camera node, make sure to set the corrcet aperture in the CameraKnobs tab before importing the file!" -STARTLINE +DISABLED T "import_chan_button this.CAM_ANIM\nknob this.use_input 0"}
+ addUserKnob {6 preview3d l "Preview in 3d Viewer" +INVISIBLE +STARTLINE}
+ preview3d true
+ addUserKnob {4 output l "<b><font color=skyblue>Output" t "stabilize - use this to stabilize a plate using the respective match moved camera\nmatch - track an element into the shot based on the camera input" M {stabilize match "" "" "" "" ""}}
+ addUserKnob {3 ref l refFrame t "if the output format is the same as the plate you want to match/stabilize,\nthis will be the frame that will not be modified."}
+ ref 1001
+ addUserKnob {22 setFrame l "Set Ref Frame" -STARTLINE T "n = nuke.thisNode()\nref = n.knob('ref')\nframe = nuke.frame()\n\nref.setValue(frame)\n"}
+ addUserKnob {41 isOn +INVISIBLE T isON.isOn}
+ addUserKnob {7 distance t "the distance of the card to the camera.\nIf you have a nodal camera this isn't important\notherwise you need to adjust this to get the required parallax." R 1 10000}
+ distance 1000
+ addUserKnob {7 distanceAxis l distance +HIDDEN R 0 100}
+ distanceAxis {{AxisDistance.NoOp1.distance}}
+ addUserKnob {26 "" l output}
+ addUserKnob {41 format T Card3D1.format}
+ addUserKnob {41 crop_1 l "black outside" +INVISIBLE T Card3D1.crop}
+ addUserKnob {41 full_format l "output format" +INVISIBLE T Card3D1.full_format}
+ addUserKnob {41 proxy_format l "proxy format" +INVISIBLE T Card3D1.proxy_format}
+ addUserKnob {41 filter T Card3D1.filter}
+ addUserKnob {26 overscanSection l "<b><font color=skyblue>Overscan"}
+ addUserKnob {7 overscan l Overscan -STARTLINE R 0 200}
+ addUserKnob {6 cropToBBox l "Crop to BBox?" +STARTLINE}
+ addUserKnob {26 mBlur l "<b><font color=skyblue>Motion Blur"}
+ addUserKnob {41 divisions l samples T TimeBlur1.divisions}
+ addUserKnob {41 shutter T TimeBlur1.shutter}
+ addUserKnob {41 shutteroffset l "shutter offset" T TimeBlur1.shutteroffset}
+ addUserKnob {20 "" l CameraKnobs}
+ addUserKnob {41 rot_order l "rotation order" T CAM_ANIM.rot_order}
+ addUserKnob {41 translate T CAM_ANIM.translate}
+ addUserKnob {41 rotate T CAM_ANIM.rotate}
+ addUserKnob {26 ""}
+ addUserKnob {41 focal l "focal length" T CAM_ANIM.focal}
+ addUserKnob {41 haperture l "horiz aperture" T CAM_ANIM.haperture}
+ addUserKnob {41 vaperture l "vert aperture" T CAM_ANIM.vaperture}
+ addUserKnob {41 win_scale l "window scale" T CAM_ANIM.win_scale}
+}
+ Camera {
+  inputs 0
+  display off
+  selectable false
+  rot_order {{"\[topnode parent.input1].rot_order"}}
+  translate {{"\[topnode parent.input1].translate.x(parent.ref)"} {"\[topnode parent.input1].translate.y(parent.ref)"} {"\[topnode parent.input1].translate.z(parent.ref)"}}
+  rotate {{"\[topnode parent.input1].rotate.x(parent.ref)"} {"\[topnode parent.input1].rotate.y(parent.ref)"} {"\[topnode parent.input1].rotate.z(parent.ref)"}}
+  focal {{"\[topnode input1].focal.0"}}
+  haperture {{"\[topnode input1].haperture.0"}}
+  vaperture {{"\[topnode input1].vaperture.0"}}
+  near 0.0001
+  far {{"\[exists parent.input2] ? ImagePlanePro.AxisDistance.NoOp1.distance*2 : parent.distance*2"}}
+  win_scale {{"\[topnode input1].win_scale.0"} {"\[topnode input1].win_scale.1"}}
+  name CAM_STATIC1
+  tile_color 0x5682e700
+  gl_color 0x4851e400
+  label "connected cam\n"
+  xpos 138
+  ypos -352
+ }
+ Camera {
+  inputs 0
+  display off
+  selectable false
+  rot_order {{CAM_ANIM.rot_order}}
+  translate {{CAM_ANIM.translate.parent.ref)} {CAM_ANIM.translate.y(parent.ref)} {CAM_ANIM.translate.z(parent.ref)}}
+  rotate {{CAM_ANIM.rotate.parent.ref)} {CAM_ANIM.rotate.y(parent.ref)} {CAM_ANIM.rotate.z(parent.ref)}}
+  focal {{CAM_ANIM.focal.0}}
+  haperture {{CAM_ANIM.haperture.0}}
+  vaperture {{CAM_ANIM.vaperture.0}}
+  near 0.0001
+  far {{"\[exists parent.input2] ? ImagePlanePro.AxisDistance.NoOp1.distance*2 : parent.distance*2"}}
+  name CAM_STATIC
+  tile_color 0x5682e700
+  gl_color 0x4851e400
+  label "internal cam"
+  xpos -66
+  ypos -334
+ }
+ Switch {
+  inputs 2
+  which {{parent.use_input}}
+  name Switch5
+  label "internal or connected cam\n\[input this \[knob parent.use_input]]"
+  xpos 24
+  ypos -223
+ }
+set Nadf6690 [stack 0]
+ Input {
+  inputs 0
+  name CAM
+  xpos -459
+  ypos -201
+  number 1
+ }
+set Nadfe860 [stack 0]
+ Camera {
+  inputs 0
+  display off
+  selectable false
+  haperture 9.58
+  vaperture 5.39
+  near 0.001
+  far {{"\[exists parent.input2] ? ImagePlanePro.AxisDistance.NoOp1.distance*2 : parent.distance*2"}}
+  name CAM_ANIM
+  xpos -236
+  ypos -289
+ }
+ Switch {
+  inputs 2
+  which {{parent.use_input}}
+  name Switch4
+  label "internal or connected camera"
+  xpos -246
+  ypos -114
+ }
+set N9ce7820 [stack 0]
+ Switch {
+  inputs 2
+  which {{!parent.output}}
+  name Switch2
+  label "match or stabilize"
+  xpos 24
+  ypos 54
+ }
+set N9cef920 [stack 0]
+push $N9ce7820
+push $Nadf6690
+ Switch {
+  inputs 2
+  which {{!parent.output}}
+  name Switch1
+  label "match or stabilize"
+  xpos 156
+  ypos -26
+ }
+set N9cf7b20 [stack 0]
+ Input {
+  inputs 0
+  name IMG
+  xpos 409
+  ypos -153
+ }
+ Dot {
+  name Dot2
+  note_font_size 41
+  xpos 443
+  ypos -74
+ }
+set N9d04840 [stack 0]
+ Card2 {
+  lens_in_focal {{parent.Card3D1.lens_in_focal}}
+  lens_in_haperture {{parent.Card3D1.lens_in_haperture}}
+  translate {0 0 -1}
+  scaling {{parent.Card3D1.scaling} {parent.Card3D1.scaling} {parent.Card3D1.scaling}}
+  uniform_scale {{parent.Card3D1.uniform_scale}}
+  pivot {0 0 1}
+  control_points {3 3 3 6 
+
+1 {-0.5 -0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0 0 0} 
+1 {0 -0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0.5 0 0} 
+1 {0.5 -0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {1 0 0} 
+1 {-0.5 0 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0 0.5 0} 
+1 {0 0 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0.5 0.5 0} 
+1 {0.5 0 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {1 0.5 0} 
+1 {-0.5 0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0 1 0} 
+1 {0 0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0.5 1 0} 
+1 {0.5 0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {1 1 0} }
+  name Card1
+  xpos 596
+  ypos -78
+ }
+ TransformGeo {
+  inputs 2
+  name TransformGeo1
+  xpos 596
+  ypos 17
+ }
+ Reformat {
+  inputs 0
+  format {{{parent.Card3D1.format}}}
+  pbb true
+  name Reformat1
+  xpos 727
+  ypos 95
+ }
+ ScanlineRender {
+  inputs 3
+  conservative_shader_sampling false
+  motion_vectors_type distance
+  name ScanlineRender1
+  xpos 596
+  ypos 101
+ }
+ Dot {
+  name Dot3
+  note_font_size 41
+  xpos 630
+  ypos 186
+ }
+push $N9cf7b20
+push $N9cef920
+push $N9d04840
+ Card3D {
+  inputs 3
+  scaling {{"\[input Switch5 \[value parent.use_input]].win_scale.0"} {"\[input Switch5 \[value parent.use_input]].win_scale.1"} 1}
+  uniform_scale {{"\[exists parent.input2] ? distanceAxis : parent.distance"}}
+  pivot {0 0 1}
+  lens_in_focal {{"\[input Switch5 \[value parent.use_input]].focal"}}
+  lens_in_haperture {{"\[input Switch5 \[value parent.use_input]].haperture"}}
+  format "1181 558 0 0 1181 558 1 CGFormat"
+  shutteroffset centred
+  name Card3D1
+  label internal
+  xpos 409
+  ypos 54
+ }
+ Switch {
+  inputs 2
+  which {{preview3d}}
+  name Switch3
+  label "\[value which]"
+  selected true
+  xpos 409
+  ypos 176
+  disable true
+ }
+ Group {
+  name BBoxToFormat
+  onCreate "n = nuke.thisNode()\ninputFormat = n.knob(\"inputFormat\")\ninputBBox = n.knob(\"inputBBox\")\ncrop = nuke.toNode(\"Crop6\")\ncropb = crop.knob('box')\noutputBBox = n.knob('outputBBox')\n\ninputFormat.setFlag(0x0000000000008000)\ninputBBox.setFlag(0x0000000000008000)\ncropb.setFlag(0x0000000000008000)\noutputBBox.setFlag(0x0000000000008000)\n\nn = nuke.thisNode()\nn.knob(\"overscan\").setRange(0,400)\nn.knob(\"overscanPercent\").setRange(1,4)"
+  knobChanged "n = nuke.thisNode()\nk = nuke.thisKnob()\nif k.name() == \"overscanType\":\n    if n.knob(\"overscanType\").getValue() == 1:\n        n.knob(\"overscanPercent\").setVisible(True)\n        n.knob(\"overscan\").setVisible(False)\n    else:\n        n.knob(\"overscanPercent\").setVisible(False)\n        n.knob(\"overscan\").setVisible(True)"
+  tile_color 0xa57aaaff
+  note_font "Verdana Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold"
+  note_font_color 0xffffffff
+  xpos 409
+  ypos 259
+  disable {{!parent.cropToBBox}}
+  addUserKnob {20 CropBBox}
+  addUserKnob {4 type l Type +INVISIBLE M {"To Format" "To BBox"}}
+  addUserKnob {41 intersect T Crop6.intersect}
+  addUserKnob {6 blackOutside l "Black Outside" -STARTLINE}
+  addUserKnob {4 overscanType l "Overscan Type:" M {Pixels Percentage}}
+  addUserKnob {14 overscan l Overscan R 0 400}
+  overscan {{parent.overscan}}
+  addUserKnob {14 overscanPercent l "Overscan Percent" +HIDDEN R 1 4}
+  overscanPercent 1
+  addUserKnob {20 inputBbox l "BBox Data" n 1}
+  inputBbox 0
+  addUserKnob {15 inputFormat l "Input Format"}
+  inputFormat {0 0 {input.width} {input.height}}
+  addUserKnob {15 inputBBox l "Input BBox"}
+  inputBBox {{input.bbox.x} {input.bbox.y} {input.bbox.r} {input.bbox.t}}
+  addUserKnob {14 bboxCenter l "BBox Center" R 0 100}
+  bboxCenter {{"(this.Crop6.box.r-this.Crop6.box.x)/2 + this.Crop6.box.x"} {"(this.Crop6.box.t-this.Crop6.box.y)/2 + this.Crop6.box.y"}}
+  addUserKnob {15 outputBBox l "Output BBox"}
+  outputBBox {{OutputBBox1.OutputBBox} {OutputBBox1.OutputBBox} {OutputBBox1.OutputBBox} {OutputBBox1.OutputBBox}}
+  addUserKnob {20 endGroup n -1}
+  addUserKnob {20 info_1 l Info}
+  addUserKnob {26 creator l Creator: T "<b><big>Tony Lyons"}
+  addUserKnob {26 desc l Description: t "crop to inputformat\n\ndisplays values of input bbox" T CropBBox}
+  addUserKnob {26 ver l Version: T v02}
+ }
+  Input {
+   inputs 0
+   name Input
+   xpos 261
+   ypos 394
+  }
+  Dot {
+   name Dot2
+   note_font_size 41
+   xpos 295
+   ypos 462
+  }
+set N9db3e00 [stack 0]
+  Dot {
+   name Dot1
+   note_font_size 41
+   xpos -160
+   ypos 462
+  }
+  Dot {
+   name Dot3
+   note_font_size 41
+   xpos -160
+   ypos 557
+  }
+set Ndf4bf70 [stack 0]
+push $N9db3e00
+  Crop {
+   box {{curve} {curve} {input.width} {input.height}}
+   intersect true
+   crop {{parent.blackOutside}}
+   name Crop6
+   xpos 261
+   ypos 510
+   addUserKnob {20 User}
+   addUserKnob {22 cropToBbox l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+   addUserKnob {22 cropToBbox_1 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+   addUserKnob {22 cropToBbox_2 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+   addUserKnob {22 cropToBbox_3 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+   addUserKnob {22 cropToBbox_4 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+   addUserKnob {22 cropToBbox_5 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+   addUserKnob {22 cropToBbox_6 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+   addUserKnob {22 cropToBbox_7 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+   addUserKnob {22 cropToBbox_8 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+   addUserKnob {22 cropToBbox_9 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+   addUserKnob {22 cropToBbox_10 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+   addUserKnob {22 cropToBbox_11 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+   addUserKnob {22 cropToBbox_12 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+   addUserKnob {22 cropToBbox_13 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+   addUserKnob {22 cropToBbox_14 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+   addUserKnob {22 cropToBbox_15 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+   addUserKnob {22 cropToBbox_16 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+   addUserKnob {22 cropToBbox_17 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+   addUserKnob {22 cropToBbox_18 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+   addUserKnob {22 cropToBbox_19 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+   addUserKnob {22 cropToBbox l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+   addUserKnob {22 cropToBbox l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+  }
+set N9db9af0 [stack 0]
+  Remove {
+   operation keep
+   channels none
+   name Remove1
+   xpos 151
+   ypos 504
+  }
+set N9dc8690 [stack 0]
+  Transform {
+   scale {{parent.overscanPercent} {parent.overscanPercent}}
+   center {{input.bbox.r/2} {input.bbox.t/2}}
+   shutteroffset centred
+   name Transform1
+   xpos 75
+   ypos 555
+  }
+push $N9dc8690
+  AdjBBox {
+   numpixels {{parent.overscan} {parent.overscan}}
+   name AdjBBox1
+   xpos -51
+   ypos 510
+  }
+  Switch {
+   inputs 2
+   which {{overscanType}}
+   name Switch2
+   label "\[value which]"
+   xpos -51
+   ypos 549
+  }
+  Merge2 {
+   inputs 2
+   bbox intersection
+   Achannels {-rgba.red -rgba.green -rgba.blue rgba.alpha}
+   Bchannels {-rgba.red -rgba.green -rgba.blue rgba.alpha}
+   output {-rgba.red -rgba.green -rgba.blue rgba.alpha}
+   name Merge1
+   selected true
+   xpos -51
+   ypos 628
+   disable {{!parent.Crop6.intersect}}
+  }
+push $Ndf4bf70
+  CopyBBox {
+   inputs 2
+   name CopyBBox1
+   xpos -194
+   ypos 634
+  }
+  BlackOutside {
+   name BlackOutside1
+   xpos -194
+   ypos 687
+   disable {{!parent.blackOutside}}
+  }
+  Dot {
+   name Dot4
+   note_font_size 41
+   xpos -160
+   ypos 766
+  }
+push $N9db9af0
+  Switch {
+   inputs 2
+   which {{"overscanType == 0 ? overscan.w != 0 || overscan.h != 0 : overscanPercent.w != 1 || overscanPercent.h != 1 ? 1 : 0"}}
+   name Switch1
+   label "\[value which]"
+   xpos 261
+   ypos 756
+  }
+set N9e0b0f0 [stack 0]
+  Output {
+   name Output1
+   xpos 261
+   ypos 909
+  }
+push $N9e0b0f0
+  NoOp {
+   name OutputBBox1
+   xpos 372
+   ypos 833
+   addUserKnob {20 User}
+   addUserKnob {15 OutputBBox l "Output BBox"}
+   OutputBBox {{input.bbox.x} {input.bbox.y} {input.bbox.r} {input.bbox.t}}
+  }
+ end_group
+ TimeBlur {
+  divisions 1
+  shutteroffset centred
+  shuttercustomoffset 0
+  name TimeBlur1
+  xpos 409
+  ypos 394
+ }
+ Output {
+  name Output1
+  xpos 409
+  ypos 469
+ }
+ Input {
+  inputs 0
+  name InputAxis
+  xpos 198
+  ypos -224
+  number 2
+ }
+ NoOp {
+  name isON
+  xpos 198
+  ypos -191
+  addUserKnob {20 User}
+  addUserKnob {6 isOn +STARTLINE}
+  isOn {{"\[exists input2]"}}
+ }
+push $Nadfe860
+ Group {
+  inputs 2
+  name AxisDistance
+  tile_color 0x9c0000ff
+  xpos 198
+  ypos -115
+  addUserKnob {20 tab1 l TNT_AxisDistance}
+  addUserKnob {41 distance T NoOp1.distance}
+ }
+  Output {
+   inputs 0
+   name Output1
+   xpos 488
+   ypos 194
+  }
+  Input {
+   inputs 0
+   name axis2
+   xpos 740
+   ypos -220
+   number 1
+  }
+  Axis2 {
+   name A2
+   xpos 750
+   ypos -150
+  }
+  NoOp {
+   inputs 0
+   name NoOp1
+   xpos 620
+   ypos -70
+   addUserKnob {20 User}
+   addUserKnob {7 distance R 0 100}
+   distance {{sqrt((pow2(parent.A1.world_matrix.3-parent.A2.world_matrix.3))+(pow2(parent.A1.world_matrix.7-parent.A2.world_matrix.7))+(pow2(parent.A1.world_matrix.11-parent.A2.world_matrix.11)))}}
+  }
+  Input {
+   inputs 0
+   name axis1
+   xpos 500
+   ypos -220
+  }
+  Axis2 {
+   name A1
+   xpos 510
+   ypos -150
+  }
+ end_group
+end_group

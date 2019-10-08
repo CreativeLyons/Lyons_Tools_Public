@@ -1,0 +1,141 @@
+set cut_paste_input [stack 0]
+version 11.3 v4
+push $cut_paste_input
+Group {
+ name ChannelControl
+ tile_color 0x9e3c63ff
+ note_font "Verdana Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold"
+ note_font_color 0xffffffff
+ selected true
+ xpos 873
+ ypos 735
+ mapsize {0.15 0.15}
+ addUserKnob {20 ChannelControl}
+ addUserKnob {41 channel l Input: T channel_selector.in}
+ addUserKnob {26 ""}
+ addUserKnob {7 redGain}
+ redGain 1
+ addUserKnob {7 greenGain}
+ greenGain 1
+ addUserKnob {7 blueGain}
+ blueGain 1
+ addUserKnob {7 alphaGain}
+ addUserKnob {41 operation1 l operation T Merge1.operation}
+ addUserKnob {6 clamp -STARTLINE}
+ clamp true
+ addUserKnob {20 info l Info}
+ addUserKnob {26 creator l Creator: T "<b><big>Tony Lyons"}
+ addUserKnob {26 desc l Description: T ChannelControl}
+ addUserKnob {26 ver l Version: T v06}
+}
+ Input {
+  inputs 0
+  name Input
+  xpos 558
+  ypos -692
+ }
+ Shuffle {
+  name channel_selector
+  label "\[value in]"
+  xpos 558
+  ypos -668
+ }
+set N994cee30 [stack 0]
+ Shuffle {
+  green red
+  blue red
+  alpha red
+  name Shuffle1
+  xpos 386
+  ypos -537
+ }
+ Grade {
+  channels rgba
+  white {{parent.redGain i}}
+  name Grade12
+  xpos 386
+  ypos -492
+ }
+push $N994cee30
+ Shuffle {
+  red green
+  blue green
+  alpha green
+  name Shuffle2
+  xpos 499
+  ypos -535
+ }
+ Grade {
+  channels rgba
+  white {{parent.greenGain i}}
+  name Grade13
+  xpos 499
+  ypos -493
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  name Merge1
+  xpos 411
+  ypos -428
+ }
+ set C99613720 [stack 0]
+push $N994cee30
+ Shuffle {
+  red blue
+  green blue
+  alpha blue
+  name Shuffle3
+  xpos 610
+  ypos -538
+ }
+ Grade {
+  channels rgba
+  white {{parent.blueGain i}}
+  name Grade14
+  xpos 610
+  ypos -494
+ }
+clone $C99613720 {
+  inputs 2
+  xpos 486
+  ypos -369
+  selected false
+ }
+push $N994cee30
+ Shuffle {
+  red alpha
+  green alpha
+  blue alpha
+  name Shuffle4
+  xpos 725
+  ypos -535
+ }
+ Grade {
+  channels rgba
+  white {{parent.alphaGain i}}
+  name Grade15
+  xpos 725
+  ypos -494
+ }
+clone $C99613720 {
+  inputs 2
+  xpos 580
+  ypos -307
+  selected false
+ }
+ Clamp {
+  channels rgba
+  maskChannelInput -rgba.alpha
+  unpremult -rgba.alpha
+  name Clamp1
+  xpos 580
+  ypos -249
+  disable {{!parent.clamp}}
+ }
+ Output {
+  name Output1
+  xpos 580
+  ypos -169
+ }
+end_group

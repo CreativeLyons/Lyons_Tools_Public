@@ -1,0 +1,369 @@
+set cut_paste_input [stack 0]
+version 11.3 v4
+push $cut_paste_input
+Group {
+ name BlacksExpon
+ tile_color 0x262626ff
+ note_font "Verdana Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold"
+ note_font_color 0xccccccff
+ selected true
+ xpos 687
+ ypos 1249
+ addUserKnob {20 BlacksExpon}
+ addUserKnob {41 size T Blur6.size}
+ addUserKnob {20 info l Info}
+ addUserKnob {26 creator l Creator: T "<b><big>Tony Lyons"}
+ addUserKnob {26 desc l Description: T BlacksExpon}
+ addUserKnob {26 ver l Version: T v02}
+}
+ Input {
+  inputs 0
+  name Input
+  xpos 424
+  ypos 416
+ }
+ Dot {
+  name Dot29
+  note_font_size 41
+  xpos 458
+  ypos 484
+ }
+set N97545350 [stack 0]
+ Blur {
+  channels rgba
+  size {{parent.Blur6.size*128}}
+  maskChannelInput -rgba.alpha
+  name Blur24
+  label "\[value size]"
+  xpos 1167
+  ypos 527
+ }
+ Unpremult {
+  name Unpremult13
+  xpos 1167
+  ypos 565
+ }
+push $N97545350
+ Blur {
+  channels rgba
+  size {{parent.Blur6.size*64}}
+  maskChannelInput -rgba.alpha
+  name Blur23
+  label "\[value size]"
+  xpos 1052
+  ypos 527
+ }
+ Unpremult {
+  name Unpremult12
+  xpos 1052
+  ypos 565
+ }
+push $N97545350
+ Blur {
+  channels rgba
+  size {{parent.Blur6.size*32}}
+  maskChannelInput -rgba.alpha
+  name Blur22
+  label "\[value size]"
+  xpos 946
+  ypos 523
+ }
+ Unpremult {
+  name Unpremult11
+  xpos 946
+  ypos 561
+ }
+push $N97545350
+ Blur {
+  channels rgba
+  size {{parent.Blur6.size*16}}
+  maskChannelInput -rgba.alpha
+  name Blur21
+  label "\[value size]"
+  xpos 834
+  ypos 522
+ }
+ Unpremult {
+  name Unpremult10
+  xpos 834
+  ypos 560
+ }
+push $N97545350
+ Blur {
+  channels rgba
+  size {{parent.Blur6.size*8}}
+  maskChannelInput -rgba.alpha
+  name Blur20
+  label "\[value size]"
+  xpos 739
+  ypos 524
+ }
+ Unpremult {
+  name Unpremult3
+  xpos 739
+  ypos 562
+ }
+push $N97545350
+ Blur {
+  channels rgba
+  size {{parent.Blur6.size*4}}
+  maskChannelInput -rgba.alpha
+  name Blur14
+  label "\[value size]"
+  xpos 633
+  ypos 523
+ }
+ Unpremult {
+  name Unpremult5
+  xpos 633
+  ypos 561
+ }
+push $N97545350
+ Blur {
+  channels rgba
+  size {{parent.Blur6.size*2}}
+  maskChannelInput -rgba.alpha
+  name Blur13
+  label "\[value size]"
+  xpos 526
+  ypos 525
+ }
+ Unpremult {
+  name Unpremult4
+  xpos 526
+  ypos 563
+ }
+push $N97545350
+ Blur {
+  channels rgba
+  size 3
+  maskChannelInput -rgba.alpha
+  name Blur6
+  label "\[value size]"
+  xpos 424
+  ypos 525
+ }
+ Unpremult {
+  name Unpremult1
+  xpos 424
+  ypos 563
+ }
+ Merge2 {
+  inputs 2
+  operation min
+  maskChannelInput -rgba.alpha
+  name Merge17
+  xpos 424
+  ypos 589
+ }
+ Merge2 {
+  inputs 2
+  operation min
+  maskChannelInput -rgba.alpha
+  name Merge19
+  xpos 424
+  ypos 615
+ }
+ Merge2 {
+  inputs 2
+  operation min
+  maskChannelInput -rgba.alpha
+  name Merge23
+  xpos 424
+  ypos 641
+ }
+ Merge2 {
+  inputs 2
+  operation min
+  maskChannelInput -rgba.alpha
+  name Merge24
+  xpos 424
+  ypos 667
+ }
+ Merge2 {
+  inputs 2
+  operation min
+  maskChannelInput -rgba.alpha
+  name Merge26
+  xpos 424
+  ypos 693
+ }
+ Merge2 {
+  inputs 2
+  operation min
+  maskChannelInput -rgba.alpha
+  name Merge27
+  xpos 424
+  ypos 719
+ }
+ Merge2 {
+  inputs 2
+  operation min
+  maskChannelInput -rgba.alpha
+  name Merge28
+  xpos 424
+  ypos 745
+ }
+ Expression {
+  expr3 "max(r,g,b) == 0 ? 0 : 1"
+  maskChannelInput -rgba.alpha
+  unpremult -rgba.alpha
+  name Expression2
+  selected true
+  xpos 424
+  ypos 841
+ }
+ Dot {
+  name Dot30
+  note_font_size 41
+  xpos 458
+  ypos 891
+ }
+set N97026680 [stack 0]
+ Blur {
+  channels rgba
+  size {{parent.Blur33.size*128}}
+  maskChannelInput -rgba.alpha
+  name Blur26
+  label "\[value size]"
+  xpos 1167
+  ypos 934
+ }
+push $N97026680
+ Blur {
+  channels rgba
+  size {{parent.Blur33.size*64}}
+  maskChannelInput -rgba.alpha
+  name Blur27
+  label "\[value size]"
+  xpos 1052
+  ypos 934
+ }
+push $N97026680
+ Blur {
+  channels rgba
+  size {{parent.Blur33.size*32}}
+  maskChannelInput -rgba.alpha
+  name Blur28
+  label "\[value size]"
+  xpos 946
+  ypos 930
+ }
+push $N97026680
+ Blur {
+  channels rgba
+  size {{parent.Blur33.size*16}}
+  maskChannelInput -rgba.alpha
+  name Blur29
+  label "\[value size]"
+  xpos 834
+  ypos 929
+ }
+push $N97026680
+ Blur {
+  channels rgba
+  size {{parent.Blur33.size*8}}
+  maskChannelInput -rgba.alpha
+  name Blur30
+  label "\[value size]"
+  xpos 739
+  ypos 931
+ }
+push $N97026680
+ Blur {
+  channels rgba
+  size {{parent.Blur33.size*4}}
+  maskChannelInput -rgba.alpha
+  name Blur31
+  label "\[value size]"
+  xpos 633
+  ypos 930
+ }
+push $N97026680
+ Blur {
+  channels rgba
+  size {{parent.Blur33.size*2}}
+  maskChannelInput -rgba.alpha
+  name Blur32
+  label "\[value size]"
+  xpos 526
+  ypos 932
+ }
+push $N97026680
+ Blur {
+  channels rgba
+  size {{parent.Blur6.size}}
+  maskChannelInput -rgba.alpha
+  name Blur33
+  label "\[value size]"
+  xpos 424
+  ypos 934
+ }
+ Merge2 {
+  inputs 2
+  maskChannelInput -rgba.alpha
+  name Merge29
+  xpos 424
+  ypos 996
+ }
+ Merge2 {
+  inputs 2
+  maskChannelInput -rgba.alpha
+  name Merge31
+  xpos 424
+  ypos 1022
+ }
+ Merge2 {
+  inputs 2
+  maskChannelInput -rgba.alpha
+  name Merge32
+  xpos 424
+  ypos 1048
+ }
+ Merge2 {
+  inputs 2
+  maskChannelInput -rgba.alpha
+  name Merge33
+  xpos 424
+  ypos 1074
+ }
+ Merge2 {
+  inputs 2
+  maskChannelInput -rgba.alpha
+  name Merge35
+  xpos 424
+  ypos 1100
+ }
+ Merge2 {
+  inputs 2
+  maskChannelInput -rgba.alpha
+  name Merge38
+  xpos 424
+  ypos 1126
+ }
+ Merge2 {
+  inputs 2
+  maskChannelInput -rgba.alpha
+  name Merge41
+  xpos 424
+  ypos 1152
+ }
+ Unpremult {
+  name Unpremult2
+  xpos 424
+  ypos 1206
+ }
+ Expression {
+  expr3 "max(r,g,b) == 0 ? 0 : 1"
+  maskChannelInput -rgba.alpha
+  unpremult -rgba.alpha
+  name Expression3
+  xpos 424
+  ypos 1232
+ }
+ Output {
+  name Output1
+  xpos 424
+  ypos 1296
+ }
+end_group
