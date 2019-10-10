@@ -5,244 +5,671 @@ Group {
  name NAN_Killer
  tile_color 0xff6200ff
  label "\[value which]"
- note_font "Bitstream Vera Sans Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold"
+ note_font "Bitstream Vera Sans Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold"
  note_font_color 0xffffffff
  selected true
- xpos 1147
- ypos 2897
+ xpos -5613
+ ypos -1324
  addUserKnob {20 NAN_Killer}
- addUserKnob {4 which l Method M {"Replace with 0" "Clone Over" "Blur Unpremult" "" ""}}
+ addUserKnob {41 channels T Shuffle1.in}
+ addUserKnob {4 which l Method M {"Replace with 0" "Replace with Color" "Clone Over" "Blur Unpremult" TimeOffset "" "" "" ""}}
+ addUserKnob {6 keepAlpha l "Keep Alpha" +STARTLINE}
+ keepAlpha true
  addUserKnob {26 ""}
- addUserKnob {20 Translate n 1}
- addUserKnob {41 translate l Translate T Transform1.translate}
+ addUserKnob {19 replaceColor l "Replace Color"}
+ replaceColor {0 0 0 0}
+ addUserKnob {6 replaceColor_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 color_rgba_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {26 ""}
+ addUserKnob {41 translateText_1 l Translate T Transform1.translate}
+ addUserKnob {20 extraTranslate l "Extra tranlate Options" n 1}
+ extraTranslate 0
+ addUserKnob {41 rotate T Transform1.rotate}
+ addUserKnob {41 scale T Transform1.scale}
+ addUserKnob {41 skewX l "skew X" T Transform1.skewX}
+ addUserKnob {41 skewY l "skew Y" T Transform1.skewY}
+ addUserKnob {41 skew_order l "skew order" T Transform1.skew_order}
+ addUserKnob {41 center T Transform1.center}
+ addUserKnob {41 invert_matrix l invert T Transform1.invert_matrix}
+ addUserKnob {41 filter T Transform1.filter}
  addUserKnob {20 endGroup n -1}
+ addUserKnob {26 "" +STARTLINE}
+ addUserKnob {26 blurUnpremult l Blur/Unpremult T " "}
+ addUserKnob {41 size l "Blur Size" T Blur1.size}
  addUserKnob {26 ""}
- addUserKnob {41 size l "Blur/Unpremult size" T Blur1.size}
+ addUserKnob {3 timeOffset l TimeOffset}
+ timeOffset -1
+ addUserKnob {26 "" +STARTLINE}
+ addUserKnob {26 "" l mask T ""}
+ addUserKnob {41 maskChannelInput l "" -STARTLINE T Merge1.maskChannelInput}
+ addUserKnob {41 inject -STARTLINE T Merge1.inject}
+ addUserKnob {41 invert_mask l invert -STARTLINE T Merge1.invert_mask}
+ addUserKnob {41 fringe -STARTLINE T Merge1.fringe}
  addUserKnob {20 info l Info}
  addUserKnob {26 creator l Creator: T "<b><big>Tony Lyons"}
  addUserKnob {26 desc l Description: t "kills NANs with options of how to replace" T NAN_Killer}
- addUserKnob {26 ver l Version: T v03}
+ addUserKnob {26 ver l Version: T v04}
 }
+ BackdropNode {
+  inputs 0
+  name BackdropNode1
+  tile_color 0x383b5000
+  label "Replace with Color"
+  note_font_size 36
+  note_font_color 0xffffffff
+  xpos 387
+  ypos 355
+  bdwidth 377
+  bdheight 331
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode2
+  tile_color 0x4f4b4200
+  label "Replace\nwith 0"
+  note_font_size 40
+  note_font_color 0xffffffff
+  xpos 71
+  ypos 347
+  bdwidth 241
+  bdheight 262
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode3
+  tile_color 0x634c7400
+  label "Clone Over"
+  note_font_size 30
+  note_font_color 0xffffffff
+  xpos 880
+  ypos 357
+  bdwidth 182
+  bdheight 200
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode4
+  tile_color 0x3f2d4100
+  label Blur/Unpremult
+  note_font_size 50
+  note_font_color 0xffffffff
+  xpos 1097
+  ypos 334
+  bdwidth 426
+  bdheight 388
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode5
+  tile_color 0x3c4d4400
+  label Timeoffset
+  note_font_size 60
+  note_font_color 0xffffffff
+  xpos 1760
+  ypos 476
+  bdwidth 270
+  bdheight 312
+ }
  Input {
   inputs 0
-  name Input1
-  xpos 312
-  ypos 175
+  name Inputmask
+  xpos 314
+  ypos 1337
+  number 1
  }
+ Input {
+  inputs 0
+  name Input
+  xpos 168
+  ypos -83
+ }
+ Dot {
+  name Dot26
+  note_font_size 41
+  xpos 202
+  ypos 54
+ }
+set N78a30f40 [stack 0]
  Reformat {
   type scale
   scale 2
   resize none
   pbb true
   name Reformat142
-  xpos 312
-  ypos 233
+  xpos 166
+  ypos 121
+ }
+ Shuffle {
+  in rgb
+  name Shuffle1
+  label "\[value in]"
+  xpos 166
+  ypos 165
  }
  AddChannels {
   channels rgba
   name AddChannels1
-  xpos 312
-  ypos 259
+  xpos 166
+  ypos 231
  }
  Dot {
   name Dot1301
   note_font_size 41
-  xpos 346
+  xpos 200
   ypos 304
  }
-set N9874ce30 [stack 0]
+set N901677d0 [stack 0]
  Expression {
   expr0 (isnan(r)||isnan(g)||isnan(b)||isnan(a))||(isinf(r)||isinf(g)||isinf(b)||isinf(a))?0:r
   expr1 (isnan(r)||isnan(g)||isnan(b)||isnan(a))||(isinf(r)||isinf(g)||isinf(b)||isinf(a))?0:g
   expr2 (isnan(r)||isnan(g)||isnan(b)||isnan(a))||(isinf(r)||isinf(g)||isinf(b)||isinf(a))?0:b
   expr3 (isnan(r)||isnan(g)||isnan(b)||isnan(a))||(isinf(r)||isinf(g)||isinf(b)||isinf(a))?0:a
   name nan_killer_ReplaceWithZero
-  xpos 312
-  ypos 406
+  xpos 166
+  ypos 510
  }
  Dot {
   name Dot11
   note_font_size 41
-  xpos 346
-  ypos 490
+  xpos 200
+  ypos 674
  }
-set N9875d080 [stack 0]
+set N3f8d7f80 [stack 0]
  Dot {
   name Dot7
   note_font_size 41
-  xpos 203
-  ypos 490
+  xpos 57
+  ypos 674
  }
+ Dot {
+  name Dot16
+  note_font_size 41
+  xpos 57
+  ypos 1062
+ }
+set N3f8cea20 [stack 0]
  Dot {
   name Dot9
   note_font_size 41
-  xpos 203
-  ypos 841
+  xpos 57
+  ypos 1148
  }
-set N984885a0 [stack 0]
+set N80d5c230 [stack 0]
  Dot {
   name Dot10
   note_font_size 41
-  xpos 203
-  ypos 873
+  xpos 57
+  ypos 1201
  }
-push $N984885a0
-push $N9874ce30
+push $N80d5c230
+push $N901677d0
  Dot {
-  name Dot2
+  name Dot19
   note_font_size 41
-  xpos 540
+  xpos 467
   ypos 304
  }
-set N98490460 [stack 0]
+set N78b255e0 [stack 0]
  Dot {
-  name Dot3
+  name Dot22
   note_font_size 41
-  xpos 675
+  xpos 577
   ypos 304
  }
-set N98494310 [stack 0]
- Expression {
-  expr3 (isnan(r)||isnan(g)||isnan(b)||isnan(a))||(isinf(r)||isinf(g)||isinf(b)||isinf(a))
-  name nan_killer_v01_32
-  xpos 641
-  ypos 401
- }
+set N80cb0640 [stack 0]
  Dot {
-  name Dot1
+  name Dot23
   note_font_size 41
-  xpos 675
-  ypos 458
+  xpos 687
+  ypos 304
  }
-set N984a4590 [stack 0]
+set N80cb2df0 [stack 0]
  Dot {
-  name Dot13
+  name Dot24
   note_font_size 41
-  xpos 675
-  ypos 543
+  xpos 961
+  ypos 304
  }
-push $N98494310
+set N3f0faa30 [stack 0]
  Dot {
   name Dot5
   note_font_size 41
-  xpos 885
+  xpos 1188
   ypos 304
  }
-set N984ac310 [stack 0]
+set N80795970 [stack 0]
  Dot {
   name Dot6
   note_font_size 41
-  xpos 1120
+  xpos 1423
+  ypos 304
+ }
+set N3f8fd250 [stack 0]
+ Dot {
+  name Dot3
+  note_font_size 41
+  xpos 1620
+  ypos 304
+ }
+set N3d0eaf30 [stack 0]
+ Expression {
+  expr3 (isnan(r)||isnan(g)||isnan(b)||isnan(a))||(isinf(r)||isinf(g)||isinf(b)||isinf(a))
+  name nan_killer_v01_32
+  xpos 1586
+  ypos 369
+ }
+ Dot {
+  name Dot1
+  label mask
+  note_font_size 41
+  xpos 1620
+  ypos 478
+ }
+set N3f3c4f30 [stack 0]
+ Dot {
+  name Dot13
+  note_font_size 41
+  xpos 1620
+  ypos 665
+ }
+set N80a54e00 [stack 0]
+ Dot {
+  name Dot2
+  label mask
+  note_font_size 41
+  xpos 1620
+  ypos 732
+ }
+push $N3d0eaf30
+ Dot {
+  name Dot14
+  note_font_size 41
+  xpos 1834
+  ypos 304
+ }
+set N35db0220 [stack 0]
+ TimeOffset {
+  time_offset {{parent.timeOffset}}
+  time ""
+  name TimeOffset1
+  label "\[value time_offset]"
+  xpos 1800
+  ypos 576
+ }
+ Dot {
+  name Dot17
+  note_font_size 41
+  xpos 1834
+  ypos 663
+ }
+push $N35db0220
+ Dot {
+  name Dot15
+  note_font_size 41
+  xpos 1944
   ypos 304
  }
  Expression {
+  expr0 (isnan(r)||isnan(g)||isnan(b)||isnan(a))||(isinf(r)||isinf(g)||isinf(b)||isinf(a))?0:r
+  expr1 (isnan(r)||isnan(g)||isnan(b)||isnan(a))||(isinf(r)||isinf(g)||isinf(b)||isinf(a))?0:g
+  expr2 (isnan(r)||isnan(g)||isnan(b)||isnan(a))||(isinf(r)||isinf(g)||isinf(b)||isinf(a))?0:b
+  expr3 (isnan(r)||isnan(g)||isnan(b)||isnan(a))||(isinf(r)||isinf(g)||isinf(b)||isinf(a))?0:a
+  name nan_killer_ReplaceWithZero4
+  xpos 1910
+  ypos 583
+ }
+ Keymix {
+  inputs 3
+  channels rgba
+  name Keymix2
+  xpos 1910
+  ypos 728
+ }
+ Dot {
+  name Dot18
+  note_font_size 41
+  xpos 1944
+  ypos 815
+ }
+push $N80a54e00
+push $N3f8fd250
+ Expression {
   expr3 !(isnan(r)||isnan(g)||isnan(b)||isnan(a))||(isinf(r)||isinf(g)||isinf(b)||isinf(a)
   name nan_killer_v01_1
-  xpos 1086
-  ypos 447
+  xpos 1389
+  ypos 512
  }
-push $N984ac310
+push $N80795970
  Expression {
   expr0 (isnan(r)||isnan(g)||isnan(b)||isnan(a))||(isinf(r)||isinf(g)||isinf(b)||isinf(a))?0:r
   expr1 (isnan(r)||isnan(g)||isnan(b)||isnan(a))||(isinf(r)||isinf(g)||isinf(b)||isinf(a))?0:g
   expr2 (isnan(r)||isnan(g)||isnan(b)||isnan(a))||(isinf(r)||isinf(g)||isinf(b)||isinf(a))?0:b
   expr3 (isnan(r)||isnan(g)||isnan(b)||isnan(a))||(isinf(r)||isinf(g)||isinf(b)||isinf(a))?0:a
   name nan_killer_ReplaceWithZero2
-  xpos 851
-  ypos 404
+  xpos 1154
+  ypos 432
  }
  Dot {
   name Dot12
   note_font_size 41
-  xpos 885
-  ypos 451
+  xpos 1188
+  ypos 516
  }
-set N984cc880 [stack 0]
+set N78dc7560 [stack 0]
  Copy {
   inputs 2
   from0 rgba.alpha
   to0 rgba.alpha
   name Copy2
-  selected true
-  xpos 961
-  ypos 441
+  xpos 1264
+  ypos 506
  }
  Blur {
   channels rgb
   size 3
   name Blur1
   label "\[value size]"
-  xpos 961
-  ypos 479
+  xpos 1264
+  ypos 544
  }
  Unpremult {
   name Unpremult1
-  xpos 961
-  ypos 539
+  xpos 1264
+  ypos 604
  }
-push $N984cc880
+push $N78dc7560
  Keymix {
   inputs 3
   channels rgba
   name Keymix1
-  xpos 851
-  ypos 539
+  xpos 1154
+  ypos 661
  }
  Dot {
   name Dot8
   note_font_size 41
-  xpos 885
+  xpos 1188
   ypos 767
  }
-push $N984a4590
-push $N98490460
+push $N3f3c4f30
+push $N3f0faa30
  Expression {
   expr0 (isnan(r)||isnan(g)||isnan(b)||isnan(a))||(isinf(r)||isinf(g)||isinf(b)||isinf(a))?0:r
   expr1 (isnan(r)||isnan(g)||isnan(b)||isnan(a))||(isinf(r)||isinf(g)||isinf(b)||isinf(a))?0:g
   expr2 (isnan(r)||isnan(g)||isnan(b)||isnan(a))||(isinf(r)||isinf(g)||isinf(b)||isinf(a))?0:b
   expr3 (isnan(r)||isnan(g)||isnan(b)||isnan(a))||(isinf(r)||isinf(g)||isinf(b)||isinf(a))?0:a
   name nan_killer_ReplaceWithZero1
-  xpos 506
-  ypos 404
+  xpos 927
+  ypos 422
  }
  TransformMasked {
   inputs 1+1
   channels rgba
   translate {4 4}
+  rotate {0}
   center {2362 1116}
   shutteroffset centred
   name Transform1
-  xpos 506
-  ypos 454
+  xpos 927
+  ypos 474
  }
  Dot {
   name Dot4
   note_font_size 41
-  xpos 540
+  xpos 961
   ypos 627
  }
-push $N9875d080
- Switch {
+push $N80cb2df0
+ Dot {
+  name Dot20
+  note_font_size 41
+  xpos 687
+  ypos 605
+ }
+push $N78b255e0
+ Remove {
+  channels rgba
+  name Remove1
+  xpos 433
+  ypos 465
+ }
+ Group {
+  name BBoxToFormat
+  onCreate "n = nuke.thisNode()\ninputFormat = n.knob(\"inputFormat\")\ninputBBox = n.knob(\"inputBBox\")\ncrop = nuke.toNode(\"Crop6\")\ncropb = crop.knob('box')\noutputBBox = n.knob('outputBBox')\noutputBBoxCenter = n.knob(\"outputBBoxCenter\")\n\ninputFormat.setFlag(0x0000000000008000)\ninputBBox.setFlag(0x0000000000008000)\ncropb.setFlag(0x0000000000008000)\noutputBBox.setFlag(0x0000000000008000)\noutputBBoxCenter.setFlag(0x0000000000008000)\n\nn = nuke.thisNode()\nn.knob(\"overscan\").setRange(0,400)\nn.knob(\"overscanPercent\").setRange(1,4)"
+  knobChanged "n = nuke.thisNode()\nk = nuke.thisKnob()\nif k.name() == \"overscanType\":\n    if n.knob(\"overscanType\").getValue() == 1:\n        n.knob(\"overscanPercent\").setVisible(True)\n        n.knob(\"overscan\").setVisible(False)\n    else:\n        n.knob(\"overscanPercent\").setVisible(False)\n        n.knob(\"overscan\").setVisible(True)"
+  tile_color 0xa57aaaff
+  note_font "Verdana Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold"
+  note_font_color 0xffffffff
+  xpos 433
+  ypos 491
+  addUserKnob {20 CropBBox}
+  addUserKnob {4 type l Type +INVISIBLE M {"To Format" "To BBox"}}
+  addUserKnob {41 intersect T Crop6.intersect}
+  addUserKnob {6 blackOutside l "Black Outside" -STARTLINE}
+  addUserKnob {4 overscanType l "Overscan Type:" M {Pixels Percentage}}
+  addUserKnob {14 overscan l Overscan R 0 400}
+  addUserKnob {14 overscanPercent l "Overscan Percent" +HIDDEN R 1 4}
+  overscanPercent 1
+  addUserKnob {20 inputBbox l "BBox Data" n 1}
+  addUserKnob {15 inputFormat l "Input Format"}
+  inputFormat {0 0 {input.width} {input.height}}
+  addUserKnob {15 inputBBox l "Input BBox"}
+  inputBBox {{input.bbox.x} {input.bbox.y} {input.bbox.r} {input.bbox.t}}
+  addUserKnob {12 outputBBoxCenter l OutputBBoxCenter}
+  outputBBoxCenter {{OutputBBox1.outputBBoxCenter.w} {OutputBBox1.outputBBoxCenter.h}}
+  addUserKnob {15 outputBBox l "Output BBox"}
+  outputBBox {{OutputBBox1.OutputBBox} {OutputBBox1.OutputBBox} {OutputBBox1.OutputBBox} {OutputBBox1.OutputBBox}}
+  addUserKnob {20 endGroup n -1}
+  addUserKnob {20 info_1 l Info}
+  addUserKnob {26 creator l Creator: T "<b><big>Tony Lyons"}
+  addUserKnob {26 desc l Description: t "crop to inputformat\n\ndisplays values of input bbox" T CropBBox}
+  addUserKnob {26 ver l Version: T v02}
+ }
+  Input {
+   inputs 0
+   name Input
+   xpos 261
+   ypos 394
+  }
+  Dot {
+   name Dot2
+   note_font_size 41
+   xpos 295
+   ypos 462
+  }
+set N78a04580 [stack 0]
+  Dot {
+   name Dot1
+   note_font_size 41
+   xpos -160
+   ypos 462
+  }
+set N39d50860 [stack 0]
+push $N78a04580
+  Crop {
+   box {{curve} {curve} {input.width} {input.height}}
+   crop {{parent.blackOutside}}
+   name Crop6
+   xpos 261
+   ypos 510
+   addUserKnob {20 User}
+   addUserKnob {22 cropToBbox l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+   addUserKnob {22 cropToBbox_1 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+   addUserKnob {22 cropToBbox_2 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+   addUserKnob {22 cropToBbox_3 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+   addUserKnob {22 cropToBbox_4 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+   addUserKnob {22 cropToBbox_5 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+   addUserKnob {22 cropToBbox_6 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+   addUserKnob {22 cropToBbox_7 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+   addUserKnob {22 cropToBbox_8 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+   addUserKnob {22 cropToBbox_9 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+   addUserKnob {22 cropToBbox_10 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+   addUserKnob {22 cropToBbox_11 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+   addUserKnob {22 cropToBbox_12 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+   addUserKnob {22 cropToBbox_13 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+   addUserKnob {22 cropToBbox_14 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+   addUserKnob {22 cropToBbox_15 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+   addUserKnob {22 cropToBbox_16 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+   addUserKnob {22 cropToBbox_17 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+   addUserKnob {22 cropToBbox_18 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+   addUserKnob {22 cropToBbox_19 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+  }
+set N3f7e1e10 [stack 0]
+  Remove {
+   operation keep
+   channels none
+   name Remove1
+   xpos 120
+   ypos 504
+  }
+set N80cec350 [stack 0]
+  Transform {
+   scale {{parent.overscanPercent} {parent.overscanPercent}}
+   center {{input.bbox.r/2} {input.bbox.t/2}}
+   shutteroffset centred
+   name Transform1
+   xpos 120
+   ypos 555
+  }
+push $N80cec350
+  AdjBBox {
+   numpixels {{parent.overscan} {parent.overscan}}
+   name AdjBBox1
+   xpos -5
+   ypos 510
+  }
+  Switch {
+   inputs 2
+   which {{overscanType}}
+   name Switch2
+   label "\[value which]"
+   xpos -5
+   ypos 549
+  }
+  Merge2 {
+   inputs 2
+   bbox intersection
+   Achannels {-rgba.red -rgba.green -rgba.blue rgba.alpha}
+   Bchannels {-rgba.red -rgba.green -rgba.blue rgba.alpha}
+   output {-rgba.red -rgba.green -rgba.blue rgba.alpha}
+   name Merge1
+   xpos -5
+   ypos 647
+   disable {{!parent.Crop6.intersect}}
+  }
+push $N39d50860
+  CopyBBox {
+   inputs 2
+   name CopyBBox1
+   xpos -194
+   ypos 653
+  }
+  BlackOutside {
+   name BlackOutside1
+   xpos -194
+   ypos 692
+   disable {{!parent.blackOutside}}
+  }
+  Dot {
+   name Dot4
+   note_font_size 41
+   xpos -160
+   ypos 769
+  }
+push $N3f7e1e10
+  Switch {
+   inputs 2
+   which {{"overscanType == 0 ? overscan.w != 0 || overscan.h != 0 : overscanPercent.w != 1 || overscanPercent.h != 1 ? 1 : 0"}}
+   name Switch1
+   label "\[value which]"
+   xpos 261
+   ypos 759
+  }
+set N80b630c0 [stack 0]
+  Output {
+   name Output1
+   xpos 261
+   ypos 921
+  }
+push $N80b630c0
+  NoOp {
+   name OutputBBox1
+   selected true
+   xpos 378
+   ypos 821
+   addUserKnob {20 User}
+   addUserKnob {15 OutputBBox l "Output BBox"}
+   OutputBBox {{input.bbox.x} {input.bbox.y} {input.bbox.r} {input.bbox.t}}
+   addUserKnob {14 outputBBoxCenter l "Output BBox Center" R 0 100}
+   outputBBoxCenter {{OutputBBox.x+(OutputBBox.r-OutputBBox.x)/2} {OutputBBox.y+(OutputBBox.t-OutputBBox.y)/2}}
+  }
+ end_group
+ Add {
+  channels rgb
+  value {{parent.replaceColor} {parent.replaceColor} {parent.replaceColor} {parent.replaceColor}}
+  name Add1
+  xpos 433
+  ypos 517
+ }
+ Dot {
+  name Dot21
+  note_font_size 41
+  xpos 467
+  ypos 605
+ }
+push $N80cb0640
+ Expression {
+  expr0 (isnan(r)||isnan(g)||isnan(b)||isnan(a))||(isinf(r)||isinf(g)||isinf(b)||isinf(a))?0:r
+  expr1 (isnan(r)||isnan(g)||isnan(b)||isnan(a))||(isinf(r)||isinf(g)||isinf(b)||isinf(a))?0:g
+  expr2 (isnan(r)||isnan(g)||isnan(b)||isnan(a))||(isinf(r)||isinf(g)||isinf(b)||isinf(a))?0:b
+  expr3 (isnan(r)||isnan(g)||isnan(b)||isnan(a))||(isinf(r)||isinf(g)||isinf(b)||isinf(a))?0:a
+  name nan_killer_ReplaceWithZero3
+  xpos 543
+  ypos 491
+ }
+ Keymix {
   inputs 3
+  channels rgba
+  name Keymix3
+  xpos 543
+  ypos 601
+ }
+push $N3f8d7f80
+ Switch {
+  inputs 5
   which {{parent.which}}
   name Switch20
   label "\[value which]"
-  xpos 312
-  ypos 757
+  xpos 166
+  ypos 984
+ }
+push $N3f8cea20
+ ShuffleCopy {
+  inputs 2
+  alpha alpha2
+  black red
+  white green
+  red2 blue
+  green2 alpha
+  out2 {{{parent.Shuffle1.in}}}
+  name ShuffleCopy1
+  xpos 166
+  ypos 1058
  }
  Copy {
   inputs 2
   from0 rgba.alpha
   to0 rgba.alpha
   name Copy1
-  xpos 313
-  ypos 831
+  xpos 166
+  ypos 1138
+  disable {{!parent.keepAlpha}}
  }
  CopyBBox {
   inputs 2
   name CopyBBox1
-  xpos 313
-  ypos 869
+  xpos 166
+  ypos 1197
  }
  Reformat {
   type scale
@@ -250,18 +677,34 @@ push $N9875d080
   resize none
   pbb true
   name Reformat143
-  xpos 313
-  ypos 958
+  xpos 166
+  ypos 1262
+ }
+push $N78a30f40
+ Dot {
+  name Dot27
+  note_font_size 41
+  xpos -33
+  ypos 54
  }
  Dot {
-  name Dot1302
+  name Dot25
   note_font_size 41
-  xpos 347
-  ypos 1008
+  xpos -33
+  ypos 1341
+ }
+ Merge2 {
+  inputs 2+1
+  operation copy
+  also_merge all
+  name Merge1
+  label "\[ expr \{ \[value mix] == 1 ? \" \" : \[concat Mix: \[value mix]] \}]"
+  xpos 166
+  ypos 1337
  }
  Output {
   name Output1
-  xpos 313
-  ypos 1088
+  xpos 167
+  ypos 1463
  }
 end_group
