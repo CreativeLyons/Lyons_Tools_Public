@@ -4,12 +4,12 @@ Group {
  knobChanged "n = nuke.thisNode()\nk = nuke.thisKnob()\n\nif k.name() == \"includeOriginal\":\n    if n.knob('includeOriginal').getValue() == 1:\n        merge = nuke.toNode(\"Merge1\")\n        original = nuke.toNode('Original')\n        AvgMult = nuke.toNode(\"AverageMult\")\n        steps = int(n.knob('steps').getValue())\n        merge.setInput(steps+1, original)\n        AvgMult\['whitepoint'].setValue(2 if steps<2 else steps+1)\n        \n    else:\n        merge.setInput(steps+1, None)\n        AvgMult\['whitepoint'].setValue(2 if steps<2 else steps)\n        \nelif k.name() == \"steps\":\n    \n    s = int(k.value())\n    if s<1:\n        k.setValue(1)\n    else:\n        start = nuke.toNode(\"Start\")\n        end   = nuke.toNode(\"End\")\n        b1    = nuke.toNode(\"Blur1\")\n        merge = nuke.toNode(\"Merge1\")\n        AvgMult = nuke.toNode(\"AverageMult\")\n        \n        b1x   = b1.xpos()\n        b1y   = b1.ypos()\n        b1n   = b1.name()\n        \n        steps = int(n.knob('steps').getValue())\n        size  = n.knob('size').getValue()\n        mult  = n.knob('mult').getValue()\n        \n        #b1.setInput(0, start)\n        for i in range(1,merge.inputs()):\n            merge.setInput(i,None)\n        merge.setInput(0, b1)\n        \[nuke.delete(i) for i in nuke.allNodes() if i.xpos()>start.xpos()]\n        for i in range(1,steps):\n            # Blur\n            b = nuke.nodes.Blur()\n            b.setXYpos(b1x+i*100,b1y)\n            b.setInput(0,start)\n            b\[\"channels\"].setValue(\"rgba\")\n            b\[\"crop\"].setValue(0)\n            b\[\"size\"].setValue(0, 1)\n            b\[\"size\"].setExpression(\"(Blur1.size)*(mult)**%s\"%(i))\n            b\[\"label\"].setValue(\"\[value size]\")\n            merge.setInput(i if i<2 else i+1, b)\n            AvgMult\['whitepoint'].setValue(i if i<2 else i+1)\n            \n        if n.knob('includeOriginal').getValue() == 1:\n            merge = nuke.toNode(\"Merge1\")\n            original = nuke.toNode('Original')\n            AvgMult = nuke.toNode(\"AverageMult\")\n            steps = int(n.knob('steps').getValue())\n            merge.setInput(steps+1, original)\n            AvgMult\['whitepoint'].setValue(2 if steps<2 else steps+1)\n            \nelif k.name() == \"output2\":\n    if n.knob(\"output2\").getValue() == 4:\n        n.knob('AvgMaxOriginal').setVisible(True)\n    else:\n        n.knob('AvgMaxOriginal').setVisible(False)"
  tile_color 0xcc804eff
  label "(\[value output2])"
- note_font "Verdana Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold"
+ note_font "Verdana Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold"
  note_font_color 0xffffffff
  selected true
- xpos -23788
- ypos 10425
- addUserKnob {20 ExponBlur}
+ xpos -23906
+ ypos 10552
+ addUserKnob {20 ExponBlurSimple}
  addUserKnob {41 channels T Shuffle1.in}
  addUserKnob {41 maskChannelMask_1 l area T Multiply1.maskChannelMask}
  addUserKnob {41 inject_1 l inject -STARTLINE T Multiply1.inject}
@@ -41,9 +41,9 @@ Group {
  addUserKnob {7 adjustBBox l "Adjust BBox" -STARTLINE R 0 100}
  addUserKnob {41 mix T MergeKeymix.mix}
  addUserKnob {20 info l Info}
- addUserKnob {26 creator l Creator: T Name}
- addUserKnob {26 desc l Description: t "Add description and tooltip for gizmo" T "Name of Gizmo"}
- addUserKnob {26 ver l Version: T v01}
+ addUserKnob {26 creator l Creator: T "Tony Lyons"}
+ addUserKnob {26 desc l Description: t "Add description and tooltip for gizmo" T ExponBlurSimple}
+ addUserKnob {26 ver l Version: T v02}
 }
  BackdropNode {
   inputs 0
@@ -69,7 +69,7 @@ Group {
   xpos 34
   ypos -666
  }
-set Nd76008a0 [stack 0]
+set Nd98fac20 [stack 0]
  Dot {
   name Dot2
   note_font_size 41
@@ -89,14 +89,14 @@ set Nd76008a0 [stack 0]
   xpos -367
   ypos 512
  }
-set Ndc188780 [stack 0]
+set Nd80ff760 [stack 0]
  Dot {
   name Dot3
   note_font_size 41
   xpos -367
   ypos 564
  }
-set Nbc3eec0 [stack 0]
+set Nda284a70 [stack 0]
  Dot {
   name Dot8
   note_font_size 41
@@ -109,7 +109,7 @@ set Nbc3eec0 [stack 0]
   xpos -463
   ypos 720
  }
-push $Nd76008a0
+push $Nd98fac20
  Dot {
   name Dot1
   note_font_size 41
@@ -135,7 +135,7 @@ push $Nd76008a0
   xpos 461
   ypos -461
  }
-set Nd77c6100 [stack 0]
+set Ndc3c90c0 [stack 0]
  Invert {
   channels rgba
   name Invert1
@@ -143,7 +143,7 @@ set Nd77c6100 [stack 0]
   ypos -465
   disable {{"parent.size < 0 ? 0 : 1"}}
  }
-set N142b2690 [stack 0]
+set Nddb8a1d0 [stack 0]
  Dot {
   name Dot4
   note_font_size 41
@@ -155,8 +155,8 @@ set N142b2690 [stack 0]
   xpos 575
   ypos -191
  }
-set Ne755e2f0 [stack 0]
-push $Ne755e2f0
+set Nd6a57920 [stack 0]
+push $Nd6a57920
  Input {
   inputs 0
   name Inputarea
@@ -177,7 +177,7 @@ push $Ne755e2f0
   xpos 289
   ypos -367
  }
-push $N142b2690
+push $Nddb8a1d0
  Multiply {
   inputs 1+1
   channels rgba
@@ -192,7 +192,7 @@ push $N142b2690
   xpos 695
   ypos -314
  }
-set N7407200 [stack 0]
+set Ndb285050 [stack 0]
  Blur {
   channels rgba
   size {{(Blur1.size)*(mult)**3} {(Blur1.size)*(mult)**3}}
@@ -202,7 +202,7 @@ set N7407200 [stack 0]
   xpos 995
   ypos -234
  }
-push $N7407200
+push $Ndb285050
  Blur {
   channels rgba
   size {{(Blur1.size)*(mult)**2} {(Blur1.size)*(mult)**2}}
@@ -213,7 +213,7 @@ push $N7407200
   ypos -234
  }
 push 0
-push $N7407200
+push $Ndb285050
  Blur {
   channels rgba
   size {{(Blur1.size)*(mult)**1} {(Blur1.size)*(mult)**1}}
@@ -223,7 +223,7 @@ push $N7407200
   xpos 795
   ypos -234
  }
-push $N7407200
+push $Ndb285050
  Blur {
   channels rgba
   size {{parent.size.w} {parent.size.h}}
@@ -279,7 +279,7 @@ push $N7407200
   ypos 117
   disable {{"parent.size < 0 ? 0 : 1"}}
  }
-push $Nd77c6100
+push $Ndc3c90c0
  Switch {
   inputs 2
   which {{"parent.size == 0 ? 0 : 1"}}
@@ -288,7 +288,7 @@ push $Nd77c6100
   xpos 427
   ypos 111
  }
-push $Nd76008a0
+push $Nd98fac20
  ShuffleCopy {
   inputs 2
   in2 none
@@ -315,7 +315,7 @@ push $Nd76008a0
   xpos 34
   ypos 474
  }
-set Nd91f8d50 [stack 0]
+set Nddf3c7c0 [stack 0]
  Dot {
   name Dot12
   note_font_size 41
@@ -328,7 +328,7 @@ set Nd91f8d50 [stack 0]
   xpos -260
   ypos 688
  }
-push $Ndc188780
+push $Nd80ff760
  Input {
   inputs 0
   name Inputmask
@@ -343,14 +343,14 @@ push $Ndc188780
   xpos 380
   ypos 327
  }
-set Nc6c4c930 [stack 0]
+set Ndcff3350 [stack 0]
  Dot {
   name Dot20
   note_font_size 41
   xpos 270
   ypos 327
  }
-push $Nd91f8d50
+push $Nddf3c7c0
  Merge2 {
   inputs 2
   bbox intersection
@@ -380,15 +380,15 @@ push $Nd91f8d50
   xpos 270
   ypos 662
  }
-push $Nc6c4c930
+push $Ndcff3350
  Dot {
   name Dot10
   note_font_size 41
   xpos 380
   ypos 564
  }
-push $Nd91f8d50
-push $Nbc3eec0
+push $Nddf3c7c0
+push $Nda284a70
  Merge2 {
   inputs 2+1
   operation copy
@@ -406,8 +406,8 @@ push $Nbc3eec0
   xpos 34
   ypos 636
  }
-set Nd0da86e0 [stack 0]
-push $Nbc3eec0
+set Nda9fc1e0 [stack 0]
+push $Nda284a70
  CopyBBox {
   inputs 2
   name CopyBBoxUnion
@@ -469,7 +469,7 @@ push $Nbc3eec0
   xpos -367
   ypos 822
  }
-push $Nd0da86e0
+push $Nda9fc1e0
  CopyBBox {
   inputs 2
   name CopyBBox
