@@ -1,0 +1,490 @@
+Group {
+ name ExponBlurSimple
+ onCreate "n = nuke.thisNode()\nn.knob('size').setRange(-100, 100)"
+ knobChanged "n = nuke.thisNode()\nk = nuke.thisKnob()\n\nif k.name() == \"includeOriginal\":\n    if n.knob('includeOriginal').getValue() == 1:\n        merge = nuke.toNode(\"Merge1\")\n        original = nuke.toNode('Original')\n        AvgMult = nuke.toNode(\"AverageMult\")\n        steps = int(n.knob('steps').getValue())\n        merge.setInput(steps+1, original)\n        AvgMult\['whitepoint'].setValue(2 if steps<2 else steps+1)\n        \n    else:\n        merge.setInput(steps+1, None)\n        AvgMult\['whitepoint'].setValue(2 if steps<2 else steps)\n        \nelif k.name() == \"steps\":\n    \n    s = int(k.value())\n    if s<1:\n        k.setValue(1)\n    else:\n        start = nuke.toNode(\"Start\")\n        end   = nuke.toNode(\"End\")\n        b1    = nuke.toNode(\"Blur1\")\n        merge = nuke.toNode(\"Merge1\")\n        AvgMult = nuke.toNode(\"AverageMult\")\n        \n        b1x   = b1.xpos()\n        b1y   = b1.ypos()\n        b1n   = b1.name()\n        \n        steps = int(n.knob('steps').getValue())\n        size  = n.knob('size').getValue()\n        mult  = n.knob('mult').getValue()\n        \n        #b1.setInput(0, start)\n        for i in range(1,merge.inputs()):\n            merge.setInput(i,None)\n        merge.setInput(0, b1)\n        \[nuke.delete(i) for i in nuke.allNodes() if i.xpos()>start.xpos()]\n        for i in range(1,steps):\n            # Blur\n            b = nuke.nodes.Blur()\n            b.setXYpos(b1x+i*100,b1y)\n            b.setInput(0,start)\n            b\[\"channels\"].setValue(\"rgba\")\n            b\[\"crop\"].setValue(0)\n            b\[\"size\"].setValue(0, 1)\n            b\[\"size\"].setExpression(\"(Blur1.size)*(mult)**%s\"%(i))\n            b\[\"label\"].setValue(\"\[value size]\")\n            merge.setInput(i if i<2 else i+1, b)\n            AvgMult\['whitepoint'].setValue(i if i<2 else i+1)\n            \n        if n.knob('includeOriginal').getValue() == 1:\n            merge = nuke.toNode(\"Merge1\")\n            original = nuke.toNode('Original')\n            AvgMult = nuke.toNode(\"AverageMult\")\n            steps = int(n.knob('steps').getValue())\n            merge.setInput(steps+1, original)\n            AvgMult\['whitepoint'].setValue(2 if steps<2 else steps+1)\n            \nelif k.name() == \"output2\":\n    if n.knob(\"output2\").getValue() == 4:\n        n.knob('AvgMaxOriginal').setVisible(True)\n    else:\n        n.knob('AvgMaxOriginal').setVisible(False)"
+ tile_color 0xcc804eff
+ label "(\[value output2])"
+ note_font "Verdana Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold"
+ note_font_color 0xffffffff
+ selected true
+ xpos -23788
+ ypos 10425
+ addUserKnob {20 ExponBlur}
+ addUserKnob {41 channels T Shuffle1.in}
+ addUserKnob {41 maskChannelMask_1 l area T Multiply1.maskChannelMask}
+ addUserKnob {41 inject_1 l inject -STARTLINE T Multiply1.inject}
+ addUserKnob {41 invert_mask_1 l invert -STARTLINE T Multiply1.invert_mask}
+ addUserKnob {41 fringe_1 l fringe -STARTLINE T Multiply1.fringe}
+ addUserKnob {26 ""}
+ addUserKnob {4 output2 l Operation: M {Screen Plus Over Hypot Average Max Min "" "" "" "" ""}}
+ addUserKnob {3 steps l "  Steps" -STARTLINE}
+ steps 4
+ addUserKnob {3 mergeNumber -STARTLINE +INVISIBLE}
+ mergeNumber {{"output2 == 0 ? 25 : output2 == 1 ? 24 : output2 == 2 ? 22 : output2 == 3 ? 13 : output2 == 4 ? 24 : output2 == 5 ? 17 : 18"}}
+ addUserKnob {26 text l " " -STARTLINE T " "}
+ addUserKnob {6 includeOriginal l "Include Original?" -STARTLINE}
+ includeOriginal true
+ addUserKnob {6 AvgMaxOriginal l "Use Max of Average and Original" +HIDDEN +STARTLINE}
+ addUserKnob {14 size l Size R -100 100}
+ size 2
+ addUserKnob {7 mult l Multiplier R 1 8}
+ mult 2
+ addUserKnob {26 text_1 l " " T " "}
+ addUserKnob {14 postBlur l "Post Blur" R 0 100}
+ addUserKnob {26 ""}
+ addUserKnob {41 maskChannelMask l mask T MergeKeymix.maskChannelMask}
+ addUserKnob {41 inject -STARTLINE T MergeKeymix.inject}
+ addUserKnob {41 invert_mask l invert -STARTLINE T MergeKeymix.invert_mask}
+ addUserKnob {41 fringe -STARTLINE T MergeKeymix.fringe}
+ addUserKnob {4 bbox l BBox: M {union intersectionMask A B "input format" "" "" "" "" "" "" "" ""}}
+ addUserKnob {6 blackOutside l "Black Outside |" -STARTLINE}
+ addUserKnob {7 adjustBBox l "Adjust BBox" -STARTLINE R 0 100}
+ addUserKnob {41 mix T MergeKeymix.mix}
+ addUserKnob {20 info l Info}
+ addUserKnob {26 creator l Creator: T Name}
+ addUserKnob {26 desc l Description: t "Add description and tooltip for gizmo" T "Name of Gizmo"}
+ addUserKnob {26 ver l Version: T v01}
+}
+ BackdropNode {
+  inputs 0
+  name BackdropNode1
+  tile_color 0x535e5a00
+  label "BBox Management"
+  note_font_size 30
+  note_font_color 0xffffffff
+  xpos -529
+  ypos 381
+  bdwidth 341
+  bdheight 525
+ }
+ Input {
+  inputs 0
+  name Inputimg
+  xpos 0
+  ypos -833
+ }
+ Dot {
+  name Dot16
+  note_font_size 41
+  xpos 34
+  ypos -666
+ }
+set Nd76008a0 [stack 0]
+ Dot {
+  name Dot2
+  note_font_size 41
+  xpos -367
+  ypos -666
+ }
+ Dot {
+  name Dot18
+  label B
+  note_font_size 41
+  xpos -367
+  ypos 323
+ }
+ Dot {
+  name Dot11
+  note_font_size 41
+  xpos -367
+  ypos 512
+ }
+set Ndc188780 [stack 0]
+ Dot {
+  name Dot3
+  note_font_size 41
+  xpos -367
+  ypos 564
+ }
+set Nbc3eec0 [stack 0]
+ Dot {
+  name Dot8
+  note_font_size 41
+  xpos -463
+  ypos 564
+ }
+ Dot {
+  name Dot15
+  note_font_size 41
+  xpos -463
+  ypos 720
+ }
+push $Nd76008a0
+ Dot {
+  name Dot1
+  note_font_size 41
+  xpos 461
+  ypos -666
+ }
+ Shuffle {
+  name Shuffle1
+  label "\[value in]"
+  xpos 427
+  ypos -620
+ }
+ Remove {
+  operation keep
+  channels rgba
+  name Remove1
+  xpos 427
+  ypos -582
+ }
+ Dot {
+  name Dot21
+  note_font_size 41
+  xpos 461
+  ypos -461
+ }
+set Nd77c6100 [stack 0]
+ Invert {
+  channels rgba
+  name Invert1
+  xpos 695
+  ypos -465
+  disable {{"parent.size < 0 ? 0 : 1"}}
+ }
+set N142b2690 [stack 0]
+ Dot {
+  name Dot4
+  note_font_size 41
+  xpos 609
+  ypos -407
+ }
+ NoOp {
+  name Original
+  xpos 575
+  ypos -191
+ }
+set Ne755e2f0 [stack 0]
+push $Ne755e2f0
+ Input {
+  inputs 0
+  name Inputarea
+  xpos 289
+  ypos -502
+  number 2
+ }
+ AddChannels {
+  channels alpha
+  color 1
+  name AddChannels1
+  xpos 289
+  ypos -444
+ }
+ Invert {
+  channels rgba
+  name Invert3
+  xpos 289
+  ypos -367
+ }
+push $N142b2690
+ Multiply {
+  inputs 1+1
+  channels rgba
+  value 0
+  name Multiply1
+  label "\[value value]"
+  xpos 695
+  ypos -373
+ }
+ NoOp {
+  name Start
+  xpos 695
+  ypos -314
+ }
+set N7407200 [stack 0]
+ Blur {
+  channels rgba
+  size {{(Blur1.size)*(mult)**3} {(Blur1.size)*(mult)**3}}
+  crop false
+  name Blur4
+  label "\[value size]"
+  xpos 995
+  ypos -234
+ }
+push $N7407200
+ Blur {
+  channels rgba
+  size {{(Blur1.size)*(mult)**2} {(Blur1.size)*(mult)**2}}
+  crop false
+  name Blur3
+  label "\[value size]"
+  xpos 895
+  ypos -234
+ }
+push 0
+push $N7407200
+ Blur {
+  channels rgba
+  size {{(Blur1.size)*(mult)**1} {(Blur1.size)*(mult)**1}}
+  crop false
+  name Blur2
+  label "\[value size]"
+  xpos 795
+  ypos -234
+ }
+push $N7407200
+ Blur {
+  channels rgba
+  size {{parent.size.w} {parent.size.h}}
+  name Blur1
+  label "\[value size]"
+  xpos 695
+  ypos -234
+ }
+ Merge2 {
+  inputs 5+1
+  operation {{parent.mergeNumber}}
+  name Merge1
+  label "\[ expr \{ \[value mix] == 1 ? \" \" : \[concat Mix: \[value mix]] \}]"
+  xpos 695
+  ypos -120
+ }
+ NoOp {
+  name End
+  xpos 695
+  ypos -94
+ }
+ Grade {
+  channels rgba
+  whitepoint 5
+  black_clamp false
+  name AverageMult
+  xpos 695
+  ypos -56
+  disable {{"output2 == 4 ? 0 : 1"}}
+ }
+ Merge2 {
+  inputs 2
+  operation max
+  name Merge2
+  label "\[ expr \{ \[value mix] == 1 ? \" \" : \[concat Mix: \[value mix]] \}]"
+  xpos 695
+  ypos -9
+  disable {{"output2 == 4 && includeOriginal == 1 && AvgMaxOriginal == 1 ? 0 : 1"}}
+ }
+ Blur {
+  channels rgba
+  size {{postBlur} {postBlur}}
+  name BlurOriginal
+  label "\[value size]"
+  selected true
+  xpos 695
+  ypos 49
+ }
+ Invert {
+  channels rgba
+  name Invert2
+  xpos 695
+  ypos 117
+  disable {{"parent.size < 0 ? 0 : 1"}}
+ }
+push $Nd77c6100
+ Switch {
+  inputs 2
+  which {{"parent.size == 0 ? 0 : 1"}}
+  name Switch1
+  label "\[value which]"
+  xpos 427
+  ypos 111
+ }
+push $Nd76008a0
+ ShuffleCopy {
+  inputs 2
+  in2 none
+  black red
+  white green
+  red2 blue
+  green2 alpha
+  out none
+  out2 {{{parent.Shuffle1.in}}}
+  name ShuffleCopy1
+  xpos 0
+  ypos 117
+ }
+ Dot {
+  name Dot17
+  label A
+  note_font_size 41
+  xpos 34
+  ypos 344
+ }
+ Dot {
+  name Dot7
+  note_font_size 41
+  xpos 34
+  ypos 474
+ }
+set Nd91f8d50 [stack 0]
+ Dot {
+  name Dot12
+  note_font_size 41
+  xpos -260
+  ypos 474
+ }
+ Dot {
+  name Dot13
+  note_font_size 41
+  xpos -260
+  ypos 688
+ }
+push $Ndc188780
+ Input {
+  inputs 0
+  name Inputmask
+  xpos 346
+  ypos 214
+  number 1
+ }
+ Dot {
+  name Dot19
+  label Mask
+  note_font_size 41
+  xpos 380
+  ypos 327
+ }
+set Nc6c4c930 [stack 0]
+ Dot {
+  name Dot20
+  note_font_size 41
+  xpos 270
+  ypos 327
+ }
+push $Nd91f8d50
+ Merge2 {
+  inputs 2
+  bbox intersection
+  Achannels {rgba.red -rgba.green -rgba.blue rgba.alpha}
+  Bchannels {rgba.red -rgba.green -rgba.blue rgba.alpha}
+  output {rgba.red -rgba.green -rgba.blue rgba.alpha}
+  name MergeIntersection
+  xpos 236
+  ypos 464
+  disable {{"!\[exists parent.input1]"}}
+ }
+ Merge2 {
+  inputs 2
+  Achannels {rgba.red -rgba.green -rgba.blue rgba.alpha}
+  Bchannels {rgba.red -rgba.green -rgba.blue rgba.alpha}
+  output {rgba.red -rgba.green -rgba.blue rgba.alpha}
+  name MergeUnion
+  xpos 236
+  ypos 502
+  disable {{"!\[exists parent.input1]"}}
+ }
+ Dot {
+  name Dot6
+  label "intersection\nof (Mask and A) + B"
+  note_font_size 14
+  note_font_color 0xffffffff
+  xpos 270
+  ypos 662
+ }
+push $Nc6c4c930
+ Dot {
+  name Dot10
+  note_font_size 41
+  xpos 380
+  ypos 564
+ }
+push $Nd91f8d50
+push $Nbc3eec0
+ Merge2 {
+  inputs 2+1
+  operation copy
+  Achannels none
+  Bchannels none
+  output none
+  also_merge all
+  name MergeKeymix
+  xpos 0
+  ypos 554
+ }
+ Dot {
+  name Dot14
+  note_font_size 41
+  xpos 34
+  ypos 636
+ }
+set Nd0da86e0 [stack 0]
+push $Nbc3eec0
+ CopyBBox {
+  inputs 2
+  name CopyBBoxUnion
+  xpos -401
+  ypos 632
+  disable {{parent.bbox==0?0:1}}
+ }
+ CopyBBox {
+  inputs 2
+  name CopyBBoxIntersection
+  xpos -401
+  ypos 658
+  disable {{"parent.bbox==1 ? 0 : 1"}}
+ }
+ CopyBBox {
+  inputs 2
+  name CopyBBoxA
+  xpos -401
+  ypos 684
+  disable {{"parent.bbox==2 ? 0 : 1"}}
+ }
+ CopyBBox {
+  inputs 2
+  name CopyBBoxB
+  xpos -401
+  ypos 716
+  disable {{"parent.bbox==3 ? 0 : 1"}}
+ }
+ Crop {
+  box {0 0 {parent.width} {parent.height}}
+  crop false
+  name CopyBBoxFormat
+  xpos -401
+  ypos 742
+  disable {{"parent.bbox==4 ? 0 : 1"}}
+  addUserKnob {20 User}
+  addUserKnob {22 cropToBbox l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+  addUserKnob {22 cropToBbox_1 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+  addUserKnob {22 cropToBbox_2 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+  addUserKnob {22 cropToBbox_3 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+  addUserKnob {22 cropToBbox_4 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+  addUserKnob {22 cropToBbox_5 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+  addUserKnob {22 cropToBbox_6 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+  addUserKnob {22 cropToBbox_7 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+  addUserKnob {22 cropToBbox_8 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+  addUserKnob {22 cropToBbox_9 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+  addUserKnob {22 cropToBbox_10 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+  addUserKnob {22 cropToBbox_11 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+ }
+ AdjBBox {
+  numpixels {{parent.adjustBBox}}
+  name AdjBBox
+  xpos -401
+  ypos 768
+ }
+ Dot {
+  name Dot9
+  note_font_size 41
+  xpos -367
+  ypos 822
+ }
+push $Nd0da86e0
+ CopyBBox {
+  inputs 2
+  name CopyBBox
+  xpos 0
+  ypos 818
+ }
+ BlackOutside {
+  name BlackOutside1
+  xpos 0
+  ypos 844
+  disable {{!parent.blackOutside}}
+ }
+ Output {
+  name Output1
+  xpos 0
+  ypos 984
+ }
+end_group
