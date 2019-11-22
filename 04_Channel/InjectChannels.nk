@@ -1,0 +1,47 @@
+set cut_paste_input [stack 0]
+version 11.3 v4
+push $cut_paste_input
+push 0
+Group {
+inputs 2
+name InjectChannels
+tile_color 0x9e3c63ff
+selected true
+xpos 59111
+ypos 11161
+}
+Input {
+inputs 0
+name InputA
+xpos 378
+ypos 241
+number 1
+}
+Multiply {
+value 0
+name Multiply1
+label "\[value value]"
+xpos 378
+ypos 330
+}
+Input {
+inputs 0
+name InputB
+xpos 520
+ypos 241
+}
+Merge2 {
+inputs 2
+operation plus
+also_merge all
+name Merge1
+label "\[ expr \{ \[value mix] == 1 ? \" \" : \[concat Mix: \[value mix]] \}]"
+xpos 520
+ypos 342
+}
+Output {
+name Output1
+xpos 520
+ypos 400
+}
+end_group
