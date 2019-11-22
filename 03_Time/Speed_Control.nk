@@ -1,0 +1,36 @@
+set cut_paste_input [stack 0]
+version 11.3 v5
+push $cut_paste_input
+TimeWarp {
+ lookup {{curve((((frame-Speed_Control.pivotFrame)*Speed_Control.invertNum*Speed_Control.speed)+Speed_Control.pivotFrame-Speed_Control.offset)) x1001 1001 x1100 1100}}
+ time ""
+ name TimeWarp10
+ selected true
+ xpos 900
+ ypos 17086
+}
+NoOp {
+ inputs 0
+ name Speed_Control
+ tile_color 0x272727ff
+ label "pivot frame \[value pivotFrame]\nspeed \[value speed]\noffset \[value offset]\n\n"
+ note_font "Bitstream Vera Sans Bold Bold Bold Bold Bold"
+ note_font_color 0xffffffff
+ selected true
+ xpos 900
+ ypos 16983
+ addUserKnob {20 speedControl l "Speed Control"}
+ addUserKnob {3 pivotFrame l "Pivot Frame"}
+ pivotFrame 1001
+ addUserKnob {22 setRefFrame l "set Pivot Frame" -STARTLINE T "n = nuke.thisNode()\npf = n.knob(\"pivotFrame\")\n\n# Get Current Frame\ncurentFrame = nuke.frame()\n\n# Set frameHold frame from current frame\npf.setValue(curentFrame)"}
+ addUserKnob {6 invert +STARTLINE}
+ addUserKnob {7 invertNum -STARTLINE +INVISIBLE}
+ invertNum {{"invert == 0 ? 1 : -1"}}
+ addUserKnob {7 speed R 0 4}
+ speed 1
+ addUserKnob {3 offset}
+ addUserKnob {6 round l "Round to Nearest Frame" +STARTLINE}
+ addUserKnob {1 expression l Expression}
+ expression ((((frame-Speed_Control.pivotFrame)*Speed_Control.invertNum*Speed_Control.speed)+Speed_Control.pivotFrame-Speed_Control.offset))
+ addUserKnob {22 apply l "Apply to selected nodes" T "n = nuke.selectedNodes()\nk = n.knob()\n\nfor k in n:\n    if k.isAnimated():\n        " +STARTLINE}
+}
