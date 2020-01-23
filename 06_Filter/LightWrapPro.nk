@@ -1,0 +1,3056 @@
+set cut_paste_input [stack 0]
+version 11.3 v5
+push $cut_paste_input
+Group {
+name LightWrapPro
+help "Adds exponentially blurred lightwrap\n\nAdds a bright highlight wrap and an overall wrap"
+tile_color 0x1e252eff
+label "(\[value outputView])"
+note_font "DejaVu Sans Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold"
+note_font_color 0xb7e6ffff
+selected true
+xpos -11004
+ypos 16829
+mapsize {0.15 0.15}
+addUserKnob {20 LightWrapPro}
+addUserKnob {26 ""}
+addUserKnob {4 outputView l "Output View" t "Chose one to view while adjusting" M {"Final Output" "Light Flare Key" "Light Flare" "Wrap All" "Effect Only" "" "" "" "" "" ""}}
+addUserKnob {6 premultiplied l "A premultiplied" -STARTLINE}
+premultiplied true
+addUserKnob {26 highlightKey l " <b><u>Highlight Key</u></b>" T " "}
+addUserKnob {6 smoothKey l "Smooth Key" -STARTLINE}
+addUserKnob {7 blackPt l Black R 0 4}
+blackPt 1
+addUserKnob {7 whitePt l White R 0 4}
+whitePt 2
+addUserKnob {26 "" l "<b><u>Light Flare</u></b>"}
+addUserKnob {41 output2 l Operation: T ExponBlurSimple1.output2}
+addUserKnob {41 steps_1 l Steps -STARTLINE T ExponBlurSimple2.steps}
+addUserKnob {7 WrapFlare_amount l Amount R 0 2}
+WrapFlare_amount 0.4
+addUserKnob {14 WrapFlare_size l "Blur Size" R 0 100}
+WrapFlare_size 4
+addUserKnob {6 Mult_Flare_panelDropped l "panel dropped state" +HIDDEN +STARTLINE}
+addUserKnob {6 Mult_Flare_panelDropped_1 l "panel dropped state" -STARTLINE +HIDDEN}
+addUserKnob {6 Mult_Flare_panelDropped_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+addUserKnob {6 Mult_Flare_panelDropped_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+addUserKnob {6 Mult_Flare_panelDropped_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+addUserKnob {6 Mult_Flare_panelDropped_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+addUserKnob {6 Mult_Flare_panelDropped_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+addUserKnob {6 Mult_Flare_panelDropped_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+addUserKnob {6 Mult_Flare_panelDropped_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+addUserKnob {6 Mult_Flare_panelDropped_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+addUserKnob {26 "" l "<b><u>Wrap All</u></b>"}
+addUserKnob {41 output2_1 l Operation: T ExponBlurSimple2.output2}
+addUserKnob {41 steps l Steps -STARTLINE T ExponBlurSimple1.steps}
+addUserKnob {7 WrapAll_amount l Amount R 0 2}
+WrapAll_amount 0.6
+addUserKnob {14 WrapAll_size l "Blur Size" R 0 100}
+WrapAll_size 20
+addUserKnob {6 WrapAllMult_panelDropped l "panel dropped state" +HIDDEN +STARTLINE}
+addUserKnob {6 WrapAllMult_panelDropped_1 l "panel dropped state" -STARTLINE +HIDDEN}
+addUserKnob {6 WrapAllMult_panelDropped_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+addUserKnob {6 WrapAllMult_panelDropped_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+addUserKnob {6 WrapAllMult_panelDropped_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+addUserKnob {6 WrapAllMult_panelDropped_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+addUserKnob {6 WrapAllMult_panelDropped_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+addUserKnob {6 WrapAllMult_panelDropped_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+addUserKnob {6 WrapAllMult_panelDropped_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+addUserKnob {6 WrapAllMult_panelDropped_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+addUserKnob {26 blendEdges l "<b><u>Blend Edges</u></b>"}
+addUserKnob {7 iColor_amount l Amount}
+addUserKnob {6 ColorBleedMult_panelDropped l "panel dropped state" +HIDDEN +STARTLINE}
+addUserKnob {6 ColorBleedMult_panelDropped_1 l "panel dropped state" -STARTLINE +HIDDEN}
+addUserKnob {6 ColorBleedMult_panelDropped_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+addUserKnob {6 ColorBleedMult_panelDropped_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+addUserKnob {6 ColorBleedMult_panelDropped_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+addUserKnob {6 ColorBleedMult_panelDropped_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+addUserKnob {6 ColorBleedMult_panelDropped_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+addUserKnob {6 ColorBleedMult_panelDropped_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+addUserKnob {6 ColorBleedMult_panelDropped_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+addUserKnob {6 ColorBleedMult_panelDropped_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+addUserKnob {26 bleedColor_1 l "<b><u>Bleed Color</u></b>"}
+addUserKnob {7 BGwashAmount l Amount -STARTLINE}
+addUserKnob {6 pblacks l "Preserve Luminance" +STARTLINE}
+pblacks true
+addUserKnob {26 ""}
+addUserKnob {26 _1 l mask T ""}
+addUserKnob {41 maskChannelInput l "" -STARTLINE T MergeCopyLightWrapPro.maskChannelInput}
+addUserKnob {41 inject -STARTLINE T MergeCopyLightWrapPro.inject}
+addUserKnob {41 invert_mask l invert -STARTLINE T MergeCopyLightWrapPro.invert_mask}
+addUserKnob {41 fringe -STARTLINE T MergeCopyLightWrapPro.fringe}
+addUserKnob {41 mix T MergeCopyLightWrapPro.mix}
+addUserKnob {20 info l Info}
+addUserKnob {26 creator l Creator: T "<b><big>Tony Lyons"}
+addUserKnob {26 desc l Description: t "\n\n" T LightWrapPro}
+addUserKnob {26 ver l Version: T v04}
+}
+BackdropNode {
+inputs 0
+name BackdropNode1
+tile_color 0x402f27ff
+label "Bleed Color"
+note_font_size 60
+note_font_color 0xffffffff
+xpos -286
+ypos 2054
+bdwidth 756
+bdheight 815
+}
+BackdropNode {
+inputs 0
+name BackdropNode2
+tile_color 0x39464200
+label "highlight key"
+note_font_size 40
+note_font_color 0xffffffff
+xpos 1662
+ypos 135
+bdwidth 279
+bdheight 356
+}
+Input {
+inputs 0
+name Inputmask
+xpos 1887
+ypos 3438
+number 2
+}
+Input {
+inputs 0
+name FG
+xpos -158
+ypos 56
+}
+AddChannels {
+channels rgba
+name AddChannels1
+xpos -158
+ypos 111
+}
+Dot {
+name Dot1
+xpos -124
+ypos 378
+}
+set Ncb8f5420 [stack 0]
+Dot {
+name Dot7
+xpos -570
+ypos 378
+}
+Dot {
+name Dot46
+xpos -570
+ypos 2965
+}
+set Ncb8c3c80 [stack 0]
+Dot {
+name Dot15
+xpos 915
+ypos 2965
+}
+set Ncb8c8800 [stack 0]
+push $Ncb8f5420
+Input {
+inputs 0
+name BG
+label "\n"
+xpos 2264
+ypos 48
+number 1
+}
+AddChannels {
+channels rgba
+name AddChannels2
+xpos 2264
+ypos 119
+}
+Dot {
+name Dot2
+xpos 2298
+ypos 235
+}
+set Ne4953fc0 [stack 0]
+Dot {
+name Dot3
+xpos 1736
+ypos 235
+}
+set Ne4958b20 [stack 0]
+Dot {
+name Dot20
+xpos 1059
+ypos 237
+}
+Copy {
+inputs 2
+from0 rgba.alpha
+to0 rgba.alpha
+bbox B
+name Copy3
+xpos 1025
+ypos 368
+}
+Invert {
+channels {-rgba.red -rgba.green -rgba.blue rgba.alpha}
+name Invert1
+xpos 1025
+ypos 420
+}
+Premult {
+name Premult2
+xpos 1025
+ypos 476
+}
+set Ne497b970 [stack 0]
+Dot {
+name Dot9
+xpos 1059
+ypos 689
+}
+set Ne4983c40 [stack 0]
+push $Ne4958b20
+Group {
+name lumaKeyer
+tile_color 0x421010ff
+xpos 1821
+ypos 371
+addUserKnob {20 User l lumaKeyer}
+addUserKnob {7 black}
+black {{parent.blackPt}}
+addUserKnob {7 white R 0 3}
+white {{parent.whitePt}}
+addUserKnob {6 invert +STARTLINE}
+addUserKnob {26 ""}
+addUserKnob {22 btn l DerekVFX.ca T "import os\nimport sys\n\ntry:\n    import subprocess\n    def _run(cmd, shell, wait):\n        opener = subprocess.Popen(cmd, shell=shell)\n        if wait:\n            opener.wait()\n        return opener.pid\nexcept ImportError:\n    import popen2\n    def _run(cmd, shell, wait):\n        opener = popen2.Popen3(cmd)\n        if wait:\n            opener.wait()\n        return opener.pid\n\ndef _open(url, wait=0):\n    if sys.platform == \"darwin\":\n        cmd = \[\"open\", url]\n    elif hasattr(os, \"startfile\"):\n        return os.startfile(url)\n    elif os.environ.has_key(\"KDE_FULL_SESSION\") or os.environ.has_key(\"KDE_MULTIHEAD\") or \\\n        os.environ.has_key(\"GNOME_DESKTOP_SESSION_ID\") or os.environ.has_key(\"GNOME_KEYRING_SOCKET\"):\n        cmd = \[\"xdg-open\", url]\n    else:\n        raise OSError, \"Desktop not supported.\"\n\n    return _run(cmd, 0, wait)\n\n_open('http://www.derekvfx.ca/')" +STARTLINE}
+}
+Input {
+inputs 0
+name Input1
+xpos 29
+ypos -241
+}
+set Ne49926d0 [stack 0]
+Colorspace {
+colorspace_out HSL
+name Colorspace1
+xpos -45
+ypos -179
+}
+Expression {
+expr3 smoothstep(parent.black,parent.white,b)
+name Expression1
+selected true
+xpos -45
+ypos -132
+}
+Expression {
+expr3 1-a
+name Expression2
+xpos -45
+ypos -106
+disable {{"parent.invert == 0"}}
+}
+set Ne49bdc80 [stack 0]
+push $Ne49926d0
+Copy {
+inputs 2
+from0 rgba.alpha
+to0 rgba.alpha
+name Copy1
+xpos 57
+ypos -79
+}
+Output {
+name Output1
+xpos 63
+ypos -8
+}
+push $Ne49bdc80
+Viewer {
+frame_range 1-100
+name Viewer1
+xpos -176
+ypos -62
+addUserKnob {20 User}
+addUserKnob {6 toAddBtn -STARTLINE}
+toAddBtn true
+addUserKnob {6 toAddBtn_1 l toAddBtn -STARTLINE}
+addUserKnob {6 toAddBtn_2 l toAddBtn -STARTLINE}
+addUserKnob {6 toAddBtn_3 l toAddBtn -STARTLINE}
+addUserKnob {6 toAddBtn -STARTLINE}
+toAddBtn true
+}
+end_group
+push $Ne4958b20
+Keyer {
+operation "luminance key"
+range {{parent.blackPt} {parent.whitePt} {range.B} {range.B}}
+name Keyer2
+xpos 1702
+ypos 361
+}
+Switch {
+inputs 2
+which {{parent.smoothKey}}
+name Switch2
+label "\[value which]"
+xpos 1702
+ypos 419
+}
+Dot {
+name Dot4
+note_font_size 41
+xpos 1736
+ypos 495
+}
+set Ne4a14520 [stack 0]
+Premult {
+name Premult1
+xpos 1702
+ypos 610
+}
+Merge2 {
+inputs 2
+operation mask
+name Merge3
+xpos 1702
+ypos 686
+}
+Group {
+name ExponBlurSimple2
+onCreate "n = nuke.thisNode()\nn.knob('size').setRange(-100, 100)"
+knobChanged "n = nuke.thisNode()\nk = nuke.thisKnob()\n\nif k.name() == \"includeOriginal\":\n    if n.knob('includeOriginal').getValue() == 1:\n        merge = nuke.toNode(\"Merge1\")\n        original = nuke.toNode('Original')\n        AvgMult = nuke.toNode(\"AverageMult\")\n        steps = int(n.knob('steps').getValue())\n        merge.setInput(steps+1, original)\n        AvgMult\['whitepoint'].setValue(2 if steps<2 else steps+1)\n        \n    else:\n        merge.setInput(steps+1, None)\n        AvgMult\['whitepoint'].setValue(2 if steps<2 else steps)\n        \nelif k.name() == \"steps\":\n    \n    s = int(k.value())\n    if s<1:\n        k.setValue(1)\n    else:\n        start = nuke.toNode(\"Start\")\n        end   = nuke.toNode(\"End\")\n        b1    = nuke.toNode(\"Blur1\")\n        merge = nuke.toNode(\"Merge1\")\n        AvgMult = nuke.toNode(\"AverageMult\")\n        \n        b1x   = b1.xpos()\n        b1y   = b1.ypos()\n        b1n   = b1.name()\n        \n        steps = int(n.knob('steps').getValue())\n        size  = n.knob('size').getValue()\n        mult  = n.knob('mult').getValue()\n        \n        #b1.setInput(0, start)\n        for i in range(1,merge.inputs()):\n            merge.setInput(i,None)\n        merge.setInput(0, b1)\n        \[nuke.delete(i) for i in nuke.allNodes() if i.xpos()>start.xpos()]\n        for i in range(1,steps):\n            # Blur\n            b = nuke.nodes.Blur()\n            b.setXYpos(b1x+i*100,b1y)\n            b.setInput(0,start)\n            b\[\"channels\"].setValue(\"rgba\")\n            b\[\"crop\"].setValue(0)\n            b\[\"size\"].setValue(0, 1)\n            b\[\"size\"].setExpression(\"(Blur1.size)*(mult)**%s\"%(i))\n            b\[\"label\"].setValue(\"\[value size]\")\n            merge.setInput(i if i<2 else i+1, b)\n            AvgMult\['whitepoint'].setValue(i if i<2 else i+1)\n            \n        if n.knob('includeOriginal').getValue() == 1:\n            merge = nuke.toNode(\"Merge1\")\n            original = nuke.toNode('Original')\n            AvgMult = nuke.toNode(\"AverageMult\")\n            steps = int(n.knob('steps').getValue())\n            merge.setInput(steps+1, original)\n            AvgMult\['whitepoint'].setValue(2 if steps<2 else steps+1)\n            \nelif k.name() == \"output2\":\n    if n.knob(\"output2\").getValue() == 4:\n        n.knob('AvgMaxOriginal').setVisible(True)\n    else:\n        n.knob('AvgMaxOriginal').setVisible(False)"
+tile_color 0xcc804eff
+label "(\[value output2])"
+note_font "Verdana Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold"
+note_font_color 0xffffffff
+xpos 1702
+ypos 1113
+addUserKnob {20 ExponBlur}
+addUserKnob {41 channels T Shuffle1.in}
+addUserKnob {41 maskChannelMask_1 l area T Multiply1.maskChannelMask}
+addUserKnob {41 inject_1 l inject -STARTLINE T Multiply1.inject}
+addUserKnob {41 invert_mask_1 l invert -STARTLINE T Multiply1.invert_mask}
+addUserKnob {41 fringe_1 l fringe -STARTLINE T Multiply1.fringe}
+addUserKnob {26 ""}
+addUserKnob {4 output2 l Operation: M {Screen Plus Over Hypot Average Max Min "" "" "" "" ""}}
+output2 Over
+addUserKnob {3 steps l "  Steps" -STARTLINE}
+steps 5
+addUserKnob {3 mergeNumber -STARTLINE +INVISIBLE}
+mergeNumber {{"output2 == 0 ? 25 : output2 == 1 ? 24 : output2 == 2 ? 28 : output2 == 3 ? 13 : output2 == 4 ? 24 : output2 == 5 ? 17 : 18"}}
+addUserKnob {26 text l " " -STARTLINE T " "}
+addUserKnob {6 includeOriginal l "Include Original?" -STARTLINE}
+addUserKnob {6 AvgMaxOriginal l "Use Max of Average and Original" +HIDDEN +STARTLINE}
+addUserKnob {14 size l Size R -100 100}
+size {{parent.WrapFlare_size} {parent.WrapFlare_size}}
+addUserKnob {7 mult l Multiplier R 1 8}
+mult 2
+addUserKnob {26 text_1 l " " T " "}
+addUserKnob {14 postBlur l "Post Blur" R 0 100}
+addUserKnob {26 ""}
+addUserKnob {41 maskChannelMask l mask T MergeKeymix.maskChannelMask}
+addUserKnob {41 inject -STARTLINE T MergeKeymix.inject}
+addUserKnob {41 invert_mask l invert -STARTLINE T MergeKeymix.invert_mask}
+addUserKnob {41 fringe -STARTLINE T MergeKeymix.fringe}
+addUserKnob {4 bbox l BBox: M {union intersectionMask A B "input format" "" "" "" "" "" "" "" ""}}
+addUserKnob {6 blackOutside l "Black Outside |" -STARTLINE}
+addUserKnob {7 adjustBBox l "Adjust BBox" -STARTLINE R 0 100}
+addUserKnob {41 mix T MergeKeymix.mix}
+addUserKnob {20 info l Info}
+addUserKnob {26 creator l Creator: T Name}
+addUserKnob {26 desc l Description: t "Add description and tooltip for gizmo" T "Name of Gizmo"}
+addUserKnob {26 ver l Version: T v01}
+}
+BackdropNode {
+inputs 0
+name BackdropNode1
+tile_color 0x535e5a00
+label "BBox Management"
+note_font_size 30
+note_font_color 0xffffffff
+xpos -529
+ypos 381
+bdwidth 341
+bdheight 525
+}
+Input {
+inputs 0
+name Inputimg
+xpos 0
+ypos -833
+}
+Dot {
+name Dot16
+note_font_size 41
+xpos 34
+ypos -666
+}
+set Ne4a418f0 [stack 0]
+Dot {
+name Dot2
+note_font_size 41
+xpos -367
+ypos -666
+}
+Dot {
+name Dot18
+label B
+note_font_size 41
+xpos -367
+ypos 323
+}
+Dot {
+name Dot11
+note_font_size 41
+xpos -367
+ypos 512
+}
+set Ne4a4fb60 [stack 0]
+Dot {
+name Dot3
+note_font_size 41
+xpos -367
+ypos 564
+}
+set Ne4a54730 [stack 0]
+Dot {
+name Dot8
+note_font_size 41
+xpos -463
+ypos 564
+}
+Dot {
+name Dot15
+note_font_size 41
+xpos -463
+ypos 720
+}
+push $Ne4a418f0
+Dot {
+name Dot1
+note_font_size 41
+xpos 461
+ypos -666
+}
+Shuffle {
+name Shuffle1
+label "\[value in]"
+xpos 427
+ypos -620
+}
+Remove {
+operation keep
+channels rgba
+name Remove1
+xpos 427
+ypos -582
+}
+Dot {
+name Dot21
+note_font_size 41
+xpos 461
+ypos -461
+}
+set Ne4a804f0 [stack 0]
+Invert {
+channels rgba
+name Invert1
+xpos 695
+ypos -465
+disable {{"parent.size < 0 ? 0 : 1"}}
+}
+set Ne4a85050 [stack 0]
+Dot {
+name Dot4
+note_font_size 41
+xpos 609
+ypos -407
+}
+NoOp {
+name Original
+xpos 575
+ypos -191
+}
+Input {
+inputs 0
+name Inputarea
+xpos 289
+ypos -502
+number 2
+}
+AddChannels {
+channels alpha
+color 1
+name AddChannels1
+xpos 289
+ypos -444
+}
+Invert {
+channels rgba
+name Invert3
+xpos 289
+ypos -367
+}
+push $Ne4a85050
+Multiply {
+inputs 1+1
+channels rgba
+value 0
+name Multiply1
+label "\[value value]"
+xpos 695
+ypos -373
+}
+NoOp {
+name Start
+xpos 695
+ypos -314
+}
+set Ne4abf110 [stack 0]
+Blur {
+channels rgba
+size {{(Blur1.size)*(mult)**4} {(Blur1.size)*(mult)**4}}
+crop false
+name Blur5
+label "\[value size]"
+xpos 1095
+ypos -234
+}
+push $Ne4abf110
+Blur {
+channels rgba
+size {{(Blur1.size)*(mult)**3} {(Blur1.size)*(mult)**3}}
+crop false
+name Blur4
+label "\[value size]"
+xpos 995
+ypos -234
+}
+push $Ne4abf110
+Blur {
+channels rgba
+size {{(Blur1.size)*(mult)**2} {(Blur1.size)*(mult)**2}}
+crop false
+name Blur3
+label "\[value size]"
+xpos 895
+ypos -234
+}
+push 0
+push $Ne4abf110
+Blur {
+channels rgba
+size {{(Blur1.size)*(mult)**1} {(Blur1.size)*(mult)**1}}
+crop false
+name Blur2
+label "\[value size]"
+xpos 795
+ypos -234
+}
+push $Ne4abf110
+Blur {
+channels rgba
+size {{parent.size.w} {parent.size.h}}
+name Blur1
+label "\[value size]"
+xpos 695
+ypos -234
+}
+Merge2 {
+inputs 5+1
+operation {{parent.mergeNumber}}
+name Merge1
+label "\[ expr \{ \[value mix] == 1 ? \" \" : \[concat Mix: \[value mix]] \}]"
+xpos 695
+ypos -120
+}
+NoOp {
+name End
+xpos 695
+ypos -29
+}
+Grade {
+channels rgba
+whitepoint 5
+black_clamp false
+name AverageMult
+xpos 695
+ypos 9
+disable {{"output2 == 4 ? 0 : 1"}}
+}
+Merge2 {
+inputs 2
+operation max
+name Merge2
+label "\[ expr \{ \[value mix] == 1 ? \" \" : \[concat Mix: \[value mix]] \}]"
+xpos 695
+ypos 56
+disable {{"output2 == 4 && includeOriginal == 1 && AvgMaxOriginal == 1 ? 0 : 1"}}
+}
+Blur {
+channels rgba
+size {{parent.postBlur} {parent.postBlur}}
+name BlurOriginal
+label "\[value size]"
+xpos 695
+ypos 114
+}
+Invert {
+channels rgba
+name Invert2
+xpos 695
+ypos 182
+disable {{"parent.size < 0 ? 0 : 1"}}
+}
+push $Ne4a804f0
+Switch {
+inputs 2
+which {{"parent.size == 0 ? 0 : 1"}}
+name Switch1
+label "\[value which]"
+xpos 427
+ypos 176
+}
+push $Ne4a418f0
+ShuffleCopy {
+inputs 2
+in2 none
+black red
+white green
+red2 blue
+green2 alpha
+out none
+out2 {{{parent.Shuffle1.in}}}
+name ShuffleCopy1
+xpos 0
+ypos 182
+}
+Dot {
+name Dot17
+label A
+note_font_size 41
+xpos 34
+ypos 344
+}
+Dot {
+name Dot7
+note_font_size 41
+xpos 34
+ypos 474
+}
+set Ne4b75570 [stack 0]
+Dot {
+name Dot12
+note_font_size 41
+xpos -260
+ypos 474
+}
+Dot {
+name Dot13
+note_font_size 41
+xpos -260
+ypos 688
+}
+push $Ne4a4fb60
+Input {
+inputs 0
+name Inputmask
+xpos 346
+ypos 279
+number 1
+}
+Dot {
+name Dot19
+label Mask
+note_font_size 41
+xpos 380
+ypos 327
+}
+set Ne4b88320 [stack 0]
+Dot {
+name Dot20
+note_font_size 41
+xpos 270
+ypos 327
+}
+push $Ne4b75570
+Merge2 {
+inputs 2
+bbox intersection
+Achannels {rgba.red -rgba.green -rgba.blue rgba.alpha}
+Bchannels {rgba.red -rgba.green -rgba.blue rgba.alpha}
+output {rgba.red -rgba.green -rgba.blue rgba.alpha}
+name MergeIntersection
+xpos 236
+ypos 464
+disable {{"!\[exists parent.input1]"}}
+}
+Merge2 {
+inputs 2
+Achannels {rgba.red -rgba.green -rgba.blue rgba.alpha}
+Bchannels {rgba.red -rgba.green -rgba.blue rgba.alpha}
+output {rgba.red -rgba.green -rgba.blue rgba.alpha}
+name MergeUnion
+xpos 236
+ypos 502
+disable {{"!\[exists parent.input1]"}}
+}
+Dot {
+name Dot6
+label "intersection\nof (Mask and A) + B"
+note_font_size 14
+note_font_color 0xffffffff
+xpos 270
+ypos 662
+}
+push $Ne4b88320
+Dot {
+name Dot10
+note_font_size 41
+xpos 380
+ypos 564
+}
+push $Ne4b75570
+push $Ne4a54730
+Merge2 {
+inputs 2+1
+operation copy
+Achannels none
+Bchannels none
+output none
+also_merge all
+name MergeKeymix
+xpos 0
+ypos 554
+}
+Dot {
+name Dot14
+note_font_size 41
+xpos 34
+ypos 636
+}
+set Ne4bcc300 [stack 0]
+push $Ne4a54730
+CopyBBox {
+inputs 2
+name CopyBBoxUnion
+xpos -401
+ypos 632
+disable {{parent.bbox==0?0:1}}
+}
+CopyBBox {
+inputs 2
+name CopyBBoxIntersection
+xpos -401
+ypos 658
+disable {{"parent.bbox==1 ? 0 : 1"}}
+}
+CopyBBox {
+inputs 2
+name CopyBBoxA
+xpos -401
+ypos 684
+disable {{"parent.bbox==2 ? 0 : 1"}}
+}
+CopyBBox {
+inputs 2
+name CopyBBoxB
+xpos -401
+ypos 716
+disable {{"parent.bbox==3 ? 0 : 1"}}
+}
+Crop {
+box {0 0 {parent.width} {parent.height}}
+crop false
+name CopyBBoxFormat
+xpos -401
+ypos 742
+disable {{"parent.bbox==4 ? 0 : 1"}}
+addUserKnob {20 User}
+addUserKnob {22 cropToBbox l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+addUserKnob {22 cropToBbox_1 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+addUserKnob {22 cropToBbox_2 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+addUserKnob {22 cropToBbox_3 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+addUserKnob {22 cropToBbox_4 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+addUserKnob {22 cropToBbox_5 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+addUserKnob {22 cropToBbox_6 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+addUserKnob {22 cropToBbox_7 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+addUserKnob {22 cropToBbox_8 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+addUserKnob {22 cropToBbox_9 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+addUserKnob {22 cropToBbox_10 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+addUserKnob {22 cropToBbox_11 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+}
+AdjBBox {
+numpixels {{parent.adjustBBox}}
+name AdjBBox
+xpos -401
+ypos 768
+}
+Dot {
+name Dot9
+note_font_size 41
+xpos -367
+ypos 822
+}
+push $Ne4bcc300
+CopyBBox {
+inputs 2
+name CopyBBox
+xpos 0
+ypos 818
+}
+BlackOutside {
+name BlackOutside1
+xpos 0
+ypos 844
+disable {{!parent.blackOutside}}
+}
+Output {
+name Output1
+xpos 0
+ypos 984
+}
+end_group
+Grade {
+channels all
+white {{WrapFlare_amount/10}}
+name FlareAmount
+xpos 1702
+ypos 1377
+}
+Dot {
+name Dot25
+label "LIGHT FLARE"
+note_font_size 61
+xpos 1736
+ypos 1801
+}
+set Ne4c2e2a0 [stack 0]
+Merge2 {
+inputs 2
+operation mask
+name Merge13
+xpos 1708
+ypos 2955
+}
+set Ne4c32de0 [stack 0]
+push $Ncb8c8800
+push $Ne4983c40
+Group {
+name ExponBlurSimple1
+onCreate "n = nuke.thisNode()\nn.knob('size').setRange(-100, 100)"
+knobChanged "n = nuke.thisNode()\nk = nuke.thisKnob()\n\nif k.name() == \"includeOriginal\":\n    if n.knob('includeOriginal').getValue() == 1:\n        merge = nuke.toNode(\"Merge1\")\n        original = nuke.toNode('Original')\n        AvgMult = nuke.toNode(\"AverageMult\")\n        steps = int(n.knob('steps').getValue())\n        merge.setInput(steps+1, original)\n        AvgMult\['whitepoint'].setValue(2 if steps<2 else steps+1)\n        \n    else:\n        merge.setInput(steps+1, None)\n        AvgMult\['whitepoint'].setValue(2 if steps<2 else steps)\n        \nelif k.name() == \"steps\":\n    \n    s = int(k.value())\n    if s<1:\n        k.setValue(1)\n    else:\n        start = nuke.toNode(\"Start\")\n        end   = nuke.toNode(\"End\")\n        b1    = nuke.toNode(\"Blur1\")\n        merge = nuke.toNode(\"Merge1\")\n        AvgMult = nuke.toNode(\"AverageMult\")\n        \n        b1x   = b1.xpos()\n        b1y   = b1.ypos()\n        b1n   = b1.name()\n        \n        steps = int(n.knob('steps').getValue())\n        size  = n.knob('size').getValue()\n        mult  = n.knob('mult').getValue()\n        \n        #b1.setInput(0, start)\n        for i in range(1,merge.inputs()):\n            merge.setInput(i,None)\n        merge.setInput(0, b1)\n        \[nuke.delete(i) for i in nuke.allNodes() if i.xpos()>start.xpos()]\n        for i in range(1,steps):\n            # Blur\n            b = nuke.nodes.Blur()\n            b.setXYpos(b1x+i*100,b1y)\n            b.setInput(0,start)\n            b\[\"channels\"].setValue(\"rgba\")\n            b\[\"crop\"].setValue(0)\n            b\[\"size\"].setValue(0, 1)\n            b\[\"size\"].setExpression(\"(Blur1.size)*(mult)**%s\"%(i))\n            b\[\"label\"].setValue(\"\[value size]\")\n            merge.setInput(i if i<2 else i+1, b)\n            AvgMult\['whitepoint'].setValue(i if i<2 else i+1)\n            \n        if n.knob('includeOriginal').getValue() == 1:\n            merge = nuke.toNode(\"Merge1\")\n            original = nuke.toNode('Original')\n            AvgMult = nuke.toNode(\"AverageMult\")\n            steps = int(n.knob('steps').getValue())\n            merge.setInput(steps+1, original)\n            AvgMult\['whitepoint'].setValue(2 if steps<2 else steps+1)\n            \nelif k.name() == \"output2\":\n    if n.knob(\"output2\").getValue() == 4:\n        n.knob('AvgMaxOriginal').setVisible(True)\n    else:\n        n.knob('AvgMaxOriginal').setVisible(False)"
+tile_color 0xcc804eff
+label "(\[value output2])"
+note_font "Verdana Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold"
+note_font_color 0xffffffff
+xpos 1025
+ypos 1097
+addUserKnob {20 ExponBlur}
+addUserKnob {41 channels T Shuffle1.in}
+addUserKnob {41 maskChannelMask_1 l area T Multiply1.maskChannelMask}
+addUserKnob {41 inject_1 l inject -STARTLINE T Multiply1.inject}
+addUserKnob {41 invert_mask_1 l invert -STARTLINE T Multiply1.invert_mask}
+addUserKnob {41 fringe_1 l fringe -STARTLINE T Multiply1.fringe}
+addUserKnob {26 ""}
+addUserKnob {4 output2 l Operation: M {Screen Plus Over Hypot Average Max Min "" "" "" "" ""}}
+output2 Plus
+addUserKnob {3 steps l "  Steps" -STARTLINE}
+steps 5
+addUserKnob {3 mergeNumber -STARTLINE +INVISIBLE}
+mergeNumber {{"output2 == 0 ? 25 : output2 == 1 ? 24 : output2 == 2 ? 28 : output2 == 3 ? 13 : output2 == 4 ? 24 : output2 == 5 ? 17 : 18"}}
+addUserKnob {26 text l " " -STARTLINE T " "}
+addUserKnob {6 includeOriginal l "Include Original?" -STARTLINE}
+addUserKnob {6 AvgMaxOriginal l "Use Max of Average and Original" +HIDDEN +STARTLINE}
+addUserKnob {14 size l Size R -100 100}
+size {{parent.WrapAll_size} {parent.WrapAll_size}}
+addUserKnob {7 mult l Multiplier R 1 8}
+mult 2
+addUserKnob {26 text_1 l " " T " "}
+addUserKnob {14 postBlur l "Post Blur" R 0 100}
+addUserKnob {26 ""}
+addUserKnob {41 maskChannelMask l mask T MergeKeymix.maskChannelMask}
+addUserKnob {41 inject -STARTLINE T MergeKeymix.inject}
+addUserKnob {41 invert_mask l invert -STARTLINE T MergeKeymix.invert_mask}
+addUserKnob {41 fringe -STARTLINE T MergeKeymix.fringe}
+addUserKnob {4 bbox l BBox: M {union intersectionMask A B "input format" "" "" "" "" "" "" "" ""}}
+addUserKnob {6 blackOutside l "Black Outside |" -STARTLINE}
+addUserKnob {7 adjustBBox l "Adjust BBox" -STARTLINE R 0 100}
+addUserKnob {41 mix T MergeKeymix.mix}
+addUserKnob {20 info l Info}
+addUserKnob {26 creator l Creator: T Name}
+addUserKnob {26 desc l Description: t "Add description and tooltip for gizmo" T "Name of Gizmo"}
+addUserKnob {26 ver l Version: T v01}
+}
+BackdropNode {
+inputs 0
+name BackdropNode1
+tile_color 0x535e5a00
+label "BBox Management"
+note_font_size 30
+note_font_color 0xffffffff
+xpos -529
+ypos 381
+bdwidth 341
+bdheight 525
+}
+Input {
+inputs 0
+name Inputimg
+xpos 0
+ypos -833
+}
+Dot {
+name Dot16
+note_font_size 41
+xpos 34
+ypos -666
+}
+set Ne4c5dba0 [stack 0]
+Dot {
+name Dot2
+note_font_size 41
+xpos -367
+ypos -666
+}
+Dot {
+name Dot18
+label B
+note_font_size 41
+xpos -367
+ypos 323
+}
+Dot {
+name Dot11
+note_font_size 41
+xpos -367
+ypos 512
+}
+set Ne4c6be10 [stack 0]
+Dot {
+name Dot3
+note_font_size 41
+xpos -367
+ypos 564
+}
+set Ne4c709e0 [stack 0]
+Dot {
+name Dot8
+note_font_size 41
+xpos -463
+ypos 564
+}
+Dot {
+name Dot15
+note_font_size 41
+xpos -463
+ypos 720
+}
+push $Ne4c5dba0
+Dot {
+name Dot1
+note_font_size 41
+xpos 461
+ypos -666
+}
+Shuffle {
+name Shuffle1
+label "\[value in]"
+xpos 427
+ypos -620
+}
+Remove {
+operation keep
+channels rgba
+name Remove1
+xpos 427
+ypos -582
+}
+Dot {
+name Dot21
+note_font_size 41
+xpos 461
+ypos -461
+}
+set Ne4c9c7a0 [stack 0]
+Invert {
+channels rgba
+name Invert1
+xpos 695
+ypos -465
+disable {{"parent.size < 0 ? 0 : 1"}}
+}
+set Ne4ca1300 [stack 0]
+Dot {
+name Dot4
+note_font_size 41
+xpos 609
+ypos -407
+}
+NoOp {
+name Original
+xpos 575
+ypos -191
+}
+Input {
+inputs 0
+name Inputarea
+xpos 289
+ypos -502
+number 2
+}
+AddChannels {
+channels alpha
+color 1
+name AddChannels1
+xpos 289
+ypos -444
+}
+Invert {
+channels rgba
+name Invert3
+xpos 289
+ypos -367
+}
+push $Ne4ca1300
+Multiply {
+inputs 1+1
+channels rgba
+value 0
+name Multiply1
+label "\[value value]"
+xpos 695
+ypos -373
+}
+NoOp {
+name Start
+xpos 695
+ypos -314
+}
+set Ne4cdb3c0 [stack 0]
+Blur {
+channels rgba
+size {{(Blur1.size)*(mult)**4} {(Blur1.size)*(mult)**4}}
+crop false
+name Blur5
+label "\[value size]"
+xpos 1095
+ypos -234
+}
+push $Ne4cdb3c0
+Blur {
+channels rgba
+size {{(Blur1.size)*(mult)**3} {(Blur1.size)*(mult)**3}}
+crop false
+name Blur4
+label "\[value size]"
+xpos 995
+ypos -234
+}
+push $Ne4cdb3c0
+Blur {
+channels rgba
+size {{(Blur1.size)*(mult)**2} {(Blur1.size)*(mult)**2}}
+crop false
+name Blur3
+label "\[value size]"
+xpos 895
+ypos -234
+}
+push 0
+push $Ne4cdb3c0
+Blur {
+channels rgba
+size {{(Blur1.size)*(mult)**1} {(Blur1.size)*(mult)**1}}
+crop false
+name Blur2
+label "\[value size]"
+xpos 795
+ypos -234
+}
+push $Ne4cdb3c0
+Blur {
+channels rgba
+size {{parent.size.w} {parent.size.h}}
+name Blur1
+label "\[value size]"
+xpos 695
+ypos -234
+}
+Merge2 {
+inputs 5+1
+operation {{parent.mergeNumber}}
+name Merge1
+label "\[ expr \{ \[value mix] == 1 ? \" \" : \[concat Mix: \[value mix]] \}]"
+xpos 695
+ypos -120
+}
+NoOp {
+name End
+xpos 695
+ypos -29
+}
+Grade {
+channels rgba
+whitepoint 5
+black_clamp false
+name AverageMult
+xpos 695
+ypos 9
+disable {{"output2 == 4 ? 0 : 1"}}
+}
+Merge2 {
+inputs 2
+operation max
+name Merge2
+label "\[ expr \{ \[value mix] == 1 ? \" \" : \[concat Mix: \[value mix]] \}]"
+xpos 695
+ypos 56
+disable {{"output2 == 4 && includeOriginal == 1 && AvgMaxOriginal == 1 ? 0 : 1"}}
+}
+Blur {
+channels rgba
+size {{parent.postBlur} {parent.postBlur}}
+name BlurOriginal
+label "\[value size]"
+xpos 695
+ypos 114
+}
+Invert {
+channels rgba
+name Invert2
+xpos 695
+ypos 182
+disable {{"parent.size < 0 ? 0 : 1"}}
+}
+push $Ne4c9c7a0
+Switch {
+inputs 2
+which {{"parent.size == 0 ? 0 : 1"}}
+name Switch1
+label "\[value which]"
+xpos 427
+ypos 176
+}
+push $Ne4c5dba0
+ShuffleCopy {
+inputs 2
+in2 none
+black red
+white green
+red2 blue
+green2 alpha
+out none
+out2 {{{parent.Shuffle1.in}}}
+name ShuffleCopy1
+xpos 0
+ypos 182
+}
+Dot {
+name Dot17
+label A
+note_font_size 41
+xpos 34
+ypos 344
+}
+Dot {
+name Dot7
+note_font_size 41
+xpos 34
+ypos 474
+}
+set Ne4d91820 [stack 0]
+Dot {
+name Dot12
+note_font_size 41
+xpos -260
+ypos 474
+}
+Dot {
+name Dot13
+note_font_size 41
+xpos -260
+ypos 688
+}
+push $Ne4c6be10
+Input {
+inputs 0
+name Inputmask
+xpos 346
+ypos 279
+number 1
+}
+Dot {
+name Dot19
+label Mask
+note_font_size 41
+xpos 380
+ypos 327
+}
+set Ne4da45d0 [stack 0]
+Dot {
+name Dot20
+note_font_size 41
+xpos 270
+ypos 327
+}
+push $Ne4d91820
+Merge2 {
+inputs 2
+bbox intersection
+Achannels {rgba.red -rgba.green -rgba.blue rgba.alpha}
+Bchannels {rgba.red -rgba.green -rgba.blue rgba.alpha}
+output {rgba.red -rgba.green -rgba.blue rgba.alpha}
+name MergeIntersection
+xpos 236
+ypos 464
+disable {{"!\[exists parent.input1]"}}
+}
+Merge2 {
+inputs 2
+Achannels {rgba.red -rgba.green -rgba.blue rgba.alpha}
+Bchannels {rgba.red -rgba.green -rgba.blue rgba.alpha}
+output {rgba.red -rgba.green -rgba.blue rgba.alpha}
+name MergeUnion
+xpos 236
+ypos 502
+disable {{"!\[exists parent.input1]"}}
+}
+Dot {
+name Dot6
+label "intersection\nof (Mask and A) + B"
+note_font_size 14
+note_font_color 0xffffffff
+xpos 270
+ypos 662
+}
+push $Ne4da45d0
+Dot {
+name Dot10
+note_font_size 41
+xpos 380
+ypos 564
+}
+push $Ne4d91820
+push $Ne4c709e0
+Merge2 {
+inputs 2+1
+operation copy
+Achannels none
+Bchannels none
+output none
+also_merge all
+name MergeKeymix
+xpos 0
+ypos 554
+}
+Dot {
+name Dot14
+note_font_size 41
+xpos 34
+ypos 636
+}
+set Ne4de85b0 [stack 0]
+push $Ne4c709e0
+CopyBBox {
+inputs 2
+name CopyBBoxUnion
+xpos -401
+ypos 632
+disable {{parent.bbox==0?0:1}}
+}
+CopyBBox {
+inputs 2
+name CopyBBoxIntersection
+xpos -401
+ypos 658
+disable {{"parent.bbox==1 ? 0 : 1"}}
+}
+CopyBBox {
+inputs 2
+name CopyBBoxA
+xpos -401
+ypos 684
+disable {{"parent.bbox==2 ? 0 : 1"}}
+}
+CopyBBox {
+inputs 2
+name CopyBBoxB
+xpos -401
+ypos 716
+disable {{"parent.bbox==3 ? 0 : 1"}}
+}
+Crop {
+box {0 0 {parent.width} {parent.height}}
+crop false
+name CopyBBoxFormat
+xpos -401
+ypos 742
+disable {{"parent.bbox==4 ? 0 : 1"}}
+addUserKnob {20 User}
+addUserKnob {22 cropToBbox l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+addUserKnob {22 cropToBbox_1 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+addUserKnob {22 cropToBbox_2 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+addUserKnob {22 cropToBbox_3 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+addUserKnob {22 cropToBbox_4 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+addUserKnob {22 cropToBbox_5 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+addUserKnob {22 cropToBbox_6 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+addUserKnob {22 cropToBbox_7 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+addUserKnob {22 cropToBbox_8 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+addUserKnob {22 cropToBbox_9 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+addUserKnob {22 cropToBbox_10 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+addUserKnob {22 cropToBbox_11 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+}
+AdjBBox {
+numpixels {{parent.adjustBBox}}
+name AdjBBox
+xpos -401
+ypos 768
+}
+Dot {
+name Dot9
+note_font_size 41
+xpos -367
+ypos 822
+}
+push $Ne4de85b0
+CopyBBox {
+inputs 2
+name CopyBBox
+xpos 0
+ypos 818
+}
+BlackOutside {
+name BlackOutside1
+xpos 0
+ypos 844
+disable {{!parent.blackOutside}}
+}
+Output {
+name Output1
+xpos 0
+ypos 984
+}
+end_group
+Dot {
+name Dot40
+note_font_size 41
+xpos 1059
+ypos 1277
+}
+set Ne4e39df0 [stack 0]
+Grade {
+channels all
+white {{WrapAll_amount/10}}
+name GradeBgWrapAmount
+xpos 1025
+ypos 1383
+}
+Dot {
+name Dot37
+label "WRAP ALL"
+note_font_size 61
+xpos 1059
+ypos 1692
+}
+set Ne4e4f0e0 [stack 0]
+Merge2 {
+inputs 2
+operation mask
+name Merge7
+xpos 1025
+ypos 3079
+}
+set Ne4e53c40 [stack 0]
+Merge2 {
+inputs 2
+name Merge1
+xpos 1537
+ypos 3079
+}
+push $Ne4e53c40
+push $Ne4c32de0
+push $Ne4a14520
+Dot {
+name Dot21
+xpos 2147
+ypos 495
+}
+Shuffle {
+red alpha
+green alpha
+blue alpha
+name Shuffle1
+label alphaOnly
+note_font Helvetica
+xpos 2113
+ypos 547
+}
+Dot {
+name Dot23
+xpos 2147
+ypos 3257
+}
+push $Ne4e39df0
+Dot {
+name Dot29
+note_font_size 41
+xpos 829
+ypos 1277
+}
+set Ne4ea6ce0 [stack 0]
+Dot {
+name Dot33
+note_font_size 41
+xpos 829
+ypos 2726
+}
+push $Ncb8f5420
+Unpremult {
+name Unpremult1
+xpos -158
+ypos 1184
+disable {{premultiplied*-1+1 i x1 1}}
+}
+set Ne4e8c920 [stack 0]
+Dot {
+name Dot13
+xpos -324
+ypos 1188
+}
+Dot {
+name Dot14
+xpos -324
+ypos 1871
+}
+push $Ne4c2e2a0
+push $Ne4e4f0e0
+push $Ne4983c40
+Dot {
+name Dot10
+xpos 350
+ypos 689
+}
+Clamp {
+minimum 0.001
+maximum 100
+name Clamp1
+xpos 316
+ypos 996
+}
+Dot {
+name Dot24
+xpos 350
+ypos 1517
+}
+push $Ne4ea6ce0
+push $Ne4e8c920
+Dot {
+name Dot12
+xpos 29
+ypos 1188
+}
+Group {
+inputs 2
+name ColorCopy_v01_
+tile_color 0x9e3c6300
+xpos -5
+ypos 1273
+addUserKnob {20 "" l User}
+addUserKnob {6 hue -STARTLINE}
+hue true
+addUserKnob {6 saturation -STARTLINE}
+saturation true
+addUserKnob {6 value -STARTLINE}
+addUserKnob {7 huemix l "hue mix"}
+huemix 1
+addUserKnob {7 satmix l "saturation mix"}
+satmix 1
+addUserKnob {7 valmix l "value mix"}
+addUserKnob {4 bbox M {"A side" "B side"}}
+bbox "B side"
+}
+Input {
+inputs 0
+name B
+xpos -150
+ypos -450
+}
+set Ne4ee6ce0 [stack 0]
+Dot {
+name Dot1
+tile_color 0xc0c0c000
+xpos -264
+ypos -380
+}
+Input {
+inputs 0
+name A
+xpos 235
+ypos -469
+number 1
+}
+Colorspace {
+colorspace_out HSV
+name Colorspace5
+xpos 235
+ypos -405
+}
+set Ne4ef4b20 [stack 0]
+Dot {
+name Dot2
+tile_color 0xc0c0c000
+xpos 214
+ypos 114
+}
+push $Ne4ef4b20
+push $Ne4ef4b20
+push $Ne4ef4b20
+push $Ne4ee6ce0
+Colorspace {
+colorspace_out HSV
+name Colorspace4
+xpos -150
+ypos -394
+}
+set Ne4f121f0 [stack 0]
+Copy {
+inputs 2
+from0 rgba.red
+to0 rgba.red
+bbox A
+name ChannelCopy3
+tile_color 0x9e3c6300
+label "(red -> red)"
+xpos -30
+ypos -270
+disable {{1-parent.hue}}
+}
+push $Ne4f121f0
+Dissolve {
+inputs 2
+channels {rgba.red -rgba.green -rgba.blue none}
+which {{parent.huemix}}
+name Dissolve1
+label (red)
+xpos -150
+ypos -225
+}
+set Ne4f38fd0 [stack 0]
+Copy {
+inputs 2
+from0 rgba.green
+to0 rgba.green
+bbox A
+name ChannelCopy4
+tile_color 0x9e3c6300
+label "(green -> green)"
+xpos -29
+ypos -198
+disable {{1-parent.saturation i}}
+}
+push $Ne4f38fd0
+Dissolve {
+inputs 2
+channels {-rgba.red rgba.green -rgba.blue none}
+which {{parent.satmix}}
+name Dissolve2
+label (green)
+xpos -150
+ypos -136
+}
+set Ne4f52370 [stack 0]
+Copy {
+inputs 2
+from0 rgba.blue
+to0 rgba.blue
+bbox A
+name ChannelCopy1
+tile_color 0x9e3c6300
+label "(blue -> blue)"
+xpos -26
+ypos -88
+disable {{1-parent.value}}
+}
+push $Ne4f52370
+Dissolve {
+inputs 2
+channels {-rgba.red -rgba.green rgba.blue none}
+which {{parent.valmix}}
+name Dissolve3
+label (blue)
+xpos -150
+ypos -16
+}
+Colorspace {
+colorspace_in HSV
+name Colorspace6
+xpos -150
+ypos 63
+}
+CopyBBox {
+inputs 2
+name CopyBBox2
+tile_color 0x9e3c6300
+xpos -150
+ypos 111
+}
+set Ne4f8f590 [stack 0]
+CopyBBox {
+inputs 2
+name CopyBBox1
+tile_color 0x9e3c6300
+xpos -298
+ypos 111
+disable {{1-(parent.bbox==1)}}
+}
+Output {
+name Output1
+xpos -298
+ypos 183
+}
+push $Ne4f8f590
+Viewer {
+frame_range 1,26
+roi {40 40 600 440}
+input_process false
+name Viewer1
+tile_color 0xff00f200
+xpos -343
+ypos -321
+hide_input true
+addUserKnob {20 User}
+addUserKnob {6 toAddBtn -STARTLINE}
+toAddBtn true
+addUserKnob {6 toAddBtn_1 l toAddBtn -STARTLINE}
+addUserKnob {6 toAddBtn_2 l toAddBtn -STARTLINE}
+addUserKnob {6 toAddBtn_3 l toAddBtn -STARTLINE}
+addUserKnob {6 toAddBtn_4 l toAddBtn -STARTLINE}
+addUserKnob {6 toAddBtn_5 l toAddBtn -STARTLINE}
+addUserKnob {6 toAddBtn_6 l toAddBtn -STARTLINE}
+addUserKnob {6 toAddBtn_7 l toAddBtn -STARTLINE}
+addUserKnob {6 toAddBtn_8 l toAddBtn -STARTLINE}
+addUserKnob {6 toAddBtn_9 l toAddBtn -STARTLINE}
+addUserKnob {6 toAddBtn -STARTLINE}
+toAddBtn true
+}
+end_group
+Dot {
+name Dot36
+label "BLEND EDGES"
+note_font_size 45
+xpos 29
+ypos 1411
+}
+push $Ne4e8c920
+Merge2 {
+inputs 2+1
+operation copy
+output {rgba.red rgba.green rgba.blue -rgba.alpha}
+mix {{parent.iColor_amount}}
+name Merge10
+label "\[ expr \{ \[value mix] == 1 ? \" \" : \[concat Mix: \[value mix]] \}]"
+xpos -152
+ypos 1513
+}
+Merge2 {
+inputs 2
+bbox B
+name Merge5
+xpos -152
+ypos 1688
+}
+Merge2 {
+inputs 2
+bbox B
+name Merge6
+xpos -152
+ypos 1797
+}
+Copy {
+inputs 2
+from0 rgba.alpha
+to0 rgba.alpha
+name Copy1
+xpos -152
+ypos 1861
+}
+Dot {
+name Dot32
+note_font_size 41
+xpos -118
+ypos 2247
+}
+set N5f825020 [stack 0]
+Premult {
+name Premult4
+xpos 58
+ypos 2243
+disable {{premultiplied*-1+1 i}}
+}
+set N5f829960 [stack 0]
+push $Ne4953fc0
+Dot {
+name Dot35
+xpos 2298
+ypos 2172
+}
+Shuffle {
+alpha white
+name Shuffle2
+label "\[value in]"
+xpos 225
+ypos 2162
+}
+Merge2 {
+inputs 2
+operation stencil
+bbox B
+name Merge8
+label "\[ expr \{ \[value mix] == 1 ? \" \" : \[concat Mix: \[value mix]] \}]"
+xpos 225
+ypos 2243
+}
+Colorspace {
+colorspace_out AlexaV3LogC
+name Colorspace3
+label "\[value colorspace_in] >> \[value colorspace_out]"
+xpos 225
+ypos 2316
+}
+Group {
+name ExponBlurSimple3
+onCreate "n = nuke.thisNode()\nn.knob('size').setRange(-100, 100)"
+knobChanged "n = nuke.thisNode()\nk = nuke.thisKnob()\n\nif k.name() == \"includeOriginal\":\n    if n.knob('includeOriginal').getValue() == 1:\n        merge = nuke.toNode(\"Merge1\")\n        original = nuke.toNode('Original')\n        AvgMult = nuke.toNode(\"AverageMult\")\n        steps = int(n.knob('steps').getValue())\n        merge.setInput(steps+1, original)\n        AvgMult\['whitepoint'].setValue(2 if steps<2 else steps+1)\n        \n    else:\n        merge.setInput(steps+1, None)\n        AvgMult\['whitepoint'].setValue(2 if steps<2 else steps)\n        \nelif k.name() == \"steps\":\n    \n    s = int(k.value())\n    if s<1:\n        k.setValue(1)\n    else:\n        start = nuke.toNode(\"Start\")\n        end   = nuke.toNode(\"End\")\n        b1    = nuke.toNode(\"Blur1\")\n        merge = nuke.toNode(\"Merge1\")\n        AvgMult = nuke.toNode(\"AverageMult\")\n        \n        b1x   = b1.xpos()\n        b1y   = b1.ypos()\n        b1n   = b1.name()\n        \n        steps = int(n.knob('steps').getValue())\n        size  = n.knob('size').getValue()\n        mult  = n.knob('mult').getValue()\n        \n        #b1.setInput(0, start)\n        for i in range(1,merge.inputs()):\n            merge.setInput(i,None)\n        merge.setInput(0, b1)\n        \[nuke.delete(i) for i in nuke.allNodes() if i.xpos()>start.xpos()]\n        for i in range(1,steps):\n            # Blur\n            b = nuke.nodes.Blur()\n            b.setXYpos(b1x+i*100,b1y)\n            b.setInput(0,start)\n            b\[\"channels\"].setValue(\"rgba\")\n            b\[\"crop\"].setValue(0)\n            b\[\"size\"].setValue(0, 1)\n            b\[\"size\"].setExpression(\"(Blur1.size)*(mult)**%s\"%(i))\n            b\[\"label\"].setValue(\"\[value size]\")\n            merge.setInput(i if i<2 else i+1, b)\n            AvgMult\['whitepoint'].setValue(i if i<2 else i+1)\n            \n        if n.knob('includeOriginal').getValue() == 1:\n            merge = nuke.toNode(\"Merge1\")\n            original = nuke.toNode('Original')\n            AvgMult = nuke.toNode(\"AverageMult\")\n            steps = int(n.knob('steps').getValue())\n            merge.setInput(steps+1, original)\n            AvgMult\['whitepoint'].setValue(2 if steps<2 else steps+1)\n            \nelif k.name() == \"output2\":\n    if n.knob(\"output2\").getValue() == 4:\n        n.knob('AvgMaxOriginal').setVisible(True)\n    else:\n        n.knob('AvgMaxOriginal').setVisible(False)"
+tile_color 0xcc804eff
+label "(\[value output2])"
+note_font "Verdana Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold"
+note_font_color 0xffffffff
+xpos 225
+ypos 2396
+addUserKnob {20 ExponBlur}
+addUserKnob {41 channels T Shuffle1.in}
+addUserKnob {41 maskChannelMask_1 l area T Multiply1.maskChannelMask}
+addUserKnob {41 inject_1 l inject -STARTLINE T Multiply1.inject}
+addUserKnob {41 invert_mask_1 l invert -STARTLINE T Multiply1.invert_mask}
+addUserKnob {41 fringe_1 l fringe -STARTLINE T Multiply1.fringe}
+addUserKnob {26 ""}
+addUserKnob {4 output2 l Operation: M {Screen Plus Over Hypot Average Max Min "" "" "" "" ""}}
+output2 Average
+addUserKnob {3 steps l "  Steps" -STARTLINE}
+steps 6
+addUserKnob {3 mergeNumber -STARTLINE +INVISIBLE}
+mergeNumber {{"output2 == 0 ? 25 : output2 == 1 ? 24 : output2 == 2 ? 28 : output2 == 3 ? 13 : output2 == 4 ? 24 : output2 == 5 ? 17 : 18"}}
+addUserKnob {26 text l " " -STARTLINE T " "}
+addUserKnob {6 includeOriginal l "Include Original?" -STARTLINE}
+addUserKnob {6 AvgMaxOriginal l "Use Max of Average and Original" +STARTLINE}
+addUserKnob {14 size l Size R -100 100}
+size {{parent.WrapAll_size} {parent.WrapAll_size}}
+addUserKnob {7 mult l Multiplier R 1 8}
+mult 2
+addUserKnob {26 text_1 l " " T " "}
+addUserKnob {14 postBlur l "Post Blur" R 0 100}
+postBlur 200
+addUserKnob {26 ""}
+addUserKnob {41 maskChannelMask l mask T MergeKeymix.maskChannelMask}
+addUserKnob {41 inject -STARTLINE T MergeKeymix.inject}
+addUserKnob {41 invert_mask l invert -STARTLINE T MergeKeymix.invert_mask}
+addUserKnob {41 fringe -STARTLINE T MergeKeymix.fringe}
+addUserKnob {4 bbox l BBox: M {union intersectionMask A B "input format" "" "" "" "" "" "" "" ""}}
+addUserKnob {6 blackOutside l "Black Outside |" -STARTLINE}
+addUserKnob {7 adjustBBox l "Adjust BBox" -STARTLINE R 0 100}
+addUserKnob {41 mix T MergeKeymix.mix}
+addUserKnob {20 info l Info}
+addUserKnob {26 creator l Creator: T Name}
+addUserKnob {26 desc l Description: t "Add description and tooltip for gizmo" T "Name of Gizmo"}
+addUserKnob {26 ver l Version: T v01}
+}
+BackdropNode {
+inputs 0
+name BackdropNode1
+tile_color 0x535e5a00
+label "BBox Management"
+note_font_size 30
+note_font_color 0xffffffff
+xpos -529
+ypos 381
+bdwidth 341
+bdheight 525
+}
+Input {
+inputs 0
+name Inputimg
+xpos 0
+ypos -833
+}
+Dot {
+name Dot16
+note_font_size 41
+xpos 34
+ypos -666
+}
+set N5f880400 [stack 0]
+Dot {
+name Dot2
+note_font_size 41
+xpos -367
+ypos -666
+}
+Dot {
+name Dot18
+label B
+note_font_size 41
+xpos -367
+ypos 323
+}
+Dot {
+name Dot11
+note_font_size 41
+xpos -367
+ypos 512
+}
+set N5f88e670 [stack 0]
+Dot {
+name Dot3
+note_font_size 41
+xpos -367
+ypos 564
+}
+set N5f893240 [stack 0]
+Dot {
+name Dot8
+note_font_size 41
+xpos -463
+ypos 564
+}
+Dot {
+name Dot15
+note_font_size 41
+xpos -463
+ypos 720
+}
+push $N5f880400
+Dot {
+name Dot1
+note_font_size 41
+xpos 461
+ypos -666
+}
+Shuffle {
+name Shuffle1
+label "\[value in]"
+xpos 427
+ypos -620
+}
+Remove {
+operation keep
+channels rgba
+name Remove1
+xpos 427
+ypos -582
+}
+Dot {
+name Dot21
+note_font_size 41
+xpos 461
+ypos -461
+}
+set N5f8bf000 [stack 0]
+Invert {
+channels rgba
+name Invert1
+xpos 695
+ypos -465
+disable {{"parent.size < 0 ? 0 : 1"}}
+}
+set N5f8c3b60 [stack 0]
+Dot {
+name Dot4
+note_font_size 41
+xpos 609
+ypos -407
+}
+NoOp {
+name Original
+xpos 575
+ypos -191
+}
+Input {
+inputs 0
+name Inputarea
+xpos 289
+ypos -502
+number 2
+}
+AddChannels {
+channels alpha
+color 1
+name AddChannels1
+xpos 289
+ypos -444
+}
+Invert {
+channels rgba
+name Invert3
+xpos 289
+ypos -367
+}
+push $N5f8c3b60
+Multiply {
+inputs 1+1
+channels rgba
+value 0
+name Multiply1
+label "\[value value]"
+xpos 695
+ypos -373
+}
+NoOp {
+name Start
+xpos 695
+ypos -314
+}
+set N5f8fdc20 [stack 0]
+Blur {
+channels rgba
+size {{(Blur1.size)*(mult)**5} {(Blur1.size)*(mult)**5}}
+crop false
+name Blur6
+label "\[value size]"
+xpos 1195
+ypos -234
+}
+push $N5f8fdc20
+Blur {
+channels rgba
+size {{(Blur1.size)*(mult)**4} {(Blur1.size)*(mult)**4}}
+crop false
+name Blur5
+label "\[value size]"
+xpos 1095
+ypos -234
+}
+push $N5f8fdc20
+Blur {
+channels rgba
+size {{(Blur1.size)*(mult)**3} {(Blur1.size)*(mult)**3}}
+crop false
+name Blur4
+label "\[value size]"
+xpos 995
+ypos -234
+}
+push $N5f8fdc20
+Blur {
+channels rgba
+size {{(Blur1.size)*(mult)**2} {(Blur1.size)*(mult)**2}}
+crop false
+name Blur3
+label "\[value size]"
+xpos 895
+ypos -234
+}
+push 0
+push $N5f8fdc20
+Blur {
+channels rgba
+size {{(Blur1.size)*(mult)**1} {(Blur1.size)*(mult)**1}}
+crop false
+name Blur2
+label "\[value size]"
+xpos 795
+ypos -234
+}
+push $N5f8fdc20
+Blur {
+channels rgba
+size {{parent.size.w} {parent.size.h}}
+name Blur1
+label "\[value size]"
+xpos 695
+ypos -234
+}
+Merge2 {
+inputs 6+1
+operation {{parent.mergeNumber}}
+name Merge1
+label "\[ expr \{ \[value mix] == 1 ? \" \" : \[concat Mix: \[value mix]] \}]"
+xpos 695
+ypos -120
+}
+NoOp {
+name End
+xpos 695
+ypos -29
+}
+Grade {
+channels rgba
+whitepoint 6
+black_clamp false
+name AverageMult
+xpos 695
+ypos 9
+disable {{"output2 == 4 ? 0 : 1"}}
+}
+Merge2 {
+inputs 2
+operation max
+name Merge2
+label "\[ expr \{ \[value mix] == 1 ? \" \" : \[concat Mix: \[value mix]] \}]"
+xpos 695
+ypos 56
+disable {{"output2 == 4 && includeOriginal == 1 && AvgMaxOriginal == 1 ? 0 : 1"}}
+}
+Blur {
+channels rgba
+size {{parent.postBlur} {parent.postBlur}}
+name BlurOriginal
+label "\[value size]"
+xpos 695
+ypos 114
+}
+Invert {
+channels rgba
+name Invert2
+xpos 695
+ypos 182
+disable {{"parent.size < 0 ? 0 : 1"}}
+}
+push $N5f8bf000
+Switch {
+inputs 2
+which {{"parent.size == 0 ? 0 : 1"}}
+name Switch1
+label "\[value which]"
+xpos 427
+ypos 176
+}
+push $N5f880400
+ShuffleCopy {
+inputs 2
+in2 none
+black red
+white green
+red2 blue
+green2 alpha
+out none
+out2 {{{parent.Shuffle1.in}}}
+name ShuffleCopy1
+xpos 0
+ypos 182
+}
+Dot {
+name Dot17
+label A
+note_font_size 41
+xpos 34
+ypos 344
+}
+Dot {
+name Dot7
+note_font_size 41
+xpos 34
+ypos 474
+}
+set N5f9c1c50 [stack 0]
+Dot {
+name Dot12
+note_font_size 41
+xpos -260
+ypos 474
+}
+Dot {
+name Dot13
+note_font_size 41
+xpos -260
+ypos 688
+}
+push $N5f88e670
+Input {
+inputs 0
+name Inputmask
+xpos 346
+ypos 279
+number 1
+}
+Dot {
+name Dot19
+label Mask
+note_font_size 41
+xpos 380
+ypos 327
+}
+set N5f9d4a00 [stack 0]
+Dot {
+name Dot20
+note_font_size 41
+xpos 270
+ypos 327
+}
+push $N5f9c1c50
+Merge2 {
+inputs 2
+bbox intersection
+Achannels {rgba.red -rgba.green -rgba.blue rgba.alpha}
+Bchannels {rgba.red -rgba.green -rgba.blue rgba.alpha}
+output {rgba.red -rgba.green -rgba.blue rgba.alpha}
+name MergeIntersection
+xpos 236
+ypos 464
+disable {{"!\[exists parent.input1]"}}
+}
+Merge2 {
+inputs 2
+Achannels {rgba.red -rgba.green -rgba.blue rgba.alpha}
+Bchannels {rgba.red -rgba.green -rgba.blue rgba.alpha}
+output {rgba.red -rgba.green -rgba.blue rgba.alpha}
+name MergeUnion
+xpos 236
+ypos 502
+disable {{"!\[exists parent.input1]"}}
+}
+Dot {
+name Dot6
+label "intersection\nof (Mask and A) + B"
+note_font_size 14
+note_font_color 0xffffffff
+xpos 270
+ypos 662
+}
+push $N5f9d4a00
+Dot {
+name Dot10
+note_font_size 41
+xpos 380
+ypos 564
+}
+push $N5f9c1c50
+push $N5f893240
+Merge2 {
+inputs 2+1
+operation copy
+Achannels none
+Bchannels none
+output none
+also_merge all
+name MergeKeymix
+xpos 0
+ypos 554
+}
+Dot {
+name Dot14
+note_font_size 41
+xpos 34
+ypos 636
+}
+set N5fa18c50 [stack 0]
+push $N5f893240
+CopyBBox {
+inputs 2
+name CopyBBoxUnion
+xpos -401
+ypos 632
+disable {{parent.bbox==0?0:1}}
+}
+CopyBBox {
+inputs 2
+name CopyBBoxIntersection
+xpos -401
+ypos 658
+disable {{"parent.bbox==1 ? 0 : 1"}}
+}
+CopyBBox {
+inputs 2
+name CopyBBoxA
+xpos -401
+ypos 684
+disable {{"parent.bbox==2 ? 0 : 1"}}
+}
+CopyBBox {
+inputs 2
+name CopyBBoxB
+xpos -401
+ypos 716
+disable {{"parent.bbox==3 ? 0 : 1"}}
+}
+Crop {
+box {0 0 {parent.width} {parent.height}}
+crop false
+name CopyBBoxFormat
+xpos -401
+ypos 742
+disable {{"parent.bbox==4 ? 0 : 1"}}
+addUserKnob {20 User}
+addUserKnob {22 cropToBbox l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+addUserKnob {22 cropToBbox_1 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+addUserKnob {22 cropToBbox_2 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+addUserKnob {22 cropToBbox_3 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+addUserKnob {22 cropToBbox_4 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+addUserKnob {22 cropToBbox_5 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+addUserKnob {22 cropToBbox_6 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+addUserKnob {22 cropToBbox_7 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+addUserKnob {22 cropToBbox_8 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+addUserKnob {22 cropToBbox_9 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+addUserKnob {22 cropToBbox_10 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+addUserKnob {22 cropToBbox_11 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+}
+AdjBBox {
+numpixels {{parent.adjustBBox}}
+name AdjBBox
+xpos -401
+ypos 768
+}
+Dot {
+name Dot9
+note_font_size 41
+xpos -367
+ypos 822
+}
+push $N5fa18c50
+CopyBBox {
+inputs 2
+name CopyBBox
+xpos 0
+ypos 818
+}
+BlackOutside {
+name BlackOutside1
+xpos 0
+ypos 844
+disable {{!parent.blackOutside}}
+}
+Output {
+name Output1
+xpos 0
+ypos 984
+}
+end_group
+Colorspace {
+colorspace_in AlexaV3LogC
+name Colorspace4
+label "\[value colorspace_in] >> \[value colorspace_out]"
+xpos 225
+ypos 2434
+}
+Unpremult {
+name Unpremult3
+xpos 225
+ypos 2472
+}
+push $N5f825020
+Dot {
+name Dot39
+xpos -118
+ypos 2537
+}
+set N5fa8ae80 [stack 0]
+push $N5f829960
+Colorspace {
+colorspace_out AlexaV3LogC
+name Colorspace1
+label "\[value colorspace_in] >> \[value colorspace_out]"
+xpos 58
+ypos 2316
+}
+Group {
+name ExponBlurSimple5
+onCreate "n = nuke.thisNode()\nn.knob('size').setRange(-100, 100)"
+knobChanged "n = nuke.thisNode()\nk = nuke.thisKnob()\n\nif k.name() == \"includeOriginal\":\n    if n.knob('includeOriginal').getValue() == 1:\n        merge = nuke.toNode(\"Merge1\")\n        original = nuke.toNode('Original')\n        AvgMult = nuke.toNode(\"AverageMult\")\n        steps = int(n.knob('steps').getValue())\n        merge.setInput(steps+1, original)\n        AvgMult\['whitepoint'].setValue(2 if steps<2 else steps+1)\n        \n    else:\n        merge.setInput(steps+1, None)\n        AvgMult\['whitepoint'].setValue(2 if steps<2 else steps)\n        \nelif k.name() == \"steps\":\n    \n    s = int(k.value())\n    if s<1:\n        k.setValue(1)\n    else:\n        start = nuke.toNode(\"Start\")\n        end   = nuke.toNode(\"End\")\n        b1    = nuke.toNode(\"Blur1\")\n        merge = nuke.toNode(\"Merge1\")\n        AvgMult = nuke.toNode(\"AverageMult\")\n        \n        b1x   = b1.xpos()\n        b1y   = b1.ypos()\n        b1n   = b1.name()\n        \n        steps = int(n.knob('steps').getValue())\n        size  = n.knob('size').getValue()\n        mult  = n.knob('mult').getValue()\n        \n        #b1.setInput(0, start)\n        for i in range(1,merge.inputs()):\n            merge.setInput(i,None)\n        merge.setInput(0, b1)\n        \[nuke.delete(i) for i in nuke.allNodes() if i.xpos()>start.xpos()]\n        for i in range(1,steps):\n            # Blur\n            b = nuke.nodes.Blur()\n            b.setXYpos(b1x+i*100,b1y)\n            b.setInput(0,start)\n            b\[\"channels\"].setValue(\"rgba\")\n            b\[\"crop\"].setValue(0)\n            b\[\"size\"].setValue(0, 1)\n            b\[\"size\"].setExpression(\"(Blur1.size)*(mult)**%s\"%(i))\n            b\[\"label\"].setValue(\"\[value size]\")\n            merge.setInput(i if i<2 else i+1, b)\n            AvgMult\['whitepoint'].setValue(i if i<2 else i+1)\n            \n        if n.knob('includeOriginal').getValue() == 1:\n            merge = nuke.toNode(\"Merge1\")\n            original = nuke.toNode('Original')\n            AvgMult = nuke.toNode(\"AverageMult\")\n            steps = int(n.knob('steps').getValue())\n            merge.setInput(steps+1, original)\n            AvgMult\['whitepoint'].setValue(2 if steps<2 else steps+1)\n            \nelif k.name() == \"output2\":\n    if n.knob(\"output2\").getValue() == 4:\n        n.knob('AvgMaxOriginal').setVisible(True)\n    else:\n        n.knob('AvgMaxOriginal').setVisible(False)"
+tile_color 0xcc804eff
+label "(\[value output2])"
+note_font "Verdana Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold"
+note_font_color 0xffffffff
+xpos 58
+ypos 2393
+addUserKnob {20 ExponBlur}
+addUserKnob {41 channels T Shuffle1.in}
+addUserKnob {41 maskChannelMask_1 l area T Multiply1.maskChannelMask}
+addUserKnob {41 inject_1 l inject -STARTLINE T Multiply1.inject}
+addUserKnob {41 invert_mask_1 l invert -STARTLINE T Multiply1.invert_mask}
+addUserKnob {41 fringe_1 l fringe -STARTLINE T Multiply1.fringe}
+addUserKnob {26 ""}
+addUserKnob {4 output2 l Operation: M {Screen Plus Over Hypot Average Max Min "" "" "" "" ""}}
+output2 Average
+addUserKnob {3 steps l "  Steps" -STARTLINE}
+steps 6
+addUserKnob {3 mergeNumber -STARTLINE +INVISIBLE}
+mergeNumber {{"output2 == 0 ? 25 : output2 == 1 ? 24 : output2 == 2 ? 28 : output2 == 3 ? 13 : output2 == 4 ? 24 : output2 == 5 ? 17 : 18"}}
+addUserKnob {26 text l " " -STARTLINE T " "}
+addUserKnob {6 includeOriginal l "Include Original?" -STARTLINE}
+addUserKnob {6 AvgMaxOriginal l "Use Max of Average and Original" +STARTLINE}
+addUserKnob {14 size l Size R -100 100}
+size {{parent.WrapAll_size} {parent.WrapAll_size}}
+addUserKnob {7 mult l Multiplier R 1 8}
+mult 2
+addUserKnob {26 text_1 l " " T " "}
+addUserKnob {14 postBlur l "Post Blur" R 0 100}
+postBlur 200
+addUserKnob {26 ""}
+addUserKnob {41 maskChannelMask l mask T MergeKeymix.maskChannelMask}
+addUserKnob {41 inject -STARTLINE T MergeKeymix.inject}
+addUserKnob {41 invert_mask l invert -STARTLINE T MergeKeymix.invert_mask}
+addUserKnob {41 fringe -STARTLINE T MergeKeymix.fringe}
+addUserKnob {4 bbox l BBox: M {union intersectionMask A B "input format" "" "" "" "" "" "" "" ""}}
+addUserKnob {6 blackOutside l "Black Outside |" -STARTLINE}
+addUserKnob {7 adjustBBox l "Adjust BBox" -STARTLINE R 0 100}
+addUserKnob {41 mix T MergeKeymix.mix}
+addUserKnob {20 info l Info}
+addUserKnob {26 creator l Creator: T Name}
+addUserKnob {26 desc l Description: t "Add description and tooltip for gizmo" T "Name of Gizmo"}
+addUserKnob {26 ver l Version: T v01}
+}
+BackdropNode {
+inputs 0
+name BackdropNode1
+tile_color 0x535e5a00
+label "BBox Management"
+note_font_size 30
+note_font_color 0xffffffff
+xpos -529
+ypos 381
+bdwidth 341
+bdheight 525
+}
+Input {
+inputs 0
+name Inputimg
+xpos 0
+ypos -833
+}
+Dot {
+name Dot16
+note_font_size 41
+xpos 34
+ypos -666
+}
+set N5fac2010 [stack 0]
+Dot {
+name Dot2
+note_font_size 41
+xpos -367
+ypos -666
+}
+Dot {
+name Dot18
+label B
+note_font_size 41
+xpos -367
+ypos 323
+}
+Dot {
+name Dot11
+note_font_size 41
+xpos -367
+ypos 512
+}
+set N5fad0280 [stack 0]
+Dot {
+name Dot3
+note_font_size 41
+xpos -367
+ypos 564
+}
+set N5fad4e50 [stack 0]
+Dot {
+name Dot8
+note_font_size 41
+xpos -463
+ypos 564
+}
+Dot {
+name Dot15
+note_font_size 41
+xpos -463
+ypos 720
+}
+push $N5fac2010
+Dot {
+name Dot1
+note_font_size 41
+xpos 461
+ypos -666
+}
+Shuffle {
+name Shuffle1
+label "\[value in]"
+xpos 427
+ypos -620
+}
+Remove {
+operation keep
+channels rgba
+name Remove1
+xpos 427
+ypos -582
+}
+Dot {
+name Dot21
+note_font_size 41
+xpos 461
+ypos -461
+}
+set N5fb00c10 [stack 0]
+Invert {
+channels rgba
+name Invert1
+xpos 695
+ypos -465
+disable {{"parent.size < 0 ? 0 : 1"}}
+}
+set N5fb05770 [stack 0]
+Dot {
+name Dot4
+note_font_size 41
+xpos 609
+ypos -407
+}
+NoOp {
+name Original
+xpos 575
+ypos -191
+}
+Input {
+inputs 0
+name Inputarea
+xpos 289
+ypos -502
+number 2
+}
+AddChannels {
+channels alpha
+color 1
+name AddChannels1
+xpos 289
+ypos -444
+}
+Invert {
+channels rgba
+name Invert3
+xpos 289
+ypos -367
+}
+push $N5fb05770
+Multiply {
+inputs 1+1
+channels rgba
+value 0
+name Multiply1
+label "\[value value]"
+xpos 695
+ypos -373
+}
+NoOp {
+name Start
+xpos 695
+ypos -314
+}
+set N5fb3f830 [stack 0]
+Blur {
+channels rgba
+size {{(Blur1.size)*(mult)**5} {(Blur1.size)*(mult)**5}}
+crop false
+name Blur6
+label "\[value size]"
+xpos 1195
+ypos -234
+}
+push $N5fb3f830
+Blur {
+channels rgba
+size {{(Blur1.size)*(mult)**4} {(Blur1.size)*(mult)**4}}
+crop false
+name Blur5
+label "\[value size]"
+xpos 1095
+ypos -234
+}
+push $N5fb3f830
+Blur {
+channels rgba
+size {{(Blur1.size)*(mult)**3} {(Blur1.size)*(mult)**3}}
+crop false
+name Blur4
+label "\[value size]"
+xpos 995
+ypos -234
+}
+push $N5fb3f830
+Blur {
+channels rgba
+size {{(Blur1.size)*(mult)**2} {(Blur1.size)*(mult)**2}}
+crop false
+name Blur3
+label "\[value size]"
+xpos 895
+ypos -234
+}
+push 0
+push $N5fb3f830
+Blur {
+channels rgba
+size {{(Blur1.size)*(mult)**1} {(Blur1.size)*(mult)**1}}
+crop false
+name Blur2
+label "\[value size]"
+xpos 795
+ypos -234
+}
+push $N5fb3f830
+Blur {
+channels rgba
+size {{parent.size.w} {parent.size.h}}
+name Blur1
+label "\[value size]"
+xpos 695
+ypos -234
+}
+Merge2 {
+inputs 6+1
+operation {{parent.mergeNumber}}
+name Merge1
+label "\[ expr \{ \[value mix] == 1 ? \" \" : \[concat Mix: \[value mix]] \}]"
+xpos 695
+ypos -120
+}
+NoOp {
+name End
+xpos 695
+ypos -29
+}
+Grade {
+channels rgba
+whitepoint 6
+black_clamp false
+name AverageMult
+xpos 695
+ypos 9
+disable {{"output2 == 4 ? 0 : 1"}}
+}
+Merge2 {
+inputs 2
+operation max
+name Merge2
+label "\[ expr \{ \[value mix] == 1 ? \" \" : \[concat Mix: \[value mix]] \}]"
+xpos 695
+ypos 56
+disable {{"output2 == 4 && includeOriginal == 1 && AvgMaxOriginal == 1 ? 0 : 1"}}
+}
+Blur {
+channels rgba
+size {{parent.postBlur} {parent.postBlur}}
+name BlurOriginal
+label "\[value size]"
+xpos 695
+ypos 114
+}
+Invert {
+channels rgba
+name Invert2
+xpos 695
+ypos 182
+disable {{"parent.size < 0 ? 0 : 1"}}
+}
+push $N5fb00c10
+Switch {
+inputs 2
+which {{"parent.size == 0 ? 0 : 1"}}
+name Switch1
+label "\[value which]"
+xpos 427
+ypos 176
+}
+push $N5fac2010
+ShuffleCopy {
+inputs 2
+in2 none
+black red
+white green
+red2 blue
+green2 alpha
+out none
+out2 {{{parent.Shuffle1.in}}}
+name ShuffleCopy1
+xpos 0
+ypos 182
+}
+Dot {
+name Dot17
+label A
+note_font_size 41
+xpos 34
+ypos 344
+}
+Dot {
+name Dot7
+note_font_size 41
+xpos 34
+ypos 474
+}
+set N5fc03860 [stack 0]
+Dot {
+name Dot12
+note_font_size 41
+xpos -260
+ypos 474
+}
+Dot {
+name Dot13
+note_font_size 41
+xpos -260
+ypos 688
+}
+push $N5fad0280
+Input {
+inputs 0
+name Inputmask
+xpos 346
+ypos 279
+number 1
+}
+Dot {
+name Dot19
+label Mask
+note_font_size 41
+xpos 380
+ypos 327
+}
+set N5fc16610 [stack 0]
+Dot {
+name Dot20
+note_font_size 41
+xpos 270
+ypos 327
+}
+push $N5fc03860
+Merge2 {
+inputs 2
+bbox intersection
+Achannels {rgba.red -rgba.green -rgba.blue rgba.alpha}
+Bchannels {rgba.red -rgba.green -rgba.blue rgba.alpha}
+output {rgba.red -rgba.green -rgba.blue rgba.alpha}
+name MergeIntersection
+xpos 236
+ypos 464
+disable {{"!\[exists parent.input1]"}}
+}
+Merge2 {
+inputs 2
+Achannels {rgba.red -rgba.green -rgba.blue rgba.alpha}
+Bchannels {rgba.red -rgba.green -rgba.blue rgba.alpha}
+output {rgba.red -rgba.green -rgba.blue rgba.alpha}
+name MergeUnion
+xpos 236
+ypos 502
+disable {{"!\[exists parent.input1]"}}
+}
+Dot {
+name Dot6
+label "intersection\nof (Mask and A) + B"
+note_font_size 14
+note_font_color 0xffffffff
+xpos 270
+ypos 662
+}
+push $N5fc16610
+Dot {
+name Dot10
+note_font_size 41
+xpos 380
+ypos 564
+}
+push $N5fc03860
+push $N5fad4e50
+Merge2 {
+inputs 2+1
+operation copy
+Achannels none
+Bchannels none
+output none
+also_merge all
+name MergeKeymix
+xpos 0
+ypos 554
+}
+Dot {
+name Dot14
+note_font_size 41
+xpos 34
+ypos 636
+}
+set N5fc5a860 [stack 0]
+push $N5fad4e50
+CopyBBox {
+inputs 2
+name CopyBBoxUnion
+xpos -401
+ypos 632
+disable {{parent.bbox==0?0:1}}
+}
+CopyBBox {
+inputs 2
+name CopyBBoxIntersection
+xpos -401
+ypos 658
+disable {{"parent.bbox==1 ? 0 : 1"}}
+}
+CopyBBox {
+inputs 2
+name CopyBBoxA
+xpos -401
+ypos 684
+disable {{"parent.bbox==2 ? 0 : 1"}}
+}
+CopyBBox {
+inputs 2
+name CopyBBoxB
+xpos -401
+ypos 716
+disable {{"parent.bbox==3 ? 0 : 1"}}
+}
+Crop {
+box {0 0 {parent.width} {parent.height}}
+crop false
+name CopyBBoxFormat
+xpos -401
+ypos 742
+disable {{"parent.bbox==4 ? 0 : 1"}}
+addUserKnob {20 User}
+addUserKnob {22 cropToBbox l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+addUserKnob {22 cropToBbox_1 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+addUserKnob {22 cropToBbox_2 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+addUserKnob {22 cropToBbox_3 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+addUserKnob {22 cropToBbox_4 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+addUserKnob {22 cropToBbox_5 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+addUserKnob {22 cropToBbox_6 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+addUserKnob {22 cropToBbox_7 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+addUserKnob {22 cropToBbox_8 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+addUserKnob {22 cropToBbox_9 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+addUserKnob {22 cropToBbox_10 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+addUserKnob {22 cropToBbox_11 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+}
+AdjBBox {
+numpixels {{parent.adjustBBox}}
+name AdjBBox
+xpos -401
+ypos 768
+}
+Dot {
+name Dot9
+note_font_size 41
+xpos -367
+ypos 822
+}
+push $N5fc5a860
+CopyBBox {
+inputs 2
+name CopyBBox
+xpos 0
+ypos 818
+}
+BlackOutside {
+name BlackOutside1
+xpos 0
+ypos 844
+disable {{!parent.blackOutside}}
+}
+Output {
+name Output1
+xpos 0
+ypos 984
+}
+end_group
+Colorspace {
+colorspace_in AlexaV3LogC
+name Colorspace2
+label "\[value colorspace_in] >> \[value colorspace_out]"
+xpos 58
+ypos 2431
+}
+Unpremult {
+name Unpremult2
+xpos 58
+ypos 2469
+}
+Merge2 {
+inputs 2
+operation divide
+name Merge2
+label "\[ expr \{ \[value mix] == 1 ? \" \" : \[concat Mix: \[value mix]] \}]"
+xpos 58
+ypos 2533
+}
+Merge2 {
+inputs 2
+operation multiply
+name Merge4
+label "\[ expr \{ \[value mix] == 1 ? \" \" : \[concat Mix: \[value mix]] \}]"
+xpos 58
+ypos 2580
+}
+push $N5fa8ae80
+Dot {
+name Dot34
+note_font_size 41
+xpos -118
+ypos 2630
+}
+set N5fced4d0 [stack 0]
+Group {
+inputs 2
+name ColorCopy_v01_1
+tile_color 0x9e3c6300
+xpos 58
+ypos 2626
+addUserKnob {20 "" l User}
+addUserKnob {6 hue -STARTLINE}
+hue true
+addUserKnob {6 saturation -STARTLINE}
+saturation true
+addUserKnob {6 value -STARTLINE}
+value {{!parent.pblacks}}
+addUserKnob {7 huemix l "hue mix"}
+huemix 1
+addUserKnob {7 satmix l "saturation mix"}
+satmix 1
+addUserKnob {7 valmix l "value mix"}
+valmix 1
+addUserKnob {4 bbox M {"A side" "B side"}}
+bbox "B side"
+}
+Input {
+inputs 0
+name B
+xpos -150
+ypos -450
+}
+set N5fcfc9d0 [stack 0]
+Dot {
+name Dot1
+tile_color 0xc0c0c000
+xpos -264
+ypos -380
+}
+Input {
+inputs 0
+name A
+xpos 235
+ypos -469
+number 1
+}
+Colorspace {
+colorspace_out HSV
+name Colorspace5
+xpos 235
+ypos -405
+}
+set N5fd0a870 [stack 0]
+Dot {
+name Dot2
+tile_color 0xc0c0c000
+xpos 214
+ypos 114
+}
+push $N5fd0a870
+push $N5fd0a870
+push $N5fd0a870
+push $N5fcfc9d0
+Colorspace {
+colorspace_out HSV
+name Colorspace4
+xpos -150
+ypos -394
+}
+set N5fd27f40 [stack 0]
+Copy {
+inputs 2
+from0 rgba.red
+to0 rgba.red
+bbox A
+name ChannelCopy3
+tile_color 0x9e3c6300
+label "(red -> red)"
+xpos -30
+ypos -270
+disable {{1-parent.hue}}
+}
+push $N5fd27f40
+Dissolve {
+inputs 2
+channels {rgba.red -rgba.green -rgba.blue none}
+which {{parent.huemix}}
+name Dissolve1
+label (red)
+xpos -150
+ypos -225
+}
+set N5fd4ed20 [stack 0]
+Copy {
+inputs 2
+from0 rgba.green
+to0 rgba.green
+bbox A
+name ChannelCopy4
+tile_color 0x9e3c6300
+label "(green -> green)"
+xpos -29
+ypos -198
+disable {{1-parent.saturation i}}
+}
+push $N5fd4ed20
+Dissolve {
+inputs 2
+channels {-rgba.red rgba.green -rgba.blue none}
+which {{parent.satmix}}
+name Dissolve2
+label (green)
+xpos -150
+ypos -136
+}
+set N5fd680c0 [stack 0]
+Copy {
+inputs 2
+from0 rgba.blue
+to0 rgba.blue
+bbox A
+name ChannelCopy1
+tile_color 0x9e3c6300
+label "(blue -> blue)"
+xpos -26
+ypos -88
+disable {{1-parent.value}}
+}
+push $N5fd680c0
+Dissolve {
+inputs 2
+channels {-rgba.red -rgba.green rgba.blue none}
+which {{parent.valmix}}
+name Dissolve3
+label (blue)
+xpos -150
+ypos -16
+}
+Colorspace {
+colorspace_in HSV
+name Colorspace6
+xpos -150
+ypos 63
+}
+CopyBBox {
+inputs 2
+name CopyBBox2
+tile_color 0x9e3c6300
+xpos -150
+ypos 111
+}
+set N5fda52e0 [stack 0]
+CopyBBox {
+inputs 2
+name CopyBBox1
+tile_color 0x9e3c6300
+xpos -298
+ypos 111
+disable {{1-(parent.bbox==1)}}
+}
+Output {
+name Output1
+xpos -298
+ypos 183
+}
+push $N5fda52e0
+Viewer {
+frame_range 1,26
+roi {40 40 600 440}
+input_process false
+name Viewer1
+tile_color 0xff00f200
+xpos -343
+ypos -321
+hide_input true
+addUserKnob {20 User}
+addUserKnob {6 toAddBtn -STARTLINE}
+toAddBtn true
+addUserKnob {6 toAddBtn_1 l toAddBtn -STARTLINE}
+addUserKnob {6 toAddBtn_2 l toAddBtn -STARTLINE}
+addUserKnob {6 toAddBtn_3 l toAddBtn -STARTLINE}
+addUserKnob {6 toAddBtn_4 l toAddBtn -STARTLINE}
+addUserKnob {6 toAddBtn_5 l toAddBtn -STARTLINE}
+addUserKnob {6 toAddBtn_6 l toAddBtn -STARTLINE}
+addUserKnob {6 toAddBtn_7 l toAddBtn -STARTLINE}
+addUserKnob {6 toAddBtn_8 l toAddBtn -STARTLINE}
+addUserKnob {6 toAddBtn -STARTLINE}
+toAddBtn true
+}
+end_group
+push $N5fced4d0
+Merge2 {
+inputs 2+1
+operation copy
+output {rgba.red rgba.green rgba.blue -rgba.alpha}
+mix {{parent.BGwashAmount}}
+name Merge9
+label "\[ expr \{ \[value mix] == 1 ? \" \" : \[concat Mix: \[value mix]] \}]"
+xpos -152
+ypos 2716
+}
+Premult {
+name Premult3
+xpos -152
+ypos 2774
+disable {{premultiplied*-1+1 i}}
+}
+Dot {
+name Dot19
+xpos -118
+ypos 3257
+}
+Switch {
+inputs 5
+which {{"\[value ls parent.outputView]"}}
+name Switch1
+xpos 1708
+ypos 3253
+}
+push $Ncb8c3c80
+Dot {
+name Dot5
+note_font_size 41
+selected true
+xpos -570
+ypos 3442
+}
+Merge2 {
+inputs 2+1
+operation copy
+also_merge all
+name MergeCopyLightWrapPro
+label "\[ expr \{ \[value mix] == 1 ? \" \" : \[concat Mix: \[value mix]] \}]"
+xpos 1708
+ypos 3438
+}
+Output {
+name Output1
+xpos 1708
+ypos 3756
+}
+push $Ne497b970
+Crop {
+box {0 0 {parent.Crop1.box.r i} {parent.Crop1.box.t i}}
+name Crop5
+xpos 882
+ypos 547
+addUserKnob {20 User}
+addUserKnob {22 cropToBbox l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+}
+push $Ncb8f5420
+Crop {
+box {0 0 {"\[value input.format.w]"} {"\[value input.format.h]"}}
+name Crop1
+xpos 57
+ypos 505
+addUserKnob {20 User}
+addUserKnob {22 cropToBbox l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+}
+end_group
