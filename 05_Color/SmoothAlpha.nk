@@ -1,0 +1,123 @@
+Group {
+ name SmoothAlpha
+ tile_color 0x5c7fc0ff
+ note_font "DejaVu Sans Bold Bold Bold"
+ note_font_color 0xffffffff
+ selected true
+ xpos -37911
+ ypos 17759
+ addUserKnob {20 SmoothAlpha l Controls}
+ addUserKnob {41 channels T ColorLookup_smooth.channels}
+ addUserKnob {26 ""}
+ addUserKnob {4 output l "<font color=skyblue>Operation:</font color>" M {smooth smooth0 smooth1 "" "" "" "" "" ""}}
+ addUserKnob {41 gamma l Gamma T Gamma1.value}
+ addUserKnob {26 ""}
+ addUserKnob {26 "" l mask T ""}
+ addUserKnob {41 maskChannelInput l "" -STARTLINE T Merge1.maskChannelInput}
+ addUserKnob {41 inject -STARTLINE T Merge1.inject}
+ addUserKnob {41 invert_mask l invert -STARTLINE T Merge1.invert_mask}
+ addUserKnob {41 fringe -STARTLINE T Merge1.fringe}
+ addUserKnob {41 mix T Merge1.mix}
+ addUserKnob {20 smoothTable l smooth}
+ addUserKnob {41 lut l "" +STARTLINE T ColorLookup_smooth.lut}
+ addUserKnob {20 smooth0}
+ addUserKnob {41 lut_1 l "" +STARTLINE T ColorLookup_smooth0.lut}
+ addUserKnob {20 smooth1}
+ addUserKnob {41 lut_2 l "" +STARTLINE T ColorLookup_smooth1.lut}
+}
+ Input {
+  inputs 0
+  name Inputmask
+  xpos -212
+  ypos 511
+  number 1
+ }
+ Input {
+  inputs 0
+  name Input
+  xpos -351
+  ypos 189
+ }
+ Dot {
+  name Dot1
+  note_font_size 41
+  xpos -317
+  ypos 254
+ }
+set N2b6d2f00 [stack 0]
+ ColorLookup {
+  channels {{{parent.ColorLookup_smooth.channels}}}
+  lut {master {curve L 0 C k 1 s0}
+    red {}
+    green {}
+    blue {}
+    alpha {}}
+  name ColorLookup_smooth1
+  xpos -251
+  ypos 329
+ }
+push $N2b6d2f00
+ ColorLookup {
+  channels {{{parent.ColorLookup_smooth.channels}}}
+  lut {master {curve L 0 s0 1}
+    red {}
+    green {}
+    blue {}
+    alpha {}}
+  name ColorLookup_smooth0
+  xpos -351
+  ypos 328
+ }
+push $N2b6d2f00
+ ColorLookup {
+  lut {master {curve L 0 s0 C k 1 s0}
+    red {}
+    green {}
+    blue {}
+    alpha {}}
+  name ColorLookup_smooth
+  xpos -465
+  ypos 329
+ }
+ Switch {
+  inputs 3
+  which {{output}}
+  name Switch1
+  label "\[value which]"
+  xpos -351
+  ypos 390
+ }
+ Gamma {
+  channels {{{parent.ColorLookup_smooth.channels}}}
+  name Gamma1
+  xpos -351
+  ypos 447
+ }
+push $N2b6d2f00
+ Dot {
+  name Dot2
+  note_font_size 41
+  xpos -493
+  ypos 254
+ }
+ Dot {
+  name Dot4
+  note_font_size 41
+  xpos -493
+  ypos 515
+ }
+ Merge2 {
+  inputs 2+1
+  operation copy
+  also_merge all
+  name Merge1
+  label "\[ expr \{ \[value mix] == 1 ? \" \" : \[concat Mix: \[value mix]] \}]"
+  xpos -351
+  ypos 511
+ }
+ Output {
+  name Output1
+  xpos -351
+  ypos 564
+ }
+end_group
