@@ -1,25 +1,25 @@
 set cut_paste_input [stack 0]
-version 11.3 v4
+push 0
+push 0
 push $cut_paste_input
 Group {
+ inputs 3
  name AdditiveKeyerPro
  tile_color 0x5200ff
- note_font "Verdana Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold"
+ note_font "Verdana Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold"
  note_font_color 0xffffffff
  selected true
- xpos 1194
- ypos 521
  addUserKnob {20 AdditiveKeyer}
  addUserKnob {6 useSC l "Use Screen Color as CleanPlate" +STARTLINE}
  addUserKnob {41 screenColor l "Screen Color" T Keylight1.screenColour}
  addUserKnob {6 despillSat l "Despill Screen Color from Saturation?" +STARTLINE}
  despillSat true
  addUserKnob {26 ""}
- addUserKnob {7 DarkValue R 0 10}
+ addUserKnob {7 DarkValue l "Dark Value" R 0 10}
  DarkValue 1
  addUserKnob {7 satDarks l "Saturate Darks"}
  satDarks 0.2
- addUserKnob {18 darkTint l DarkTint}
+ addUserKnob {18 darkTint l "Dark Tint"}
  darkTint 1
  addUserKnob {6 darkTint_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
  addUserKnob {6 darkTint_panelDropped_1 l "panel dropped state" -STARTLINE +HIDDEN}
@@ -31,14 +31,10 @@ Group {
  addUserKnob {6 darkTint_panelDropped_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
  addUserKnob {6 darkTint_panelDropped_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
  addUserKnob {6 darkTint_panelDropped_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 darkTint_panelDropped_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 darkTint_panelDropped_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
  addUserKnob {26 ""}
- addUserKnob {7 LightValue R 0 10}
- LightValue 1
- addUserKnob {7 satLights l "Saturate Lights"}
- satLights 0.2
- addUserKnob {18 lightTint l LightTint}
- lightTint 1
- addUserKnob {6 lightTint_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 lightTint_panelDropped l "panel dropped state" +HIDDEN +STARTLINE}
  addUserKnob {6 lightTint_panelDropped_1 l "panel dropped state" -STARTLINE +HIDDEN}
  addUserKnob {6 lightTint_panelDropped_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
  addUserKnob {6 lightTint_panelDropped_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
@@ -48,16 +44,25 @@ Group {
  addUserKnob {6 lightTint_panelDropped_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
  addUserKnob {6 lightTint_panelDropped_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
  addUserKnob {6 lightTint_panelDropped_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
- addUserKnob {26 ""}
- addUserKnob {6 darkTint_panelDropped_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" +HIDDEN +STARTLINE}
- addUserKnob {6 darkTint_panelDropped_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
- addUserKnob {6 darkTint_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
- addUserKnob {6 darkTint_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
- addUserKnob {6 lightTint_panelDropped_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" +HIDDEN +STARTLINE}
+ addUserKnob {6 lightTint_panelDropped_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
  addUserKnob {6 lightTint_panelDropped_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
- addUserKnob {6 lightTint_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {7 LightValue l "Light Value" R 0 10}
+ LightValue 1
+ addUserKnob {7 satLights l "Saturate Lights"}
+ satLights 0.2
+ addUserKnob {18 lightTint l "Light Tint"}
+ lightTint 1
+ addUserKnob {7 ExtraLightValue l "Extra Light Value"}
+ addUserKnob {26 ""}
+ addUserKnob {6 darkTint_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" +HIDDEN +STARTLINE}
+ addUserKnob {6 darkTint_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 darkTint_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 darkTint_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 lightTint_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" +HIDDEN +STARTLINE}
  addUserKnob {6 lightTint_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
- addUserKnob {6 compositeSwitch l "Output Difference to RGBA" +STARTLINE}
+ addUserKnob {6 lightTint_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 lightTint_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 compositeSwitch l "Output Difference to RGB" +STARTLINE}
  addUserKnob {6 outputDiffAlpha l "Output Difference Matte to Alpha" +STARTLINE}
  addUserKnob {26 ""}
  addUserKnob {41 maskChannelMask l mask T MergeKeymix.maskChannelMask}
@@ -116,7 +121,7 @@ Group {
   xpos -466
   ypos 5
  }
-set N3caa1eb0 [stack 0]
+set Nc2e48080 [stack 0]
  OFXuk.co.thefoundry.keylight.keylight_v201 {
   show "Final Result"
   unPreMultiply false
@@ -162,8 +167,8 @@ set N3caa1eb0 [stack 0]
   xpos -500
   ypos 73
  }
-set N3cb22430 [stack 0]
-push $N3caa1eb0
+set Nc2e4be40 [stack 0]
+push $Nc2e48080
  Dot {
   name Dot27
   note_font_size 41
@@ -190,7 +195,7 @@ push $N3caa1eb0
   xpos -390
   ypos 125
  }
-push $N3cb22430
+push $Nc2e4be40
  Merge2 {
   inputs 2
   operation plus
@@ -199,7 +204,7 @@ push $N3cb22430
   xpos -500
   ypos 125
  }
-push $N3caa1eb0
+push $Nc2e48080
  Dot {
   name Dot30
   note_font_size 41
@@ -225,7 +230,7 @@ push $N3caa1eb0
   xpos -466
   ypos 373
  }
-set N3cb41190 [stack 0]
+set Nc2dbf450 [stack 0]
  Input {
   inputs 0
   name clean
@@ -260,7 +265,7 @@ set N3cb41190 [stack 0]
   xpos 160
   ypos 50
  }
-set N3bf3fcf0 [stack 0]
+set Nc2de2710 [stack 0]
  OFXuk.co.thefoundry.keylight.keylight_v201 {
   show "Final Result"
   unPreMultiply false
@@ -303,11 +308,12 @@ set N3bf3fcf0 [stack 0]
   outsideComponent None
   cacheBreaker true
   name Keylight2
+  selected true
   xpos 126
   ypos 118
  }
-set N3bf421b0 [stack 0]
-push $N3bf3fcf0
+set Nc2de65e0 [stack 0]
+push $Nc2de2710
  Dot {
   name Dot29
   note_font_size 41
@@ -334,7 +340,7 @@ push $N3bf3fcf0
   xpos 354
   ypos -65
  }
-push $N3bf421b0
+push $Nc2de65e0
  Merge2 {
   inputs 2
   operation plus
@@ -343,7 +349,7 @@ push $N3bf421b0
   xpos 126
   ypos 170
  }
-push $N3bf3fcf0
+push $Nc2de2710
  Dot {
   name Dot33
   note_font_size 41
@@ -370,7 +376,7 @@ push $N3bf3fcf0
   xpos 160
   ypos 320
  }
-set N3b919920 [stack 0]
+set Nc30218e0 [stack 0]
  Dot {
   name Dot6
   xpos 412
@@ -417,7 +423,7 @@ set N3b919920 [stack 0]
    xpos 558
    ypos -668
   }
-set N3bf4c0a0 [stack 0]
+set Nc3042aa0 [stack 0]
   Shuffle {
    green red
    blue red
@@ -433,7 +439,7 @@ set N3bf4c0a0 [stack 0]
    xpos 386
    ypos -492
   }
-push $N3bf4c0a0
+push $Nc3042aa0
   Shuffle {
    red green
    blue green
@@ -456,8 +462,8 @@ push $N3bf4c0a0
    xpos 411
    ypos -428
   }
-  set C3cb902f0 [stack 0]
-push $N3bf4c0a0
+  set Cc3080580 [stack 0]
+push $Nc3042aa0
   Shuffle {
    red blue
    green blue
@@ -473,13 +479,13 @@ push $N3bf4c0a0
    xpos 610
    ypos -494
   }
-clone $C3cb902f0 {
+clone $Cc3080580 {
    inputs 2
    xpos 486
    ypos -369
    selected false
   }
-push $N3bf4c0a0
+push $Nc3042aa0
   Shuffle {
    red alpha
    green alpha
@@ -496,7 +502,7 @@ push $N3bf4c0a0
    xpos 725
    ypos -494
   }
-clone $C3cb902f0 {
+clone $Cc3080580 {
    inputs 2
    xpos 580
    ypos -307
@@ -538,29 +544,29 @@ clone $C3cb902f0 {
   xpos -811
   ypos 1449
  }
-set N3caf6ca0 [stack 0]
+set Nc30f27a0 [stack 0]
  Dot {
   name Dot13
   note_font_size 41
   xpos -811
   ypos 1688
  }
-set N3cbd4690 [stack 0]
-push $N3cb41190
+set Nc30f6680 [stack 0]
+push $Nc2dbf450
  Dot {
   name Dot2
   note_font_size 41
   xpos -466
   ypos 421
  }
-set Nd94cc110 [stack 0]
+set Nc30fa560 [stack 0]
  Saturation {
   saturation {{parent.satDarks}}
   name Saturation9
   xpos -378
   ypos 418
  }
-push $N3b919920
+push $Nc30218e0
  Saturation {
   saturation {{parent.satDarks}}
   name Saturation8
@@ -623,7 +629,7 @@ push $N3b919920
   xpos -181
   ypos 1257
  }
-push $Nd94cc110
+push $Nc30fa560
  Dot {
   name Dot36
   note_font_size 41
@@ -636,13 +642,15 @@ push $Nd94cc110
   xpos -101
   ypos 574
  }
-push $N3b919920
+set Nc2cd6cc0 [stack 0]
+push $Nc30218e0
  Saturation {
   saturation {{parent.satLights}}
   name Saturation6
   xpos 126
   ypos 500
  }
+set Nc2ce11d0 [stack 0]
  Merge2 {
   inputs 2
   operation divide
@@ -651,19 +659,13 @@ push $N3b919920
   xpos 126
   ypos 574
  }
- Dot {
-  name Dot37
-  note_font_size 41
-  xpos 160
-  ypos 691
- }
  Clamp {
   channels rgba
   minimum 1
   maximum_enable false
   name Clamp3
   xpos 126
-  ypos 781
+  ypos 780
  }
  Add {
   channels rgba
@@ -677,21 +679,21 @@ push $N3b919920
   value {{parent.LightValue} {parent.LightValue} {parent.LightValue} 0}
   name LIGHT_VALUE
   xpos 126
-  ypos 897
+  ypos 902
  }
  Multiply {
   channels rgb
   value {{parent.lightTint.r} {parent.lightTint.g} {parent.lightTint.b} 0}
   name LIGHT_TINT
   xpos 126
-  ypos 940
+  ypos 1038
  }
  Add {
   channels rgba
   value 1
   name Add2
-  xpos 128
-  ypos 1014
+  xpos 126
+  ypos 1120
  }
  Merge2 {
   inputs 2
@@ -704,25 +706,81 @@ push $N3b919920
   ypos 1254
  }
  Dot {
-  name Dot1
+  name Dot19
   note_font_size 41
   xpos 162
-  ypos 1449
+  ypos 1354
  }
-set N3cf25410 [stack 0]
+set Na10cb1d0 [stack 0]
  Dot {
   name Dot3
   xpos -8
-  ypos 1449
+  ypos 1354
  }
  Dot {
   name Dot16
   note_font_size 41
   xpos -8
-  ypos 1540
+  ypos 1611
  }
-push $N3cf25410
-push $N3caf6ca0
+push $Nc2ce11d0
+ Dot {
+  name Dot7
+  note_font_size 41
+  xpos 310
+  ypos 503
+ }
+push $Nc2cd6cc0
+ Dot {
+  name Dot5
+  note_font_size 41
+  xpos -67
+  ypos 691
+ }
+ Merge2 {
+  inputs 2
+  operation from
+  name Merge1
+  label "\[ expr \{ \[value mix] == 1 ? \" \" : \[concat Mix: \[value mix]] \}]"
+  xpos 276
+  ypos 688
+ }
+ Clamp {
+  channels rgba
+  maximum_enable false
+  name Clamp6
+  xpos 276
+  ypos 781
+ }
+ Multiply {
+  channels rgba
+  value {{parent.ExtraLightValue}}
+  name Multiply1
+  label "\[value value]"
+  xpos 276
+  ypos 899
+ }
+ Multiply {
+  channels rgb
+  value {{parent.lightTint.r} {parent.lightTint.g} {parent.lightTint.b} 0}
+  name LIGHT_TINT1
+  xpos 276
+  ypos 1036
+ }
+ Dot {
+  name Dot15
+  note_font_size 41
+  xpos 310
+  ypos 1513
+ }
+push $Na10cb1d0
+ Dot {
+  name Dot1
+  note_font_size 41
+  xpos 162
+  ypos 1449
+ }
+push $Nc30f27a0
  Merge2 {
   inputs 2
   operation multiply
@@ -733,13 +791,22 @@ push $N3caf6ca0
   xpos 128
   ypos 1446
  }
+ Merge2 {
+  inputs 2
+  operation plus
+  output rgb
+  name Merge2
+  label "\[ expr \{ \[value mix] == 1 ? \" \" : \[concat Mix: \[value mix]] \}]"
+  xpos 128
+  ypos 1510
+ }
  Switch {
   inputs 2
   which {{parent.compositeSwitch}}
   name Switch1
   label "\[value which]"
   xpos 128
-  ypos 1533
+  ypos 1604
  }
  Copy {
   inputs 2
@@ -766,7 +833,7 @@ push $N3caf6ca0
   xpos 162
   ypos 1910
  }
-push $N3cbd4690
+push $Nc30f6680
  Dot {
   name Dot18
   label B
