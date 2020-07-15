@@ -1,3 +1,6 @@
+set cut_paste_input [stack 0]
+push $cut_paste_input
+push 0
 Group {
  inputs 2
  name ColorCopy
@@ -6,7 +9,7 @@ Group {
  note_font_color 0xffffffff
  selected true
  addUserKnob {20 ColorCopy}
- addUserKnob {41 also_merge l "also merge" T Merge5.also_merge}
+ addUserKnob {41 channels T Merge5.also_merge}
  addUserKnob {4 output l method M {HSV HSL "Rec 709" "Ccir 601" Average Maximum ""}}
  addUserKnob {6 opInLog l "Operations in Log" -STARTLINE}
  addUserKnob {7 colorMix l "Color Mix" +HIDDEN}
