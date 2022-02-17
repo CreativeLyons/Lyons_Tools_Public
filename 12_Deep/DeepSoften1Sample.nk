@@ -1,13 +1,12 @@
-set cut_paste_input [stack 0]
-version 11.3 v4
-push $cut_paste_input
 Group {
- name DeepSoften
+ name DeepSoften1Sample
  tile_color 0x60ff
  selected true
- xpos -20117
- ypos 4384
- addUserKnob {20 DeepSoften}
+ addUserKnob {20 DeepSoften1Sample}
+ addUserKnob {26 info l "<b> <font color = red>Warning:" T "<b><font color = white>This Tool is only useful for renders with 1 deep sample."}
+ addUserKnob {26 text_1 l " " T "<b><font color = white>Using on a render with multiple samples will\nkill all your samples"}
+ addUserKnob {26 text l " " T "It creates more slices by moving the sample forward and \nbackwards a few times by a small amount and combinng \nthem together."}
+ addUserKnob {26 ""}
  addUserKnob {7 size R 0 0.0001}
  size 1.5e-05
  addUserKnob {7 subSample l "Sub Sample" R 0 10}
@@ -27,7 +26,7 @@ Group {
   xpos -251
   ypos 229
  }
-set Nb73fcc70 [stack 0]
+set N409f7900 [stack 0]
  Dot {
   name Dot48
   note_font_size 41
@@ -53,7 +52,7 @@ set Nb73fcc70 [stack 0]
   xpos 309
   ypos 614
  }
-push $Nb73fcc70
+push $N409f7900
  DeepToImage {
   name DeepToImage2
   xpos -285
@@ -65,7 +64,7 @@ push $Nb73fcc70
   xpos -251
   ypos 362
  }
-set Nbc83d260 [stack 0]
+set N92e28800 [stack 0]
  Grade {
   channels depth
   add {{size}}
@@ -82,7 +81,7 @@ set Nbc83d260 [stack 0]
   xpos 121
   ypos 473
  }
-push $Nbc83d260
+push $N92e28800
  Grade {
   channels depth
   add {{size*.75}}
@@ -99,7 +98,7 @@ push $Nbc83d260
   xpos 13
   ypos 473
  }
-push $Nbc83d260
+push $N92e28800
  Grade {
   channels depth
   add {{size*.5}}
@@ -116,7 +115,7 @@ push $Nbc83d260
   xpos -106
   ypos 471
  }
-push $Nbc83d260
+push $N92e28800
  Grade {
   channels depth
   add {{size*.25}}
@@ -133,8 +132,8 @@ push $Nbc83d260
   xpos -214
   ypos 472
  }
-push $Nbc83d260
-push $Nbc83d260
+push $N92e28800
+push $N92e28800
  Grade {
   channels depth
   add {{-size*.25}}
@@ -151,7 +150,7 @@ push $Nbc83d260
   xpos -372
   ypos 470
  }
-push $Nbc83d260
+push $N92e28800
  Grade {
   channels depth
   add {{-size*.5}}
@@ -168,7 +167,7 @@ push $Nbc83d260
   xpos -474
   ypos 469
  }
-push $Nbc83d260
+push $N92e28800
  Grade {
   channels depth
   add {{-size*.75}}
@@ -185,7 +184,7 @@ push $Nbc83d260
   xpos -583
   ypos 466
  }
-push $Nbc83d260
+push $N92e28800
  Grade {
   channels depth
   add {{-size}}
