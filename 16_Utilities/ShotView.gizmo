@@ -1,0 +1,776 @@
+Gizmo {
+ name ShotView
+ label "Hero: \[value heroFrame]"
+ selected true
+ addUserKnob {20 ShotView}
+ addUserKnob {22 setReadsToLatest l "Set Reads to Latest" T "n = nuke.thisNode()\nreadsToReload = \[]\nnodesConnected = n.dependencies()\nfor e in nodesConnected:\n    if e == False:\n        pass\n    else:\n        if e.Class() == \"Read\":\n            readsToReload.append(e.name())\n        else:\n            pass\nfor r in readsToReload:\n    nuke.toNode(r).knob('version_setlatest').execute()" +STARTLINE}
+ addUserKnob {6 heroFrameOn l "<font color= dimgray>.  <font color= skyblue> <b>Hero Frame  " +STARTLINE}
+ heroFrameOn true
+ addUserKnob {3 heroFrame l "" -STARTLINE}
+ heroFrame 1009
+ addUserKnob {22 setFrame l "set frame" -STARTLINE T "curentFrame = nuke.frame()\nnuke.thisNode().knob(\"heroFrame\").setValue(curentFrame)"}
+ addUserKnob {6 deliveryOverlay l "Delivery Matte Overlay" +STARTLINE}
+ deliveryOverlay true
+ addUserKnob {6 ocioShotDisplay l "OCIO ShotDisplay" +STARTLINE}
+ ocioShotDisplay true
+ addUserKnob {6 plateType l "Using PlateRef instead of Master Plate" +INVISIBLE +STARTLINE}
+ plateType true
+ addUserKnob {26 ""}
+ addUserKnob {6 shotStatus1 l "Shot Status:" +STARTLINE}
+ addUserKnob {4 shotStatus l "" -STARTLINE M {"Not Started" Init "In Progress" Tweak "Approved Pending TC" "Pending Tech Check" Final Omitted "On Hold"}}
+ addUserKnob {6 showDot l "Show Dot" +STARTLINE}
+ addUserKnob {18 color_1 l color -STARTLINE}
+ color_1 {1 0 0}
+ addUserKnob {6 color_rgb_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {26 ""}
+ addUserKnob {6 labelToggle l "Label From Read" +STARTLINE}
+ labelToggle true
+ addUserKnob {41 filenameCheck l "Include FIle Name?" T LabelFromRead2.filenameCheck}
+ addUserKnob {6 artistName l "Include Artist Name?" -STARTLINE}
+ artistName true
+ addUserKnob {41 descCheck l "Include Description?" T LabelFromRead2.descCheck}
+ addUserKnob {41 inputDesc l Description T LabelFromRead2.inputDesc}
+ addUserKnob {20 labelFromReadSettings l "Label From Read Settings" n 1}
+ labelFromReadSettings 0
+ addUserKnob {41 color l "Text Color" T LabelFromRead2.color}
+ addUserKnob {41 borderColor l "Border Color" T LabelFromRead2.borderColor}
+ addUserKnob {41 borderSize l "Border Size" T LabelFromRead2.borderSize}
+ addUserKnob {4 xjustify l Justify M {left center right justify "" "" ""}}
+ addUserKnob {4 yjustify l "" -STARTLINE M {top center bottom ""}}
+ addUserKnob {41 size l "Overall Size" T LabelFromRead2.size}
+ addUserKnob {41 x_pos l "X Pos" T LabelFromRead2.x_pos}
+ addUserKnob {41 YPos l "Y Pos" T LabelFromRead2.YPos}
+ addUserKnob {41 mix T LabelFromRead2.mix}
+ addUserKnob {1 inputName0 +INVISIBLE}
+ inputName0 "\[file tail \[value \[topnode input0].file] ]"
+ addUserKnob {1 fullPath0 +INVISIBLE}
+ fullPath0 "\[value \[topnode input0].file]"
+ addUserKnob {20 endGroup n -1}
+}
+ ColorWheel {
+  inputs 0
+  format "256 256 0 0 256 256 1 square_256"
+  channels {-rgba.red -rgba.green -rgba.blue rgba.alpha}
+  gamma 0.45
+  name ColorWheel1
+  xpos 4
+  ypos 792
+ }
+set Nd66b6b00 [stack 0]
+ Transform {
+  scale 1.12
+  center {128 128}
+  shutteroffset centred
+  name Transform5
+  xpos 115
+  ypos 891
+ }
+ Transform {
+  scale {{parent.width/5000}}
+  center {128 128}
+  shutteroffset centred
+  name Transform3
+  xpos 115
+  ypos 939
+ }
+ Transform {
+  translate {{parent.width-(width)} {(parent.height/2)-(height/1.5)}}
+  center {128 128}
+  shutteroffset centred
+  name Transform6
+  xpos 115
+  ypos 1002
+ }
+ Dot {
+  name Dot3
+  note_font_size 41
+  xpos 149
+  ypos 1112
+ }
+push $Nd66b6b00
+ Transform {
+  scale {{parent.width/5000}}
+  center {128 128}
+  shutteroffset centred
+  name Transform1
+  xpos 4
+  ypos 935
+ }
+ Transform {
+  translate {{parent.width-(width)} {(parent.height/2)-(height/1.5)}}
+  center {128 128}
+  shutteroffset centred
+  name Transform2
+  xpos 4
+  ypos 998
+ }
+ Input {
+  inputs 0
+  name Inputcomp
+  xpos -457
+  ypos -137
+ }
+ tx_viewport_overlay {
+  name tx_viewport_overlay
+  xpos -457
+  ypos -81
+  disable {{!parent.deliveryOverlay}}
+  draw_line false
+  inner_matte 1
+  delivery_matte 1
+ }
+ Group {
+  name LabelFromRead2
+  tile_color 0x1f1f1fff
+  label "\[ expr \{ \[value splitPath] ? \[value finalFilePath] : \[] \} ]\n\[value inputDesc]"
+  note_font Verdana
+  note_font_color 0xe5e500ff
+  xpos -457
+  ypos 29
+  disable {{!parent.labelToggle}}
+  addUserKnob {20 LabelFromRead}
+  addUserKnob {1 inputName}
+  inputName "\[value parent.inputName0]"
+  addUserKnob {1 fullPath}
+  fullPath "\[value parent.fullPath0]"
+  addUserKnob {6 filenameCheck l "Include FIle Name?" +STARTLINE}
+  filenameCheck true
+  addUserKnob {4 pathType l "" -STARTLINE M {"Full Path" Tail ""}}
+  pathType Tail
+  addUserKnob {6 splitPath l "Split Path" -STARTLINE}
+  splitPath true
+  addUserKnob {1 whichPath}
+  whichPath "\[ expr  \{ \[value pathType] == \"Full Path\" ? \[value fullPath] : \[value inputName] \} ]"
+  addUserKnob {3 rangeStart l range}
+  rangeStart 1
+  addUserKnob {3 rangeEnd l " -  " -STARTLINE}
+  rangeEnd 4
+  addUserKnob {1 splitText l "Split with" -STARTLINE}
+  splitText _
+  addUserKnob {1 masterText}
+  masterText master
+  addUserKnob {1 masterVer}
+  masterVer "\[lrange \[split \[lrange \[split \[value parent.fullPath1] _ ] 2 2] / ] 0 0 ]"
+  addUserKnob {1 masterExtra}
+  masterExtra "\[expr \{ !\[value parent.plateType] ? \[value masterText] : \[] \}]"
+  addUserKnob {1 masterExtra2}
+  masterExtra2 "\[expr \{ !\[value parent.plateType] ? \[value masterVer] : \[] \}]"
+  addUserKnob {1 fileRange +INVISIBLE}
+  fileRange "\[ expr \{ \[value splitPath] ? \[ expr \{ \[value filenameCheck] ? \[lrange \[split \[value whichPath] \[value splitText] ] \[value rangeStart] \[value rangeEnd] ] : \[] \} ] : \[value whichPath] \} ]"
+  addUserKnob {1 finalFilePath +INVISIBLE}
+  finalFilePath "\[value fileRange]"
+  addUserKnob {6 descCheck l "Include Description?" +STARTLINE}
+  addUserKnob {1 inputDesc l Description}
+  addUserKnob {26 ""}
+  addUserKnob {6 color_rgb_panelDropped l "panel dropped state" +HIDDEN +STARTLINE}
+  addUserKnob {18 color l "Text Color"}
+  color {1 1 0}
+  addUserKnob {6 color_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {18 borderColor l "Border Color"}
+  borderColor {0 0 0}
+  addUserKnob {6 borderColor_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 color_rgb_panelDropped_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {7 borderSize l "Border Size" R 0 5}
+  borderSize 2
+  addUserKnob {6 enableBackground l "Enable Background" +INVISIBLE +STARTLINE}
+  addUserKnob {26 ""}
+  addUserKnob {41 xjustify l Justify T FileName.xjustify}
+  addUserKnob {41 yjustify l "" -STARTLINE T FileName.yjustify}
+  addUserKnob {7 size l "Overall Size" R -50 50}
+  size 40
+  addUserKnob {7 x_pos l "X Pos" R -100 100}
+  addUserKnob {7 YPos l "Y Pos" R -100 100}
+  addUserKnob {26 ""}
+  addUserKnob {41 mix T Merge1.mix}
+  addUserKnob {20 info l Info}
+  addUserKnob {26 creator l Creator: T "<b><big>Tony Lyons"}
+  addUserKnob {26 desc l Description: t "Takes the last section of the filename and displays in on the top of frame\n\n- Can toggle dsiplay of a User Description\n- Can adjust size and position of Text" T LabelFromRead}
+  addUserKnob {26 text l Version: T v05}
+ }
+  Input {
+   inputs 0
+   name Input
+   xpos -195
+   ypos -643
+  }
+  Dot {
+   name Dot1
+   xpos -161
+   ypos -585
+  }
+set Nd6608100 [stack 0]
+  Remove {
+   operation keep
+   channels rgba
+   name Remove1
+   xpos -339
+   ypos -588
+  }
+  Shuffle {
+   red black
+   green black
+   blue black
+   alpha black
+   name Shuffle1
+   label "\[value in]"
+   xpos -339
+   ypos -548
+  }
+  Text2 {
+   font_size_toolbar 100
+   font_width_toolbar 100
+   font_height_toolbar 100
+   message "\[value parent.inputDesc]"
+   old_expression_markers {{0 -1}
+     }
+   box {0 {input.height-(input.height/5)} {input.width} {input.height-(input.height/37.25)}}
+   xjustify {{parent.FileName.xjustify}}
+   yjustify {{parent.FileName.yjustify}}
+   transforms {{0 2}
+     }
+   font {{ Arial : Regular : arial.ttf : 0 }}
+   global_font_scale {{(input.width/35+parent.size)/100}}
+   scale {1 1}
+   cursor_initialised true
+   autofit_bbox false
+   initial_cursor_position {{0 1556}
+     }
+   group_animations {{0} imported: 0 selected: items: "root transform"}
+   animation_layers {{1 11 0 {input.height-(input.height/7)} {"input.width/40+ parent.x_pos"} {parent.YPos} 1 1 0 0 0 0}
+     }
+   color {{parent.color} {parent.color} {parent.color} 1}
+   background_border_x 0
+   background_border_y 0
+   enable_shadows true
+   shadow_color {{parent.borderColor} {parent.borderColor} {parent.borderColor} 1}
+   shadow_opacity 1
+   shadow_distance 0
+   shadow_size {{parent.borderSize}}
+   name Description
+   xpos -339
+   ypos -487
+   disable {{!parent.descCheck}}
+  }
+  Text2 {
+   font_size_toolbar 100
+   font_width_toolbar 100
+   font_height_toolbar 100
+   message "\n\[value parent.finalFilePath] \[value parent.masterExtra] \[value parent.masterExtra2]"
+   old_message {{10 75 69 70 32 49 53 50 48 32 99 111 109 112 32 118 48 49 48 32 32}
+     }
+   old_expression_markers {{1 18 20 19 21 20}
+     }
+   box {0 {input.height-(input.height/5)} {input.width} {input.height-(input.height/37.25)}}
+   xjustify {{parent.parent.xjustify}}
+   yjustify {{parent.parent.yjustify}}
+   transforms {{0 2}
+     }
+   cursor_position 30
+   font {{ Arial : Regular : arial.ttf : 0 }}
+   global_font_scale {{(input.width/35+parent.size)/100}}
+   scale {1 1}
+   cursor_initialised true
+   autofit_bbox false
+   initial_cursor_position {{0 1556}
+     }
+   group_animations {{0} imported: 0 selected: items: "root transform"}
+   animation_layers {{1 11 0 {input.height-(input.height/7)} {"input.width/40+ parent.x_pos"} {"descCheck == 1 ? parent.YPos : input.height/20 + parent.YPos"} 1 1 0 0 0 0}
+     }
+   color {{parent.color} {parent.color} {parent.color} 1}
+   enable_background {{parent.enableBackground}}
+   background_border_x 0
+   background_border_y 0
+   enable_shadows true
+   shadow_color {{parent.borderColor} {parent.borderColor} {parent.borderColor} 1}
+   shadow_opacity 1
+   shadow_distance 0
+   shadow_size {{parent.borderSize}}
+   name FileName
+   xpos -339
+   ypos -440
+   disable {{!parent.filenameCheck}}
+  }
+  Text2 {
+   font_size_toolbar 100
+   font_width_toolbar 100
+   font_height_toolbar 100
+   message "\n\n\[metadata exr/tx/uid]"
+   old_message {{10 10 99 111 108 111 109 98 109 105}
+     }
+   old_expression_markers {{2 9}
+     }
+   box {0 {input.height-(input.height/5)} {input.width} {input.height-(input.height/37.25)}}
+   transforms {{0 2}
+     }
+   cursor_position 1
+   font {{ Arial : Regular : arial.ttf : 0 }}
+   global_font_scale {{(input.width/35+parent.size)/100}}
+   scale {1 1}
+   cursor_initialised true
+   autofit_bbox false
+   initial_cursor_position {{0 1556}
+     }
+   group_animations {{0} imported: 0 selected: items: "root transform"}
+   animation_layers {{1 11 0 {input.height-(input.height/7)} {"input.width/40+ parent.x_pos"} {"descCheck == 1 ? parent.YPos : input.height/20 + parent.YPos"} 1 1 0 0 0 0}
+     }
+   color {{parent.color} {parent.color} {parent.color} 1}
+   enable_background {{parent.enableBackground}}
+   background_border_x 0
+   background_border_y 0
+   enable_shadows true
+   shadow_color {{parent.borderColor} {parent.borderColor} {parent.borderColor} 1}
+   shadow_opacity 1
+   shadow_distance 0
+   shadow_size {{parent.borderSize}}
+   name ArtistName
+   xpos -339
+   ypos -391
+   disable {{!parent.parent.artistName}}
+  }
+  Dot {
+   name Dot2
+   xpos -305
+   ypos -342
+  }
+push $Nd6608100
+  Merge2 {
+   inputs 2
+   bbox B
+   name Merge1
+   xpos -195
+   ypos -345
+  }
+  Output {
+   name Output1
+   xpos -195
+   ypos -201
+  }
+ end_group
+ FrameHold {
+  first_frame {{parent.heroFrame}}
+  name FrameHold1
+  xpos -457
+  ypos 139
+  disable {{!parent.heroFrameOn}}
+ }
+ FrameRange {
+  first_frame 1001
+  last_frame 1001
+  time ""
+  name FrameRange1
+  xpos -457
+  ypos 202
+ }
+ OCIOLookTransform {
+  in_colorspace scene_linear
+  look -shot_cdl
+  out_colorspace scene_linear
+  key1 SEQUENCE
+  value1 "\[value TrixterShotData.sequence]"
+  key2 SHOT
+  value2 "\[value TrixterShotData.shot]"
+  name OCIOLookTransform4
+  label "Current shot_CDL\\ninvert\n\[value value1] \[value value2]"
+  note_font_size 14
+  xpos -457
+  ypos 246
+  disable {{!parent.ocioShotDisplay}}
+ }
+ OCIOLookTransform {
+  in_colorspace scene_linear
+  look shot_cdl
+  out_colorspace scene_linear
+  key1 SEQUENCE
+  value1 "\[lrange  \[split \[value fullPath0 ] /] 5 5 ]"
+  key2 SHOT
+  value2 "\[lrange  \[split \[value fullPath0 ] /] 6 6 ]"
+  name OCIOLookTransform3
+  label "read Shot CDL\\napply\n\[value value1] \[value value2]"
+  note_font_size 14
+  xpos -457
+  ypos 356
+  disable {{!parent.ocioShotDisplay}}
+ }
+ Dot {
+  name Dot4
+  note_font_size 41
+  xpos -423
+  ypos 498
+ }
+set Nd65a0f00 [stack 0]
+ Dot {
+  name Dot2
+  note_font_size 41
+  xpos 114
+  ypos 498
+ }
+set Nd65a0800 [stack 0]
+ Text2 {
+  font_size_toolbar 100
+  font_width_toolbar 100
+  font_height_toolbar 100
+  message " ON HOLD "
+  old_message {{32 79 78 32 72 79 76 68 32}
+    }
+  box {{"xjustify == 0 ? width/25 :0"} 0 {"xjustify == 2 ? width-(width/25) : width"} {height}}
+  yjustify center
+  transforms {{0 2}
+    }
+  cursor_position 9
+  font {{ Arial : Regular : arial.ttf : 0 }}
+  global_font_scale {{(input.width/35+parent.size)/100}}
+  center {1112 774}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{204.6999512 774.3001709}
+    }
+  group_animations {{0} imported: 0 selected: items: "root transform/"}
+  animation_layers {{1 11 1112 774 0 0 1 1 0 0 0 0}
+    }
+  enable_background true
+  background_color {0.6 0.18 0 1}
+  background_opacity 0.9
+  enable_shadows true
+  shadow_opacity 1
+  shadow_distance 0
+  shadow_size 7
+  name Text7
+  xpos 600
+  ypos 606
+ }
+push $Nd65a0800
+ Text2 {
+  font_size_toolbar 100
+  font_width_toolbar 100
+  font_height_toolbar 100
+  message " OMIT "
+  old_message {{32 79 77 73 84 32}
+    }
+  box {{"xjustify == 0 ? width/25 :0"} 0 {"xjustify == 2 ? width-(width/25) : width"} {height}}
+  yjustify center
+  transforms {{0 2}
+    }
+  cursor_position 5
+  font {{ Arial : Regular : arial.ttf : 0 }}
+  global_font_scale {{(input.width/35+parent.size)/100}}
+  center {1112 774}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{204.6999512 774.3001709}
+    }
+  group_animations {{0} imported: 0 selected: items: "root transform/"}
+  animation_layers {{1 11 1112 774 0 0 1 1 0 0 0 0}
+    }
+  enable_background true
+  background_color {0.4 0 0 1}
+  background_opacity 0.9
+  enable_shadows true
+  shadow_opacity 1
+  shadow_distance 0
+  shadow_size 7
+  name Text6
+  xpos 494
+  ypos 606
+ }
+push $Nd65a0800
+ Text2 {
+  font_size_toolbar 100
+  font_width_toolbar 100
+  font_height_toolbar 100
+  message " FNL "
+  old_message {{32 70 78 76 32}
+    }
+  box {{"xjustify == 0 ? width/25 :0"} 0 {"xjustify == 2 ? width-(width/25) : width"} {height}}
+  yjustify center
+  transforms {{0 2}
+    }
+  kern_values {{1 0}
+    }
+  cursor_position 1
+  font {{ Arial : Regular : arial.ttf : 0 }}
+  global_font_scale {{(input.width/35+parent.size)/100}}
+  center {1112 774}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{204.6999512 774.3001709}
+    }
+  group_animations {{0} imported: 0 selected: items: "root transform/"}
+  animation_layers {{1 11 1112 774 0 0 1 1 0 0 0 0}
+    }
+  enable_background true
+  background_color {0 0.75 0 1}
+  background_opacity 0.9
+  enable_shadows true
+  shadow_opacity 1
+  shadow_distance 0
+  shadow_size 7
+  name Text1
+  xpos 386
+  ypos 605
+ }
+push $Nd65a0800
+ Text2 {
+  font_size_toolbar 100
+  font_width_toolbar 100
+  font_height_toolbar 100
+  message " PTC "
+  old_message {{32 80 84 67 32}
+    }
+  box {{"xjustify == 0 ? width/25 :0"} 0 {"xjustify == 2 ? width-(width/25) : width"} {height}}
+  yjustify center
+  transforms {{0 2}
+    }
+  cursor_position 4
+  font {{ Arial : Regular : arial.ttf : 0 }}
+  global_font_scale {{(input.width/35+parent.size)/100}}
+  center {1112 774}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{204.6999512 774.3001709}
+    }
+  group_animations {{0} imported: 0 selected: items: "root transform/"}
+  animation_layers {{1 11 1112 774 0 0 1 1 0 0 0 0}
+    }
+  enable_background true
+  background_color {0.2 0.1 0 1}
+  background_opacity 0.9
+  enable_shadows true
+  shadow_opacity 1
+  shadow_distance 0
+  shadow_size 7
+  name Text9
+  xpos 249
+  ypos 609
+ }
+push $Nd65a0800
+ Text2 {
+  font_size_toolbar 100
+  font_width_toolbar 100
+  font_height_toolbar 100
+  message APTC
+  old_message {{65 80 84 67}
+    }
+  box {{"xjustify == 0 ? width/25 :0"} 0 {"xjustify == 2 ? width-(width/25) : width"} {height}}
+  yjustify center
+  transforms {{0 2}
+    }
+  cursor_position 1
+  font {{ Arial : Regular : arial.ttf : 0 }}
+  global_font_scale {{(input.width/35+parent.size)/100}}
+  center {1112 774}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{204.6999512 774.3001709}
+    }
+  group_animations {{0} imported: 0 selected: items: "root transform/"}
+  animation_layers {{1 11 1112 774 0 0 1 1 0 0 0 0}
+    }
+  enable_background true
+  background_color {0.25 1 0.1 1}
+  background_opacity 0.9
+  enable_shadows true
+  shadow_opacity 1
+  shadow_distance 0
+  shadow_size 7
+  name Text5
+  xpos 127
+  ypos 604
+ }
+push $Nd65a0800
+ Text2 {
+  font_size_toolbar 100
+  font_width_toolbar 100
+  font_height_toolbar 100
+  message " TWK "
+  old_message {{32 84 87 75 32}
+    }
+  box {{"xjustify == 0 ? width/25 :0"} 0 {"xjustify == 2 ? width-(width/25) : width"} {height}}
+  yjustify center
+  transforms {{0 2}
+    }
+  cursor_position 4
+  font {{ Arial : Regular : arial.ttf : 0 }}
+  global_font_scale {{(input.width/35+parent.size)/100}}
+  center {1112 774}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{204.6999512 774.3001709}
+    }
+  group_animations {{0} imported: 0 selected: items: "root transform/"}
+  animation_layers {{1 11 1112 774 0 0 1 1 0 0 0 0}
+    }
+  enable_background true
+  background_color {1 0.1 0.5 1}
+  background_opacity 0.9
+  enable_shadows true
+  shadow_opacity 1
+  shadow_distance 0
+  shadow_size 7
+  name Text4
+  xpos 11
+  ypos 607
+ }
+push $Nd65a0800
+ Text2 {
+  font_size_toolbar 100
+  font_width_toolbar 100
+  font_height_toolbar 100
+  message " IP "
+  old_message {{32 73 80 32}
+    }
+  box {{"xjustify == 0 ? width/25 :0"} 0 {"xjustify == 2 ? width-(width/25) : width"} {height}}
+  yjustify center
+  transforms {{0 2}
+    }
+  cursor_position 3
+  font {{ Arial : Regular : arial.ttf : 0 }}
+  global_font_scale {{(input.width/35+parent.size)/100}}
+  center {1112 774}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{204.6999512 774.3001709}
+    }
+  group_animations {{0} imported: 0 selected: items: "root transform/"}
+  animation_layers {{1 11 1112 774 0 0 1 1 0 0 0 0}
+    }
+  enable_background true
+  background_color {0.6 0.7 0 1}
+  background_opacity 0.9
+  enable_shadows true
+  shadow_opacity 1
+  shadow_distance 0
+  shadow_size 7
+  name Text2
+  xpos -105
+  ypos 608
+ }
+push $Nd65a0800
+ Text2 {
+  font_size_toolbar 100
+  font_width_toolbar 100
+  font_height_toolbar 100
+  message " INIT "
+  old_message {{32 73 78 73 84 32}
+    }
+  box {{"xjustify == 0 ? width/25 :0"} 0 {"xjustify == 2 ? width-(width/25) : width"} {height}}
+  yjustify center
+  transforms {{0 2}
+    }
+  cursor_position 5
+  font {{ Arial : Regular : arial.ttf : 0 }}
+  global_font_scale {{(input.width/35+parent.size)/100}}
+  center {1112 774}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{204.6999512 774.3001709}
+    }
+  group_animations {{0} imported: 0 selected: items: "root transform/"}
+  animation_layers {{1 11 1112 774 0 0 1 1 0 0 0 0}
+    }
+  enable_background true
+  background_color {1 0.4 1 1}
+  background_opacity 0.9
+  enable_shadows true
+  shadow_opacity 1
+  shadow_distance 0
+  shadow_size 7
+  name Text8
+  xpos -211
+  ypos 611
+ }
+push $Nd65a0800
+ Text2 {
+  font_size_toolbar 100
+  font_width_toolbar 100
+  font_height_toolbar 100
+  message " NS "
+  old_message {{32 78 83 32}
+    }
+  box {{"xjustify == 0 ? width/25 :0"} 0 {"xjustify == 2 ? width-(width/25) : width"} {height}}
+  yjustify center
+  transforms {{0 2}
+    }
+  cursor_position 3
+  font {{ Arial : Regular : arial.ttf : 0 }}
+  global_font_scale {{(input.width/35+parent.size)/100}}
+  scale {1 1}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{204.6999512 774.3001709}
+    }
+  group_animations {{0} imported: 0 selected: items: "root transform"}
+  animation_layers {{1 11 1112 774 0 0 1 1 0 0 0 0}
+    }
+  enable_background true
+  background_color {0.5 0.5 0.5 1}
+  background_opacity 0.9
+  enable_shadows true
+  shadow_opacity 1
+  shadow_distance 0
+  shadow_size 7
+  name Text3
+  xpos -333
+  ypos 609
+ }
+push $Nd65a0f00
+ Switch {
+  inputs 10
+  which {{"shotStatus1 == 0 ? 0 :shotStatus+1"}}
+  name Switch4
+  label "\[value which]"
+  xpos -457
+  ypos 821
+ }
+ Dot {
+  name Dot5
+  note_font_size 41
+  xpos -423
+  ypos 935
+ }
+set Nc0fbb900 [stack 0]
+ Fill {
+  color {{parent.color_1} {parent.color_1} {parent.color_1} {parent.color_1}}
+  name Fill1
+  xpos -153
+  ypos 931
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy1
+  xpos -153
+  ypos 992
+ }
+ Premult {
+  name Premult1
+  xpos -153
+  ypos 1046
+ }
+ Merge2 {
+  inputs 2
+  operation under
+  name Merge3
+  label "\[ expr \{ \[value mix] == 1 ? \" \" : \[concat Mix: \[value mix]] \}]"
+  xpos -153
+  ypos 1108
+  addUserKnob {20 TRX}
+  addUserKnob {22 swap l "swap to Merge All Node" -STARTLINE T "import convertMergeToMergeAll;convertMergeToMergeAll.convertMergeToMergeAll()"}
+ }
+push $Nc0fbb900
+ Merge2 {
+  inputs 2
+  name Merge2
+  label "\[ expr \{ \[value mix] == 1 ? \" \" : \[concat Mix: \[value mix]] \}]"
+  xpos -457
+  ypos 1108
+  disable {{!showDot}}
+  addUserKnob {20 TRX}
+  addUserKnob {22 swap l "swap to Merge All Node" -STARTLINE T "import convertMergeToMergeAll;convertMergeToMergeAll.convertMergeToMergeAll()"}
+ }
+ Output {
+  name Output1
+  xpos -457
+  ypos 1232
+ }
+end_group
