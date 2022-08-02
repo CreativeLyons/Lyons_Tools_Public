@@ -1,0 +1,52 @@
+Gizmo {
+ name ShotOverviewMaster
+ tile_color 0x98a1ff
+ note_font_size 21
+ note_font_color 0xffffffff
+ selected true
+ addUserKnob {20 ShotOverviewMaster}
+ addUserKnob {41 output T NoOp1.output}
+ addUserKnob {41 setReadToLatest l "Set Reads To Latest Version" T NoOp1.setReadToLatest}
+ addUserKnob {41 heroFrameOn l "Use Hero Frame" T NoOp1.heroFrameOn}
+ addUserKnob {41 useAppendClip l "Use Append Clip 1001-1007" T NoOp1.useAppendClip}
+ addUserKnob {41 shotStatus l "Show Shot Status" T NoOp1.shotStatus}
+ addUserKnob {41 showDot l "Show Dot" -STARTLINE T NoOp1.showDot}
+ addUserKnob {41 labelFromRead l "Label From Read" T NoOp1.labelFromRead}
+ addUserKnob {41 artistName l "Include Artist name" T NoOp1.artistName}
+ addUserKnob {41 deliveryOverlay l "Delivery Matte Overlay" T NoOp1.deliveryOverlay}
+ addUserKnob {41 ocioShotDisplay l "OCIO ShotDisplay" -STARTLINE T NoOp1.ocioShotDisplay}
+}
+ Input {
+  inputs 0
+  name InputContactSheet
+  xpos 0
+  ypos -62
+ }
+ NoOp {
+  name NoOp1
+  knobChanged "import nuke\n\nn = nuke.thisGroup()\nk = nuke.thisKnob()\n\nif k.name() in \[\"output\",\"useAppendClip\",\"labelFromRead\",\"heroFrameOn\",\"shotStatus\",\"showDot\",\"artistName\",\"deliveryOverlay\",\"ocioShotDisplay\"]:\n    with nuke.root():\n        def get_dependencies(node, node_list):\n            for dep_node in node.dependencies():\n                if dep_node not in node_list:\n                    node_list.append(dep_node)\n                    get_dependencies(dep_node, node_list)\n            return node_list\n    \n        shotOverviews = get_dependencies(n, \[])\n        \n        for shotOverview in shotOverviews:\n            if \"ShotOverview\" in shotOverview.name():\n                so = shotOverview.name()\n                \n                if k.name() == \"output\":\n                    output = n.knob('output').value()\n                    ni = n.input(0)\n                    inputNum = ni.inputs()\n                    for i in range(0, inputNum ):\n                        soNode = nuke.toNode(so)\n                        soNode.knob('output').setValue(output)\n                    \n                if k.name() == \"useAppendClip\":\n                    ac = n.knob('useAppendClip').value()\n                    ni = n.input(0)\n                    inputNum = ni.inputs()\n                    for i in range(0, inputNum ):\n                        soNode = nuke.toNode(so)\n                        soNode.knob('useAppendClip').setValue(ac)\n                \n                if k.name() == \"labelFromRead\":\n                    ac = n.knob('labelFromRead').value()\n                    ni = n.input(0)\n                    inputNum = ni.inputs()\n                    for i in range(0, inputNum ):\n                        soNode = nuke.toNode(so)\n                        soNode.knob('labelToggle').setValue(ac)\n\n                if k.name() == \"artistName\":\n                    ac = n.knob('artistName').value()\n                    ni = n.input(0)\n                    inputNum = ni.inputs()\n                    for i in range(0, inputNum ):\n                        soNode = nuke.toNode(so)\n                        soNode.knob('artistName').setValue(ac)\n                        \n                if k.name() == \"shotStatus\":\n                    ac = n.knob('shotStatus').value()\n                    ni = n.input(0)\n                    inputNum = ni.inputs()\n                    for i in range(0, inputNum ):\n                        soNode = nuke.toNode(so)\n                        soNode.knob('shotStatus1').setValue(ac)\n\n                if k.name() == \"showDot\":\n                    ac = n.knob('showDot').value()\n                    ni = n.input(0)\n                    inputNum = ni.inputs()\n                    for i in range(0, inputNum ):\n                        soNode = nuke.toNode(so)\n                        soNode.knob('showDot').setValue(ac)\n                                                                       \n                if k.name() == \"heroFrameOn\":\n                    ac = n.knob('heroFrameOn').value()\n                    ni = n.input(0)\n                    inputNum = ni.inputs()\n                    for i in range(0, inputNum ):\n                        soNode = nuke.toNode(so)\n                        soNode.knob('heroFrameOn').setValue(ac)\n                                            \n                if k.name() == \"deliveryOverlay\":\n                    ac = n.knob('deliveryOverlay').value()\n                    ni = n.input(0)\n                    inputNum = ni.inputs()\n                    for i in range(0, inputNum ):\n                        soNode = nuke.toNode(so)\n                        soNode.knob('deliveryOverlay').setValue(ac)   \n                      \n                if k.name() == \"ocioShotDisplay\":\n                    ac = n.knob('ocioShotDisplay').value()\n                    ni = n.input(0)\n                    inputNum = ni.inputs()\n                    for i in range(0, inputNum ):\n                        soNode = nuke.toNode(so)\n                        soNode.knob('ocioShotDisplay').setValue(ac)\n                    "
+  xpos 0
+  ypos -6
+  addUserKnob {20 User}
+  addUserKnob {4 output M {"Comp - 1001" "Master Plate - 1002" "Degrain Plate - 1003" "LightingSlap - 1004" "Lighting Renders - 1005" "Prep - 1006" "Roto - 1007"}}
+  addUserKnob {22 setReadToLatest l "Set Reads To Latest Version" T "n = nuke.thisGroup()\n\nwith nuke.root():\n    def get_dependencies(node, node_list):\n        for dep_node in node.dependencies():\n            if dep_node not in node_list:\n                node_list.append(dep_node)\n                get_dependencies(dep_node, node_list)\n        return node_list\n    \n    all_dependencies = get_dependencies(n, \[])\n    \n    for a in all_dependencies:\n        if \"ShotOverview\" in a.name():\n            shotOverview = a\n            inputNumber = int(a.knob(\"output\").getValue())\n            inputNode = shotOverview.input(inputNumber)\n            \n            readList = \[]\n            if inputNode.Class() == \"Read\":\n                readList.append(inputNode)\n            else:\n                all_dependencies = get_dependencies(inputNode, \[])\n                for i in all_dependencies:\n                    if i.Class() == \"Read\":\n                        readList.append(i)\n            \n            for r in readList:\n                r.setSelected(True)\n    m = nuke.menu( 'Nuke' ).findItem( 'Snippets/ReadNodes/set Reads versions to latest' )\n    m.invoke()    " +STARTLINE}
+  addUserKnob {6 heroFrameOn l "Use Hero Frame" +STARTLINE}
+  heroFrameOn true
+  addUserKnob {6 useAppendClip l "Use Append Clip 1001-1007" +STARTLINE}
+  addUserKnob {6 shotStatus l "Show Shot Status" +STARTLINE}
+  addUserKnob {6 showDot l "Show Dot" +STARTLINE}
+  addUserKnob {6 labelFromRead l "Label From Read" +STARTLINE}
+  labelFromRead true
+  addUserKnob {6 artistName l "Include Artist name" +STARTLINE}
+  artistName true
+  addUserKnob {6 deliveryOverlay l "Delivery Matte Overlay" +STARTLINE}
+  deliveryOverlay true
+  addUserKnob {6 ocioShotDisplay l "OCIO ShotDisplay" -STARTLINE}
+  ocioShotDisplay true
+ }
+ Output {
+  name Output1
+  xpos 0
+  ypos 70
+ }
+end_group
