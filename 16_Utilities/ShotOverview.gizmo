@@ -1,0 +1,2569 @@
+Gizmo {
+ name ShotOverview33
+ label "Hero: \[value heroFrame]"
+ selected true
+ addUserKnob {20 ShotOverview}
+ addUserKnob {4 output l Output M {"Comp - 1001" "Master Plate - 1002" "Degrain Plate - 1003" "LightingSlap - 1004" "Lighting Renders - 1005" "Prep - 1006" "Roto - 1007" "" "" ""}}
+ addUserKnob {22 setReadsToLatest l "Set Reads to Latest" T "n = nuke.thisNode()\nreadsToReload = \[]\nnodesConnected = n.dependencies()\nfor i in nodesConnected:\n    reads = i.dependencies()\n    for e in reads:\n        if e == False:\n            pass\n        else:\n            if e.Class() == \"Read\":\n                readsToReload.append(e.name())\n            else:\n                pass\nfor r in readsToReload:\n    nuke.toNode(r).knob('version_setlatest').execute()" +STARTLINE}
+ addUserKnob {6 heroFrameOn l "<font color= dimgray>.  <font color= skyblue> <b>Hero Frame  " +STARTLINE}
+ heroFrameOn true
+ addUserKnob {3 heroFrame l "" -STARTLINE}
+ heroFrame 1009
+ addUserKnob {22 setFrame l "set frame" -STARTLINE T "curentFrame = nuke.frame()\nnuke.thisNode().knob(\"heroFrame\").setValue(curentFrame)"}
+ addUserKnob {6 plateType l "Using PlateRef instead of Master Plate" +STARTLINE}
+ plateType true
+ addUserKnob {6 deliveryOverlay l "Delivery Matte Overlay" +STARTLINE}
+ deliveryOverlay true
+ addUserKnob {6 ocioShotDisplay l "OCIO ShotDisplay" -STARTLINE}
+ ocioShotDisplay true
+ addUserKnob {6 useAppendClip l "Use Append Clip 1001-1007" +STARTLINE}
+ addUserKnob {6 viewContactSheet l "View as Contact Sheet" +STARTLINE}
+ addUserKnob {26 ""}
+ addUserKnob {6 color_1_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 color_rgb_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 shotStatus1 l "Shot Status:" +STARTLINE}
+ addUserKnob {4 shotStatus l "" -STARTLINE M {"Not Started" Init "In Progress" Tweak "Approved Pending TC" "Pending Tech Check" Final Omitted "On Hold" "" "" "" "" ""}}
+ addUserKnob {6 showDot l "Show Dot" +STARTLINE}
+ addUserKnob {18 color_1 l color -STARTLINE}
+ color_1 {1 0 0}
+ addUserKnob {26 ""}
+ addUserKnob {6 labelToggle l "Label From Read" +STARTLINE}
+ labelToggle true
+ addUserKnob {41 filenameCheck l "Include FIle Name?" T LabelFromRead2.filenameCheck}
+ addUserKnob {6 artistName l "Include Aritst Name?" -STARTLINE}
+ artistName true
+ addUserKnob {41 descCheck l "Include Description?" T LabelFromRead2.descCheck}
+ addUserKnob {41 inputDesc l Description T LabelFromRead2.inputDesc}
+ addUserKnob {20 labelFromReadSettings l "Label From Read Settings" n 1}
+ labelFromReadSettings 0
+ addUserKnob {41 color l "Text Color" T LabelFromRead2.color}
+ addUserKnob {41 borderColor l "Border Color" T LabelFromRead2.borderColor}
+ addUserKnob {41 borderSize l "Border Size" T LabelFromRead2.borderSize}
+ addUserKnob {4 xjustify l Justify M {left center right justify "" "" ""}}
+ addUserKnob {4 yjustify l "" -STARTLINE M {top center bottom ""}}
+ addUserKnob {41 size l "Overall Size" T LabelFromRead2.size}
+ addUserKnob {41 x_pos l "X Pos" T LabelFromRead2.x_pos}
+ addUserKnob {41 YPos l "Y Pos" T LabelFromRead2.YPos}
+ addUserKnob {41 mix T LabelFromRead2.mix}
+ addUserKnob {1 inputName0 +INVISIBLE}
+ inputName0 "\[file tail \[value \[topnode input0].file] ]"
+ addUserKnob {1 fullPath0 +INVISIBLE}
+ fullPath0 "\[value \[topnode input0].file]"
+ addUserKnob {1 inputName1 +INVISIBLE}
+ inputName1 "\[file tail \[value \[topnode input1].file] ]"
+ addUserKnob {1 fullPath1 +INVISIBLE}
+ fullPath1 "\[value \[topnode input1].file]"
+ addUserKnob {1 inputName2 +INVISIBLE}
+ inputName2 "\[file tail \[value \[topnode input2].file] ]"
+ addUserKnob {1 fullPath2 +INVISIBLE}
+ fullPath2 "\[value \[topnode input2].file]"
+ addUserKnob {1 inputName3 +INVISIBLE}
+ inputName3 "\[file tail \[value \[topnode input3].file] ]"
+ addUserKnob {1 fullPath3 +INVISIBLE}
+ fullPath3 "\[value \[topnode input3].file]"
+ addUserKnob {1 inputName4 +INVISIBLE}
+ inputName4 "\[file tail \[value \[topnode input4].file] ]"
+ addUserKnob {1 fullPath4 +INVISIBLE}
+ fullPath4 "\[value \[topnode input4].file]"
+ addUserKnob {1 inputName5 +INVISIBLE}
+ inputName5 "\[file tail \[value \[topnode input5].file] ]"
+ addUserKnob {1 fullPath5 +INVISIBLE}
+ fullPath5 "\[value \[topnode input5].file]"
+ addUserKnob {1 inputName6 +INVISIBLE}
+ inputName6 "\[file tail \[value \[topnode input6].file] ]"
+ addUserKnob {1 fullPath6 +INVISIBLE}
+ fullPath6 "\[value \[topnode input6].file]"
+ addUserKnob {20 endGroup n -1}
+}
+ ColorWheel {
+  inputs 0
+  format "256 256 0 0 256 256 1 square_256"
+  channels {-rgba.red -rgba.green -rgba.blue rgba.alpha}
+  gamma 0.45
+  name ColorWheel1
+  xpos 4
+  ypos 1457
+ }
+set N9a2b1d00 [stack 0]
+ Transform {
+  scale 1.12
+  center {128 128}
+  shutteroffset centred
+  name Transform5
+  xpos 115
+  ypos 1556
+ }
+ Transform {
+  scale {{parent.width/5000}}
+  center {128 128}
+  shutteroffset centred
+  name Transform3
+  xpos 115
+  ypos 1604
+ }
+ Transform {
+  translate {{parent.width-(width)} {(parent.height/2)-(height/1.5)}}
+  center {128 128}
+  shutteroffset centred
+  name Transform6
+  xpos 115
+  ypos 1667
+ }
+ Dot {
+  name Dot3
+  note_font_size 41
+  xpos 149
+  ypos 1777
+ }
+push $N9a2b1d00
+ Transform {
+  scale {{parent.width/5000}}
+  center {128 128}
+  shutteroffset centred
+  name Transform1
+  xpos 4
+  ypos 1600
+ }
+ Transform {
+  translate {{parent.width-(width)} {(parent.height/2)-(height/1.5)}}
+  center {128 128}
+  shutteroffset centred
+  name Transform2
+  xpos 4
+  ypos 1663
+ }
+ Input {
+  inputs 0
+  name Inputroto
+  xpos 758
+  ypos -135
+  number 6
+ }
+ tx_viewport_overlay {
+  name tx_viewport_overlay7
+  xpos 758
+  ypos -80
+  disable {{!parent.deliveryOverlay}}
+  draw_line false
+  inner_matte 1
+  delivery_matte 1
+ }
+ Group {
+  name LabelFromRead6
+  tile_color 0x1f1f1fff
+  label "\[ expr \{ \[value splitPath] ? \[value finalFilePath] : \[] \} ]\n\[value inputDesc]"
+  note_font Verdana
+  note_font_color 0xe5e500ff
+  xpos 758
+  ypos -24
+  disable {{!parent.labelToggle}}
+  addUserKnob {20 LabelFromRead}
+  addUserKnob {1 inputName}
+  inputName "\[value parent.inputName6]"
+  addUserKnob {1 fullPath}
+  fullPath "\[value parent.fullPath6]"
+  addUserKnob {6 filenameCheck l "Include FIle Name?" +STARTLINE}
+  filenameCheck {{parent.LabelFromRead2.filenameCheck}}
+  addUserKnob {4 pathType l "" -STARTLINE M {"Full Path" Tail}}
+  pathType Tail
+  addUserKnob {6 splitPath l "Split Path" -STARTLINE}
+  splitPath true
+  addUserKnob {1 whichPath +INVISIBLE}
+  whichPath "\[ expr  \{ \[value pathType] == \"Full Path\" ? \[value fullPath] : \[value inputName] \} ]"
+  addUserKnob {3 rangeStart l range}
+  rangeStart 1
+  addUserKnob {3 rangeEnd l " -  " -STARTLINE}
+  rangeEnd 4
+  addUserKnob {1 splitText l "Split with" -STARTLINE}
+  splitText _
+  addUserKnob {1 fileRange +INVISIBLE}
+  fileRange "\[ expr \{ \[value splitPath] ? \[ expr \{ \[value filenameCheck] ? \[lrange \[split \[value whichPath] \[value splitText] ] \[value rangeStart] \[value rangeEnd] ] : \[] \} ] : \[value whichPath] \} ]"
+  addUserKnob {1 finalFilePath +INVISIBLE}
+  finalFilePath "\[value fileRange]"
+  addUserKnob {6 descCheck l "Include Description?" +STARTLINE}
+  descCheck {{parent.LabelFromRead2.descCheck}}
+  addUserKnob {1 inputDesc l Description}
+  inputDesc "\[value parent.LabelFromRead2.inputDesc]"
+  addUserKnob {26 ""}
+  addUserKnob {6 color_rgb_panelDropped l "panel dropped state" +HIDDEN +STARTLINE}
+  addUserKnob {18 color l "Text Color"}
+  color {{parent.LabelFromRead2.color} {parent.LabelFromRead2.color} {parent.LabelFromRead2.color}}
+  addUserKnob {6 color_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {18 borderColor l "Border Color"}
+  borderColor {{parent.LabelFromRead2.borderColor} {parent.LabelFromRead2.borderColor} {parent.LabelFromRead2.borderColor}}
+  addUserKnob {6 borderColor_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 color_rgb_panelDropped_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {7 borderSize l "Border Size" R 0 5}
+  borderSize {{parent.LabelFromRead2.borderSize}}
+  addUserKnob {6 enableBackground l "Enable Background" +INVISIBLE +STARTLINE}
+  addUserKnob {26 ""}
+  addUserKnob {41 xjustify l Justify T FileName.xjustify}
+  addUserKnob {41 yjustify l "" -STARTLINE T FileName.yjustify}
+  addUserKnob {7 size l "Overall Size" R -50 50}
+  size {{parent.LabelFromRead2.size}}
+  addUserKnob {7 x_pos l "X Pos" R -100 100}
+  x_pos {{parent.LabelFromRead2.x_pos}}
+  addUserKnob {7 YPos l "Y Pos" R -100 100}
+  YPos {{parent.LabelFromRead2.YPos}}
+  addUserKnob {26 ""}
+  addUserKnob {41 mix T Merge1.mix}
+  addUserKnob {20 info l Info}
+  addUserKnob {26 creator l Creator: T "<b><big>Tony Lyons"}
+  addUserKnob {26 desc l Description: t "Takes the last section of the filename and displays in on the top of frame\n\n- Can toggle dsiplay of a User Description\n- Can adjust size and position of Text" T LabelFromRead}
+  addUserKnob {26 text l Version: T v05}
+ }
+  Input {
+   inputs 0
+   name Input
+   xpos -195
+   ypos -608
+  }
+  Dot {
+   name Dot1
+   xpos -161
+   ypos -550
+  }
+set Na01f7900 [stack 0]
+  Remove {
+   operation keep
+   channels rgba
+   name Remove1
+   xpos -339
+   ypos -553
+  }
+  Shuffle {
+   red black
+   green black
+   blue black
+   alpha black
+   name Shuffle1
+   label "\[value in]"
+   xpos -339
+   ypos -529
+  }
+  Text2 {
+   font_size_toolbar 100
+   font_width_toolbar 100
+   font_height_toolbar 100
+   message "\[value parent.inputDesc]"
+   old_expression_markers {{0 -1}
+     }
+   box {0 {input.height-(input.height/5)} {input.width} {input.height-(input.height/37.25)}}
+   xjustify {{parent.FileName.xjustify}}
+   yjustify {{parent.FileName.yjustify}}
+   transforms {{0 2}
+     }
+   font {{ Arial : Regular : arial.ttf : 0 }}
+   global_font_scale {{(input.width/35+parent.size)/100}}
+   scale {1 1}
+   cursor_initialised true
+   autofit_bbox false
+   initial_cursor_position {{0 1556}
+     }
+   group_animations {{0} imported: 0 selected: items: "root transform"}
+   animation_layers {{1 11 0 {input.height-(input.height/7)} {"input.width/40+ parent.x_pos"} {parent.YPos} 1 1 0 0 0 0}
+     }
+   color {{parent.color} {parent.color} {parent.color} 1}
+   background_border_x 0
+   background_border_y 0
+   enable_shadows true
+   shadow_color {{parent.borderColor} {parent.borderColor} {parent.borderColor} 1}
+   shadow_opacity 1
+   shadow_distance 0
+   shadow_size {{parent.borderSize}}
+   name Description
+   xpos -339
+   ypos -453
+   disable {{!parent.descCheck}}
+  }
+  Text2 {
+   font_size_toolbar 100
+   font_width_toolbar 100
+   font_height_toolbar 100
+   message "\n\[value parent.finalFilePath]"
+   old_message {{10 75 69 77 32 49 50 48 48 32 114 111 116 111 32 118 48 48 49}
+     }
+   old_expression_markers {{1 18}
+     }
+   box {0 {input.height-(input.height/5)} {input.width} {input.height-(input.height/37.25)}}
+   transforms {{0 2}
+     }
+   cursor_position 28
+   font {{ Arial : Regular : arial.ttf : 0 }}
+   global_font_scale {{(input.width/35+parent.size)/100}}
+   scale {1 1}
+   cursor_initialised true
+   autofit_bbox false
+   initial_cursor_position {{0 1556}
+     }
+   group_animations {{0} imported: 0 selected: items: "root transform"}
+   animation_layers {{1 11 0 {input.height-(input.height/7)} {"input.width/40+ parent.x_pos"} {"descCheck == 1 ? parent.YPos : input.height/20 + parent.YPos"} 1 1 0 0 0 0}
+     }
+   color {{parent.color} {parent.color} {parent.color} 1}
+   enable_background {{parent.enableBackground}}
+   background_border_x 0
+   background_border_y 0
+   enable_shadows true
+   shadow_color {{parent.borderColor} {parent.borderColor} {parent.borderColor} 1}
+   shadow_opacity 1
+   shadow_distance 0
+   shadow_size {{parent.borderSize}}
+   name FileName
+   xpos -339
+   ypos -408
+   disable {{!parent.filenameCheck}}
+  }
+  Dot {
+   name Dot2
+   xpos -305
+   ypos -342
+  }
+push $Na01f7900
+  Merge2 {
+   inputs 2
+   bbox B
+   mix {{parent.parent.LabelFromRead2.Merge1.mix}}
+   name Merge1
+   xpos -195
+   ypos -345
+  }
+  Output {
+   name Output1
+   xpos -195
+   ypos -201
+  }
+ end_group
+ FrameHold {
+  first_frame {{parent.heroFrame}}
+  name FrameHold6
+  xpos 758
+  ypos 117
+  disable {{!parent.heroFrameOn}}
+ }
+ FrameRange {
+  first_frame 1001
+  last_frame 1001
+  time ""
+  name FrameRange7
+  xpos 758
+  ypos 176
+ }
+set Na01c0100 [stack 0]
+ Input {
+  inputs 0
+  name Inputprep
+  xpos 605
+  ypos -136
+  number 5
+ }
+ tx_viewport_overlay {
+  name tx_viewport_overlay6
+  xpos 605
+  ypos -80
+  disable {{!parent.deliveryOverlay}}
+  draw_line false
+  inner_matte 1
+  delivery_matte 1
+ }
+ Group {
+  name LabelFromRead5
+  tile_color 0x1f1f1fff
+  label "\[ expr \{ \[value splitPath] ? \[value finalFilePath] : \[] \} ]\n\[value inputDesc]"
+  note_font Verdana
+  note_font_color 0xe5e500ff
+  xpos 605
+  ypos -24
+  disable {{!parent.labelToggle}}
+  addUserKnob {20 LabelFromRead}
+  addUserKnob {1 inputName}
+  inputName "\[value parent.inputName5]"
+  addUserKnob {1 fullPath}
+  fullPath "\[value parent.fullPath5]"
+  addUserKnob {6 filenameCheck l "Include FIle Name?" +STARTLINE}
+  filenameCheck {{parent.LabelFromRead2.filenameCheck}}
+  addUserKnob {4 pathType l "" -STARTLINE M {"Full Path" Tail}}
+  pathType Tail
+  addUserKnob {6 splitPath l "Split Path" -STARTLINE}
+  splitPath true
+  addUserKnob {1 whichPath +INVISIBLE}
+  whichPath "\[ expr  \{ \[value pathType] == \"Full Path\" ? \[value fullPath] : \[value inputName] \} ]"
+  addUserKnob {3 rangeStart l range}
+  rangeStart 1
+  addUserKnob {3 rangeEnd l " -  " -STARTLINE}
+  rangeEnd 4
+  addUserKnob {1 splitText l "Split with" -STARTLINE}
+  splitText _
+  addUserKnob {1 fileRange +INVISIBLE}
+  fileRange "\[ expr \{ \[value splitPath] ? \[ expr \{ \[value filenameCheck] ? \[lrange \[split \[value whichPath] \[value splitText] ] \[value rangeStart] \[value rangeEnd] ] : \[] \} ] : \[value whichPath] \} ]"
+  addUserKnob {1 finalFilePath +INVISIBLE}
+  finalFilePath "\[value fileRange]"
+  addUserKnob {6 descCheck l "Include Description?" +STARTLINE}
+  descCheck {{parent.LabelFromRead2.descCheck}}
+  addUserKnob {1 inputDesc l Description}
+  inputDesc "\[value parent.LabelFromRead2.inputDesc]"
+  addUserKnob {26 ""}
+  addUserKnob {6 color_rgb_panelDropped l "panel dropped state" +HIDDEN +STARTLINE}
+  addUserKnob {18 color l "Text Color"}
+  color {{parent.LabelFromRead2.color} {parent.LabelFromRead2.color} {parent.LabelFromRead2.color}}
+  addUserKnob {6 color_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {18 borderColor l "Border Color"}
+  borderColor {{parent.LabelFromRead2.borderColor} {parent.LabelFromRead2.borderColor} {parent.LabelFromRead2.borderColor}}
+  addUserKnob {6 borderColor_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 color_rgb_panelDropped_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {7 borderSize l "Border Size" R 0 5}
+  borderSize {{parent.LabelFromRead2.borderSize}}
+  addUserKnob {6 enableBackground l "Enable Background" +INVISIBLE +STARTLINE}
+  addUserKnob {26 ""}
+  addUserKnob {41 xjustify l Justify T FileName.xjustify}
+  addUserKnob {41 yjustify l "" -STARTLINE T FileName.yjustify}
+  addUserKnob {7 size l "Overall Size" R -50 50}
+  size {{parent.LabelFromRead2.size}}
+  addUserKnob {7 x_pos l "X Pos" R -100 100}
+  x_pos {{parent.LabelFromRead2.x_pos}}
+  addUserKnob {7 YPos l "Y Pos" R -100 100}
+  YPos {{parent.LabelFromRead2.YPos}}
+  addUserKnob {26 ""}
+  addUserKnob {41 mix T Merge1.mix}
+  addUserKnob {20 info l Info}
+  addUserKnob {26 creator l Creator: T "<b><big>Tony Lyons"}
+  addUserKnob {26 desc l Description: t "Takes the last section of the filename and displays in on the top of frame\n\n- Can toggle dsiplay of a User Description\n- Can adjust size and position of Text" T LabelFromRead}
+  addUserKnob {26 text l Version: T v05}
+ }
+  Input {
+   inputs 0
+   name Input
+   xpos -195
+   ypos -608
+  }
+  Dot {
+   name Dot1
+   xpos -161
+   ypos -550
+  }
+set Na000c800 [stack 0]
+  Remove {
+   operation keep
+   channels rgba
+   name Remove1
+   xpos -339
+   ypos -553
+  }
+  Shuffle {
+   red black
+   green black
+   blue black
+   alpha black
+   name Shuffle1
+   label "\[value in]"
+   xpos -339
+   ypos -529
+  }
+  Text2 {
+   font_size_toolbar 100
+   font_width_toolbar 100
+   font_height_toolbar 100
+   message "\[value parent.inputDesc]"
+   old_expression_markers {{0 -1}
+     }
+   box {0 {input.height-(input.height/5)} {input.width} {input.height-(input.height/37.25)}}
+   xjustify {{parent.FileName.xjustify}}
+   yjustify {{parent.FileName.yjustify}}
+   transforms {{0 2}
+     }
+   font {{ Arial : Regular : arial.ttf : 0 }}
+   global_font_scale {{(input.width/35+parent.size)/100}}
+   scale {1 1}
+   cursor_initialised true
+   autofit_bbox false
+   initial_cursor_position {{0 1556}
+     }
+   group_animations {{0} imported: 0 selected: items: "root transform"}
+   animation_layers {{1 11 0 {input.height-(input.height/7)} {"input.width/40+ parent.x_pos"} {parent.YPos} 1 1 0 0 0 0}
+     }
+   color {{parent.color} {parent.color} {parent.color} 1}
+   background_border_x 0
+   background_border_y 0
+   enable_shadows true
+   shadow_color {{parent.borderColor} {parent.borderColor} {parent.borderColor} 1}
+   shadow_opacity 1
+   shadow_distance 0
+   shadow_size {{parent.borderSize}}
+   name Description
+   xpos -339
+   ypos -453
+   disable {{!parent.descCheck}}
+  }
+  Text2 {
+   font_size_toolbar 100
+   font_width_toolbar 100
+   font_height_toolbar 100
+   message "\n\[value parent.finalFilePath]"
+   old_message {{10 75 69 77 32 49 50 48 48 32 112 97 105 110 116 32 118 48 48 49}
+     }
+   old_expression_markers {{1 19}
+     }
+   box {0 {input.height-(input.height/5)} {input.width} {input.height-(input.height/37.25)}}
+   transforms {{0 2}
+     }
+   cursor_position 28
+   font {{ Arial : Regular : arial.ttf : 0 }}
+   global_font_scale {{(input.width/35+parent.size)/100}}
+   scale {1 1}
+   cursor_initialised true
+   autofit_bbox false
+   initial_cursor_position {{0 1556}
+     }
+   group_animations {{0} imported: 0 selected: items: "root transform"}
+   animation_layers {{1 11 0 {input.height-(input.height/7)} {"input.width/40+ parent.x_pos"} {"descCheck == 1 ? parent.YPos : input.height/20 + parent.YPos"} 1 1 0 0 0 0}
+     }
+   color {{parent.color} {parent.color} {parent.color} 1}
+   enable_background {{parent.enableBackground}}
+   background_border_x 0
+   background_border_y 0
+   enable_shadows true
+   shadow_color {{parent.borderColor} {parent.borderColor} {parent.borderColor} 1}
+   shadow_opacity 1
+   shadow_distance 0
+   shadow_size {{parent.borderSize}}
+   name FileName
+   xpos -339
+   ypos -408
+   disable {{!parent.filenameCheck}}
+  }
+  Dot {
+   name Dot2
+   xpos -305
+   ypos -342
+  }
+push $Na000c800
+  Merge2 {
+   inputs 2
+   bbox B
+   mix {{parent.parent.LabelFromRead2.Merge1.mix}}
+   name Merge1
+   xpos -195
+   ypos -345
+  }
+  Output {
+   name Output1
+   xpos -195
+   ypos -201
+  }
+ end_group
+ FrameHold {
+  first_frame {{parent.heroFrame}}
+  name FrameHold5
+  xpos 605
+  ypos 118
+  disable {{!parent.heroFrameOn}}
+ }
+ FrameRange {
+  first_frame 1001
+  last_frame 1001
+  time ""
+  name FrameRange6
+  xpos 605
+  ypos 177
+ }
+set N9ffccf00 [stack 0]
+ Input {
+  inputs 0
+  name InputLgtRender
+  xpos 412
+  ypos -720
+  number 4
+ }
+ Dot {
+  name Dot1
+  note_font_size 41
+  xpos 446
+  ypos -449
+ }
+set N9ffcc100 [stack 0]
+ Group {
+  name BBoxToFormat
+  onCreate "n = nuke.thisNode()\ninputFormat = n.knob(\"inputFormat\")\ninputBBox = n.knob(\"inputBBox\")\ncrop = nuke.toNode(\"Crop6\")\ncropb = crop.knob('box')\noutputBBox = n.knob('outputBBox')\noutputBBoxCenter = n.knob(\"outputBBoxCenter\")\n\ninputFormat.setFlag(0x0000000000008000)\ninputBBox.setFlag(0x0000000000008000)\ncropb.setFlag(0x0000000000008000)\noutputBBox.setFlag(0x0000000000008000)\noutputBBoxCenter.setFlag(0x0000000000008000)\n\nn = nuke.thisNode()\nn.knob(\"overscan\").setRange(0,400)\nn.knob(\"overscanPercent\").setRange(1,4)"
+  knobChanged "n = nuke.thisNode()\nk = nuke.thisKnob()\nif k.name() == \"overscanType\":\n    if n.knob(\"overscanType\").getValue() == 1:\n        n.knob(\"overscanPercent\").setVisible(True)\n        n.knob(\"overscan\").setVisible(False)\n    else:\n        n.knob(\"overscanPercent\").setVisible(False)\n        n.knob(\"overscan\").setVisible(True)"
+  tile_color 0xa57aaaff
+  note_font Verdana
+  note_font_color 0xffffffff
+  xpos 549
+  ypos -453
+  addUserKnob {20 CropBBox}
+  addUserKnob {4 type l Type +INVISIBLE M {"To Format" "To BBox"}}
+  addUserKnob {41 intersect T Crop6.intersect}
+  addUserKnob {6 blackOutside l "Black Outside" -STARTLINE}
+  addUserKnob {4 overscanType l "Overscan Type:" M {Pixels Percentage}}
+  overscanType Percentage
+  addUserKnob {14 overscan l Overscan +HIDDEN R 0 400}
+  addUserKnob {14 overscanPercent l "Overscan Percent" R 1 4}
+  overscanPercent 1
+  addUserKnob {20 inputBbox l "BBox Data" n 1}
+  inputBbox 0
+  addUserKnob {15 inputFormat l "Input Format"}
+  inputFormat {0 0 {input.width} {input.height}}
+  addUserKnob {15 inputBBox l "Input BBox"}
+  inputBBox {{input.bbox.x} {input.bbox.y} {input.bbox.r} {input.bbox.t}}
+  addUserKnob {12 outputBBoxCenter l OutputBBoxCenter}
+  outputBBoxCenter {{OutputBBox1.outputBBoxCenter.w} {OutputBBox1.outputBBoxCenter.h}}
+  addUserKnob {15 outputBBox l "Output BBox"}
+  outputBBox {{OutputBBox1.OutputBBox} {OutputBBox1.OutputBBox} {OutputBBox1.OutputBBox} {OutputBBox1.OutputBBox}}
+  addUserKnob {20 endGroup n -1}
+  addUserKnob {20 info_1 l Info}
+  addUserKnob {26 creator l Creator: T "<b><big>Tony Lyons"}
+  addUserKnob {26 desc l Description: t "crop to inputformat\n\ndisplays values of input bbox" T CropBBox}
+  addUserKnob {26 ver l Version: T v02}
+ }
+  Input {
+   inputs 0
+   name Input
+   xpos 261
+   ypos 394
+  }
+  Dot {
+   name Dot2
+   note_font_size 41
+   xpos 295
+   ypos 462
+  }
+set N9ffaab00 [stack 0]
+  Dot {
+   name Dot1
+   note_font_size 41
+   xpos -160
+   ypos 462
+  }
+set N9ffaa400 [stack 0]
+push $N9ffaab00
+  Crop {
+   box {{curve} {curve} {input.width} {input.height}}
+   crop {{parent.blackOutside}}
+   name Crop6
+   xpos 261
+   ypos 510
+   addUserKnob {20 User}
+   addUserKnob {22 cropToBbox l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+  }
+set N9ffa9d00 [stack 0]
+  Remove {
+   operation keep
+   channels none
+   name Remove1
+   xpos 120
+   ypos 504
+  }
+set N9ffa9600 [stack 0]
+  Transform {
+   scale {{parent.overscanPercent} {parent.overscanPercent}}
+   center {{input.bbox.r/2} {input.bbox.t/2}}
+   shutteroffset centred
+   name Transform1
+   xpos 120
+   ypos 555
+  }
+push $N9ffa9600
+  AdjBBox {
+   numpixels {{parent.overscan} {parent.overscan}}
+   name AdjBBox1
+   xpos -5
+   ypos 510
+  }
+  Switch {
+   inputs 2
+   which {{overscanType}}
+   name Switch2
+   label "\[value which]"
+   xpos -5
+   ypos 549
+  }
+  Merge2 {
+   inputs 2
+   bbox intersection
+   Achannels {-rgba.red -rgba.green -rgba.blue rgba.alpha}
+   Bchannels {-rgba.red -rgba.green -rgba.blue rgba.alpha}
+   output {-rgba.red -rgba.green -rgba.blue rgba.alpha}
+   name Merge1
+   xpos -5
+   ypos 647
+   disable {{!parent.Crop6.intersect}}
+  }
+push $N9ffaa400
+  CopyBBox {
+   inputs 2
+   name CopyBBox1
+   xpos -194
+   ypos 653
+  }
+  BlackOutside {
+   name BlackOutside1
+   xpos -194
+   ypos 692
+   disable {{!parent.blackOutside}}
+  }
+  Dot {
+   name Dot4
+   note_font_size 41
+   xpos -160
+   ypos 769
+  }
+push $N9ffa9d00
+  Switch {
+   inputs 2
+   which {{"overscanType == 0 ? overscan.w != 0 || overscan.h != 0 : overscanPercent.w != 1 || overscanPercent.h != 1 ? 1 : 0"}}
+   name Switch1
+   label "\[value which]"
+   xpos 261
+   ypos 759
+  }
+set N9ff85d00 [stack 0]
+  Output {
+   name Output1
+   xpos 261
+   ypos 921
+  }
+push $N9ff85d00
+  NoOp {
+   name OutputBBox1
+   xpos 378
+   ypos 821
+   addUserKnob {20 User}
+   addUserKnob {15 OutputBBox l "Output BBox"}
+   OutputBBox {{input.bbox.x} {input.bbox.y} {input.bbox.r} {input.bbox.t}}
+   addUserKnob {14 outputBBoxCenter l "Output BBox Center" R 0 100}
+   outputBBoxCenter {{OutputBBox.x+(OutputBBox.r-OutputBBox.x)/2} {OutputBBox.y+(OutputBBox.t-OutputBBox.y)/2}}
+  }
+ end_group
+ Multiply {
+  value 0
+  name Multiply1
+  label "\[value value]"
+  xpos 549
+  ypos -410
+ }
+push $N9ffcc100
+ Merge2 {
+  inputs 2
+  operation under
+  name Merge1
+  label "\[ expr \{ \[value mix] == 1 ? \" \" : \[concat Mix: \[value mix]] \}]"
+  xpos 412
+  ypos -398
+  disable {{"parent.output == 4 || parent.useAppendClip == 1 ? 0 : 1"}}
+ }
+ tx_viewport_overlay {
+  name tx_viewport_overlay5
+  xpos 412
+  ypos -132
+  disable {{!parent.deliveryOverlay}}
+  draw_line false
+  inner_matte 1
+  delivery_matte 1
+ }
+ Group {
+  name LabelFromRead4
+  tile_color 0x1f1f1fff
+  label "\[ expr \{ \[value splitPath] ? \[value finalFilePath] : \[] \} ] \[value ver]\n\[value inputDesc]"
+  note_font Verdana
+  note_font_color 0xe5e500ff
+  xpos 412
+  ypos -23
+  disable {{!parent.labelToggle}}
+  addUserKnob {20 LabelFromRead}
+  addUserKnob {1 inputName}
+  inputName "\[value parent.inputName4]"
+  addUserKnob {1 fullPath}
+  fullPath "\[value parent.fullPath4]"
+  addUserKnob {1 ver}
+  ver "\[lrange \[split \[lrange \[split \[value parent.fullPath4] / ] 10 10] / ] 0 0 ]"
+  addUserKnob {6 filenameCheck l "Include FIle Name?" +STARTLINE}
+  filenameCheck {{parent.LabelFromRead2.filenameCheck}}
+  addUserKnob {4 pathType l "" -STARTLINE M {"Full Path" Tail}}
+  pathType Tail
+  addUserKnob {6 splitPath l "Split Path" -STARTLINE}
+  splitPath true
+  addUserKnob {1 whichPath +INVISIBLE}
+  whichPath "\[ expr  \{ \[value pathType] == \"Full Path\" ? \[value fullPath] : \[value inputName] \} ]"
+  addUserKnob {3 rangeStart l range}
+  rangeStart 1
+  addUserKnob {3 rangeEnd l " -  " -STARTLINE}
+  rangeEnd 4
+  addUserKnob {1 splitText l "Split with" -STARTLINE}
+  splitText _
+  addUserKnob {1 fileRange +INVISIBLE}
+  fileRange "\[ expr \{ \[value splitPath] ? \[ expr \{ \[value filenameCheck] ? \[lrange \[split \[value whichPath] \[value splitText] ] \[value rangeStart] \[value rangeEnd] ] : \[] \} ] : \[value whichPath] \} ]"
+  addUserKnob {1 finalFilePath +INVISIBLE}
+  finalFilePath "\[value fileRange]"
+  addUserKnob {6 descCheck l "Include Description?" +STARTLINE}
+  descCheck {{parent.LabelFromRead2.descCheck}}
+  addUserKnob {1 inputDesc l Description}
+  inputDesc "\[value parent.LabelFromRead2.inputDesc]"
+  addUserKnob {26 ""}
+  addUserKnob {6 color_rgb_panelDropped l "panel dropped state" +HIDDEN +STARTLINE}
+  addUserKnob {18 color l "Text Color"}
+  color {{parent.LabelFromRead2.color} {parent.LabelFromRead2.color} {parent.LabelFromRead2.color}}
+  addUserKnob {6 color_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {18 borderColor l "Border Color"}
+  borderColor {{parent.LabelFromRead2.borderColor} {parent.LabelFromRead2.borderColor} {parent.LabelFromRead2.borderColor}}
+  addUserKnob {6 borderColor_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 color_rgb_panelDropped_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {7 borderSize l "Border Size" R 0 5}
+  borderSize {{parent.LabelFromRead2.borderSize}}
+  addUserKnob {6 enableBackground l "Enable Background" +INVISIBLE +STARTLINE}
+  addUserKnob {26 ""}
+  addUserKnob {41 xjustify l Justify T FileName.xjustify}
+  addUserKnob {41 yjustify l "" -STARTLINE T FileName.yjustify}
+  addUserKnob {7 size l "Overall Size" R -50 50}
+  size {{parent.LabelFromRead2.size}}
+  addUserKnob {7 x_pos l "X Pos" R -100 100}
+  x_pos {{parent.LabelFromRead2.x_pos}}
+  addUserKnob {7 YPos l "Y Pos" R -100 100}
+  YPos {{parent.LabelFromRead2.YPos}}
+  addUserKnob {26 ""}
+  addUserKnob {41 mix T Merge1.mix}
+  addUserKnob {20 info l Info}
+  addUserKnob {26 creator l Creator: T "<b><big>Tony Lyons"}
+  addUserKnob {26 desc l Description: t "Takes the last section of the filename and displays in on the top of frame\n\n- Can toggle dsiplay of a User Description\n- Can adjust size and position of Text" T LabelFromRead}
+  addUserKnob {26 text l Version: T v05}
+ }
+  Input {
+   inputs 0
+   name Input
+   xpos -195
+   ypos -608
+  }
+  Dot {
+   name Dot1
+   xpos -161
+   ypos -550
+  }
+set N9fdb0800 [stack 0]
+  Remove {
+   operation keep
+   channels rgba
+   name Remove1
+   xpos -339
+   ypos -553
+  }
+  Shuffle {
+   red black
+   green black
+   blue black
+   alpha black
+   name Shuffle1
+   label "\[value in]"
+   xpos -339
+   ypos -529
+  }
+  Text2 {
+   font_size_toolbar 100
+   font_width_toolbar 100
+   font_height_toolbar 100
+   message "\[value parent.inputDesc]"
+   old_expression_markers {{0 -1}
+     }
+   box {0 {input.height-(input.height/5)} {input.width} {input.height-(input.height/37.25)}}
+   xjustify {{parent.FileName.xjustify}}
+   yjustify {{parent.FileName.yjustify}}
+   transforms {{0 2}
+     }
+   font {{ Arial : Regular : arial.ttf : 0 }}
+   global_font_scale {{(input.width/35+parent.size)/100}}
+   scale {1 1}
+   cursor_initialised true
+   autofit_bbox false
+   initial_cursor_position {{0 1556}
+     }
+   group_animations {{0} imported: 0 selected: items: "root transform"}
+   animation_layers {{1 11 0 {input.height-(input.height/7)} {"input.width/40+ parent.x_pos"} {parent.YPos} 1 1 0 0 0 0}
+     }
+   color {{parent.color} {parent.color} {parent.color} 1}
+   background_border_x 0
+   background_border_y 0
+   enable_shadows true
+   shadow_color {{parent.borderColor} {parent.borderColor} {parent.borderColor} 1}
+   shadow_opacity 1
+   shadow_distance 0
+   shadow_size {{parent.borderSize}}
+   name Description
+   xpos -339
+   ypos -453
+   disable {{!parent.descCheck}}
+  }
+  Text2 {
+   font_size_toolbar 100
+   font_width_toolbar 100
+   font_height_toolbar 100
+   message "\n\[value parent.finalFilePath] \[value ver]"
+   old_message {{10 32}
+     }
+   old_expression_markers {{1 0 2 1}
+     }
+   box {0 {input.height-(input.height/5)} {input.width} {input.height-(input.height/37.25)}}
+   transforms {{0 2}
+     }
+   cursor_position 41
+   font {{ Arial : Regular : arial.ttf : 0 }}
+   global_font_scale {{(input.width/35+parent.size)/100}}
+   scale {1 1}
+   cursor_initialised true
+   autofit_bbox false
+   initial_cursor_position {{0 1556}
+     }
+   group_animations {{0} imported: 0 selected: items: "root transform"}
+   animation_layers {{1 11 0 {input.height-(input.height/7)} {"input.width/40+ parent.x_pos"} {"descCheck == 1 ? parent.YPos : input.height/20 + parent.YPos"} 1 1 0 0 0 0}
+     }
+   color {{parent.color} {parent.color} {parent.color} 1}
+   enable_background {{parent.enableBackground}}
+   background_border_x 0
+   background_border_y 0
+   enable_shadows true
+   shadow_color {{parent.borderColor} {parent.borderColor} {parent.borderColor} 1}
+   shadow_opacity 1
+   shadow_distance 0
+   shadow_size {{parent.borderSize}}
+   name FileName
+   xpos -339
+   ypos -406
+   disable {{!parent.filenameCheck}}
+  }
+  Dot {
+   name Dot2
+   xpos -305
+   ypos -342
+  }
+push $N9fdb0800
+  Merge2 {
+   inputs 2
+   mix {{parent.parent.LabelFromRead2.Merge1.mix}}
+   name Merge1
+   xpos -195
+   ypos -346
+  }
+  Output {
+   name Output1
+   xpos -195
+   ypos -201
+  }
+ end_group
+ FrameHold {
+  first_frame {{parent.heroFrame}}
+  name FrameHold4
+  xpos 412
+  ypos 125
+  disable {{!parent.heroFrameOn}}
+ }
+ FrameRange {
+  first_frame 1001
+  last_frame 1001
+  time ""
+  name FrameRange5
+  xpos 412
+  ypos 184
+ }
+set N9fd74f00 [stack 0]
+ Input {
+  inputs 0
+  name InputLgtSlap
+  xpos 208
+  ypos -134
+  number 3
+ }
+ tx_viewport_overlay {
+  name tx_viewport_overlay4
+  xpos 208
+  ypos -80
+  disable {{!parent.deliveryOverlay}}
+  draw_line false
+  inner_matte 1
+  delivery_matte 1
+ }
+ Group {
+  name LabelFromRead3
+  tile_color 0x1f1f1fff
+  label "\[ expr \{ \[value splitPath] ? \[value finalFilePath] : \[] \} ]\n\[value inputDesc]"
+  note_font Verdana
+  note_font_color 0xe5e500ff
+  xpos 208
+  ypos -20
+  disable {{!parent.labelToggle}}
+  addUserKnob {20 LabelFromRead}
+  addUserKnob {1 inputName}
+  inputName "\[value parent.inputName3]"
+  addUserKnob {1 fullPath}
+  fullPath "\[value parent.fullPath3]"
+  addUserKnob {6 filenameCheck l "Include FIle Name?" +STARTLINE}
+  filenameCheck {{parent.LabelFromRead2.filenameCheck}}
+  addUserKnob {4 pathType l "" -STARTLINE M {"Full Path" Tail}}
+  pathType Tail
+  addUserKnob {6 splitPath l "Split Path" -STARTLINE}
+  splitPath true
+  addUserKnob {1 whichPath +INVISIBLE}
+  whichPath "\[ expr  \{ \[value pathType] == \"Full Path\" ? \[value fullPath] : \[value inputName] \} ]"
+  addUserKnob {3 rangeStart l range}
+  rangeStart 1
+  addUserKnob {3 rangeEnd l " -  " -STARTLINE}
+  rangeEnd 4
+  addUserKnob {1 splitText l "Split with" -STARTLINE}
+  splitText _
+  addUserKnob {1 fileRange +INVISIBLE}
+  fileRange "\[ expr \{ \[value splitPath] ? \[ expr \{ \[value filenameCheck] ? \[lrange \[split \[value whichPath] \[value splitText] ] \[value rangeStart] \[value rangeEnd] ] : \[] \} ] : \[value whichPath] \} ]"
+  addUserKnob {1 finalFilePath +INVISIBLE}
+  finalFilePath "\[value fileRange]"
+  addUserKnob {6 descCheck l "Include Description?" +STARTLINE}
+  descCheck {{parent.LabelFromRead2.descCheck}}
+  addUserKnob {1 inputDesc l Description}
+  inputDesc "\[value parent.LabelFromRead2.inputDesc]"
+  addUserKnob {26 ""}
+  addUserKnob {6 color_rgb_panelDropped l "panel dropped state" +HIDDEN +STARTLINE}
+  addUserKnob {18 color l "Text Color"}
+  color {{parent.LabelFromRead2.color} {parent.LabelFromRead2.color} {parent.LabelFromRead2.color}}
+  addUserKnob {6 color_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {18 borderColor l "Border Color"}
+  borderColor {{parent.LabelFromRead2.borderColor} {parent.LabelFromRead2.borderColor} {parent.LabelFromRead2.borderColor}}
+  addUserKnob {6 borderColor_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 color_rgb_panelDropped_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {7 borderSize l "Border Size" R 0 5}
+  borderSize {{parent.LabelFromRead2.borderSize}}
+  addUserKnob {6 enableBackground l "Enable Background" +INVISIBLE +STARTLINE}
+  addUserKnob {26 ""}
+  addUserKnob {41 xjustify l Justify T FileName.xjustify}
+  addUserKnob {41 yjustify l "" -STARTLINE T FileName.yjustify}
+  addUserKnob {7 size l "Overall Size" R -50 50}
+  size {{parent.LabelFromRead2.size}}
+  addUserKnob {7 x_pos l "X Pos" R -100 100}
+  x_pos {{parent.LabelFromRead2.x_pos}}
+  addUserKnob {7 YPos l "Y Pos" R -100 100}
+  YPos {{parent.LabelFromRead2.YPos}}
+  addUserKnob {26 ""}
+  addUserKnob {41 mix T Merge1.mix}
+  addUserKnob {20 info l Info}
+  addUserKnob {26 creator l Creator: T "<b><big>Tony Lyons"}
+  addUserKnob {26 desc l Description: t "Takes the last section of the filename and displays in on the top of frame\n\n- Can toggle dsiplay of a User Description\n- Can adjust size and position of Text" T LabelFromRead}
+  addUserKnob {26 text l Version: T v05}
+ }
+  Input {
+   inputs 0
+   name Input
+   xpos -195
+   ypos -608
+  }
+  Dot {
+   name Dot1
+   xpos -161
+   ypos -550
+  }
+set N4e45600 [stack 0]
+  Remove {
+   operation keep
+   channels rgba
+   name Remove1
+   xpos -339
+   ypos -553
+  }
+  Shuffle {
+   red black
+   green black
+   blue black
+   alpha black
+   name Shuffle1
+   label "\[value in]"
+   xpos -339
+   ypos -529
+  }
+  Text2 {
+   font_size_toolbar 100
+   font_width_toolbar 100
+   font_height_toolbar 100
+   message "\[value parent.inputDesc]"
+   old_expression_markers {{0 -1}
+     }
+   box {0 {input.height-(input.height/5)} {input.width} {input.height-(input.height/37.25)}}
+   xjustify {{parent.FileName.xjustify}}
+   yjustify {{parent.FileName.yjustify}}
+   transforms {{0 2}
+     }
+   font {{ Arial : Regular : arial.ttf : 0 }}
+   global_font_scale {{(input.width/35+parent.size)/100}}
+   scale {1 1}
+   cursor_initialised true
+   autofit_bbox false
+   initial_cursor_position {{0 1556}
+     }
+   group_animations {{0} imported: 0 selected: items: "root transform"}
+   animation_layers {{1 11 0 {input.height-(input.height/7)} {"input.width/40+ parent.x_pos"} {parent.YPos} 1 1 0 0 0 0}
+     }
+   color {{parent.color} {parent.color} {parent.color} 1}
+   background_border_x 0
+   background_border_y 0
+   enable_shadows true
+   shadow_color {{parent.borderColor} {parent.borderColor} {parent.borderColor} 1}
+   shadow_opacity 1
+   shadow_distance 0
+   shadow_size {{parent.borderSize}}
+   name Description
+   xpos -339
+   ypos -453
+   disable {{!parent.descCheck}}
+  }
+  Text2 {
+   font_size_toolbar 100
+   font_width_toolbar 100
+   font_height_toolbar 100
+   message "\n\[value parent.finalFilePath]"
+   old_message {{10 75 69 77 32 49 50 48 48 32 102 120 32 107 114 101 101 115 112 101 97 114}
+     }
+   old_expression_markers {{1 21}
+     }
+   box {0 {input.height-(input.height/5)} {input.width} {input.height-(input.height/37.25)}}
+   transforms {{0 2}
+     }
+   cursor_position 28
+   font {{ Arial : Regular : arial.ttf : 0 }}
+   global_font_scale {{(input.width/35+parent.size)/100}}
+   scale {1 1}
+   cursor_initialised true
+   autofit_bbox false
+   initial_cursor_position {{0 1556}
+     }
+   group_animations {{0} imported: 0 selected: items: "root transform"}
+   animation_layers {{1 11 0 {input.height-(input.height/7)} {"input.width/40+ parent.x_pos"} {"descCheck == 1 ? parent.YPos : input.height/20 + parent.YPos"} 1 1 0 0 0 0}
+     }
+   color {{parent.color} {parent.color} {parent.color} 1}
+   enable_background {{parent.enableBackground}}
+   background_border_x 0
+   background_border_y 0
+   enable_shadows true
+   shadow_color {{parent.borderColor} {parent.borderColor} {parent.borderColor} 1}
+   shadow_opacity 1
+   shadow_distance 0
+   shadow_size {{parent.borderSize}}
+   name FileName
+   xpos -339
+   ypos -408
+   disable {{!parent.filenameCheck}}
+  }
+  Dot {
+   name Dot2
+   xpos -305
+   ypos -342
+  }
+push $N4e45600
+  Merge2 {
+   inputs 2
+   bbox B
+   mix {{parent.parent.LabelFromRead2.Merge1.mix}}
+   name Merge1
+   xpos -195
+   ypos -345
+  }
+  Output {
+   name Output1
+   xpos -195
+   ypos -201
+  }
+ end_group
+ FrameHold {
+  first_frame {{parent.heroFrame}}
+  name FrameHold3
+  xpos 208
+  ypos 132
+  disable {{!parent.heroFrameOn}}
+ }
+ FrameRange {
+  first_frame 1001
+  last_frame 1001
+  time ""
+  name FrameRange4
+  xpos 208
+  ypos 191
+ }
+set N4e11d00 [stack 0]
+ Input {
+  inputs 0
+  name Inputdegrain
+  xpos -12
+  ypos -133
+  number 2
+ }
+ tx_viewport_overlay {
+  name tx_viewport_overlay3
+  xpos -12
+  ypos -80
+  disable {{!parent.deliveryOverlay}}
+  draw_line false
+  inner_matte 1
+  delivery_matte 1
+ }
+ Group {
+  name LabelFromRead1
+  tile_color 0x1f1f1fff
+  label "\[ expr \{ \[value splitPath] ? \[value finalFilePath] : \[] \} ]\n\[value inputDesc]"
+  note_font Verdana
+  note_font_color 0xe5e500ff
+  xpos -12
+  ypos -21
+  disable {{!parent.labelToggle}}
+  addUserKnob {20 LabelFromRead}
+  addUserKnob {1 inputName}
+  inputName "\[value parent.inputName2]"
+  addUserKnob {1 fullPath}
+  fullPath "\[value parent.fullPath2]"
+  addUserKnob {6 filenameCheck l "Include FIle Name?" +STARTLINE}
+  filenameCheck {{parent.LabelFromRead2.filenameCheck}}
+  addUserKnob {4 pathType l "" -STARTLINE M {"Full Path" Tail}}
+  pathType Tail
+  addUserKnob {6 splitPath l "Split Path" -STARTLINE}
+  splitPath true
+  addUserKnob {1 whichPath +INVISIBLE}
+  whichPath "\[ expr  \{ \[value pathType] == \"Full Path\" ? \[value fullPath] : \[value inputName] \} ]"
+  addUserKnob {3 rangeStart l range}
+  rangeStart 1
+  addUserKnob {3 rangeEnd l " -  " -STARTLINE}
+  rangeEnd 4
+  addUserKnob {1 splitText l "Split with" -STARTLINE}
+  splitText _
+  addUserKnob {1 fileRange +INVISIBLE}
+  fileRange "\[ expr \{ \[value splitPath] ? \[ expr \{ \[value filenameCheck] ? \[lrange \[split \[value whichPath] \[value splitText] ] \[value rangeStart] \[value rangeEnd] ] : \[] \} ] : \[value whichPath] \} ]"
+  addUserKnob {1 finalFilePath +INVISIBLE}
+  finalFilePath "\[value fileRange]"
+  addUserKnob {6 descCheck l "Include Description?" +STARTLINE}
+  descCheck {{parent.LabelFromRead2.descCheck}}
+  addUserKnob {1 inputDesc l Description}
+  inputDesc "\[value parent.LabelFromRead2.inputDesc]"
+  addUserKnob {26 ""}
+  addUserKnob {6 color_rgb_panelDropped l "panel dropped state" +HIDDEN +STARTLINE}
+  addUserKnob {18 color l "Text Color"}
+  color {{parent.LabelFromRead2.color} {parent.LabelFromRead2.color} {parent.LabelFromRead2.color}}
+  addUserKnob {6 color_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {18 borderColor l "Border Color"}
+  borderColor {{parent.LabelFromRead2.borderColor} {parent.LabelFromRead2.borderColor} {parent.LabelFromRead2.borderColor}}
+  addUserKnob {6 borderColor_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 color_rgb_panelDropped_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {7 borderSize l "Border Size" R 0 5}
+  borderSize {{parent.LabelFromRead2.borderSize}}
+  addUserKnob {6 enableBackground l "Enable Background" +INVISIBLE +STARTLINE}
+  addUserKnob {26 ""}
+  addUserKnob {41 xjustify l Justify T FileName.xjustify}
+  addUserKnob {41 yjustify l "" -STARTLINE T FileName.yjustify}
+  addUserKnob {7 size l "Overall Size" R -50 50}
+  size {{parent.LabelFromRead2.size}}
+  addUserKnob {7 x_pos l "X Pos" R -100 100}
+  x_pos {{parent.LabelFromRead2.x_pos}}
+  addUserKnob {7 YPos l "Y Pos" R -100 100}
+  YPos {{parent.LabelFromRead2.YPos}}
+  addUserKnob {26 ""}
+  addUserKnob {41 mix T Merge1.mix}
+  addUserKnob {20 info l Info}
+  addUserKnob {26 creator l Creator: T "<b><big>Tony Lyons"}
+  addUserKnob {26 desc l Description: t "Takes the last section of the filename and displays in on the top of frame\n\n- Can toggle dsiplay of a User Description\n- Can adjust size and position of Text" T LabelFromRead}
+  addUserKnob {26 text l Version: T v05}
+ }
+  Input {
+   inputs 0
+   name Input
+   xpos -195
+   ypos -608
+  }
+  Dot {
+   name Dot1
+   xpos -161
+   ypos -550
+  }
+set N4c46400 [stack 0]
+  Remove {
+   operation keep
+   channels rgba
+   name Remove1
+   xpos -339
+   ypos -553
+  }
+  Shuffle {
+   red black
+   green black
+   blue black
+   alpha black
+   name Shuffle1
+   label "\[value in]"
+   xpos -339
+   ypos -529
+  }
+  Text2 {
+   font_size_toolbar 100
+   font_width_toolbar 100
+   font_height_toolbar 100
+   message "\[value parent.inputDesc]"
+   old_expression_markers {{0 -1}
+     }
+   box {0 {input.height-(input.height/5)} {input.width} {input.height-(input.height/37.25)}}
+   xjustify {{parent.FileName.xjustify}}
+   yjustify {{parent.FileName.yjustify}}
+   transforms {{0 2}
+     }
+   font {{ Arial : Regular : arial.ttf : 0 }}
+   global_font_scale {{(input.width/35+parent.size)/100}}
+   scale {1 1}
+   cursor_initialised true
+   autofit_bbox false
+   initial_cursor_position {{0 1556}
+     }
+   group_animations {{0} imported: 0 selected: items: "root transform"}
+   animation_layers {{1 11 0 {input.height-(input.height/7)} {"input.width/40+ parent.x_pos"} {parent.YPos} 1 1 0 0 0 0}
+     }
+   color {{parent.color} {parent.color} {parent.color} 1}
+   background_border_x 0
+   background_border_y 0
+   enable_shadows true
+   shadow_color {{parent.borderColor} {parent.borderColor} {parent.borderColor} 1}
+   shadow_opacity 1
+   shadow_distance 0
+   shadow_size {{parent.borderSize}}
+   name Description
+   xpos -339
+   ypos -453
+   disable {{!parent.descCheck}}
+  }
+  Text2 {
+   font_size_toolbar 100
+   font_width_toolbar 100
+   font_height_toolbar 100
+   message "\n\[value parent.finalFilePath]"
+   old_message {{10 75 69 77 32 49 50 48 48 32 97 117 116 111 100 101 103 114 97 105 110 32 118 48 48 49}
+     }
+   old_expression_markers {{1 25}
+     }
+   box {0 {input.height-(input.height/5)} {input.width} {input.height-(input.height/37.25)}}
+   transforms {{0 2}
+     }
+   cursor_position 28
+   font {{ Arial : Regular : arial.ttf : 0 }}
+   global_font_scale {{(input.width/35+parent.size)/100}}
+   scale {1 1}
+   cursor_initialised true
+   autofit_bbox false
+   initial_cursor_position {{0 1556}
+     }
+   group_animations {{0} imported: 0 selected: items: "root transform"}
+   animation_layers {{1 11 0 {input.height-(input.height/7)} {"input.width/40+ parent.x_pos"} {"descCheck == 1 ? parent.YPos : input.height/20 + parent.YPos"} 1 1 0 0 0 0}
+     }
+   color {{parent.color} {parent.color} {parent.color} 1}
+   enable_background {{parent.enableBackground}}
+   background_border_x 0
+   background_border_y 0
+   enable_shadows true
+   shadow_color {{parent.borderColor} {parent.borderColor} {parent.borderColor} 1}
+   shadow_opacity 1
+   shadow_distance 0
+   shadow_size {{parent.borderSize}}
+   name FileName
+   xpos -339
+   ypos -408
+   disable {{!parent.filenameCheck}}
+  }
+  Dot {
+   name Dot2
+   xpos -305
+   ypos -342
+  }
+push $N4c46400
+  Merge2 {
+   inputs 2
+   bbox B
+   mix {{parent.parent.LabelFromRead2.Merge1.mix}}
+   name Merge1
+   xpos -195
+   ypos -345
+  }
+  Output {
+   name Output1
+   xpos -195
+   ypos -201
+  }
+ end_group
+ FrameHold {
+  first_frame {{parent.heroFrame}}
+  name FrameHold2
+  xpos -12
+  ypos 138
+  disable {{!parent.heroFrameOn}}
+ }
+ FrameRange {
+  first_frame 1001
+  last_frame 1001
+  time ""
+  name FrameRange3
+  xpos -12
+  ypos 201
+ }
+set N49fab00 [stack 0]
+ Input {
+  inputs 0
+  name Inputplate
+  xpos -222
+  ypos -137
+  number 1
+ }
+ tx_viewport_overlay {
+  name tx_viewport_overlay2
+  xpos -222
+  ypos -80
+  disable {{!parent.deliveryOverlay}}
+  draw_line false
+  inner_matte 1
+  delivery_matte 1
+ }
+set N49f9d00 [stack 0]
+ Group {
+  name LabelFromRead7
+  tile_color 0x1f1f1fff
+  label "\[ expr \{ \[value splitPath] ? \[value finalFilePath] : \[] \} ]\n\[value inputDesc]"
+  note_font Verdana
+  note_font_color 0xe5e500ff
+  xpos -336
+  ypos -16
+  disable {{!parent.labelToggle}}
+  addUserKnob {20 LabelFromRead}
+  addUserKnob {1 inputName}
+  inputName "\[value parent.inputName1]"
+  addUserKnob {1 fullPath}
+  fullPath "\[value parent.fullPath1]"
+  addUserKnob {6 filenameCheck l "Include FIle Name?" +STARTLINE}
+  filenameCheck {{parent.LabelFromRead2.filenameCheck}}
+  addUserKnob {4 pathType l "" -STARTLINE M {"Full Path" Tail}}
+  pathType Tail
+  addUserKnob {6 splitPath l "Split Path" -STARTLINE}
+  splitPath true
+  addUserKnob {1 whichPath +INVISIBLE}
+  whichPath "\[ expr  \{ \[value pathType] == \"Full Path\" ? \[value fullPath] : \[value inputName] \} ]"
+  addUserKnob {3 rangeStart l range}
+  rangeStart 1
+  addUserKnob {3 rangeEnd l " -  " -STARTLINE}
+  rangeEnd 4
+  addUserKnob {1 splitText l "Split with" -STARTLINE}
+  splitText _
+  addUserKnob {1 fileRange +INVISIBLE}
+  fileRange "\[ expr \{ \[value splitPath] ? \[ expr \{ \[value filenameCheck] ? \[lrange \[split \[value whichPath] \[value splitText] ] \[value rangeStart] \[value rangeEnd] ] : \[] \} ] : \[value whichPath] \} ]"
+  addUserKnob {1 finalFilePath +INVISIBLE}
+  finalFilePath "\[value fileRange]"
+  addUserKnob {6 descCheck l "Include Description?" +STARTLINE}
+  descCheck {{parent.LabelFromRead2.descCheck}}
+  addUserKnob {1 inputDesc l Description}
+  inputDesc "\[value parent.LabelFromRead2.inputDesc]"
+  addUserKnob {26 ""}
+  addUserKnob {6 color_rgb_panelDropped l "panel dropped state" +HIDDEN +STARTLINE}
+  addUserKnob {18 color l "Text Color"}
+  color {{parent.LabelFromRead2.color} {parent.LabelFromRead2.color} {parent.LabelFromRead2.color}}
+  addUserKnob {6 color_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {18 borderColor l "Border Color"}
+  borderColor {{parent.LabelFromRead2.borderColor} {parent.LabelFromRead2.borderColor} {parent.LabelFromRead2.borderColor}}
+  addUserKnob {6 borderColor_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 color_rgb_panelDropped_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {7 borderSize l "Border Size" R 0 5}
+  borderSize {{parent.LabelFromRead2.borderSize}}
+  addUserKnob {6 enableBackground l "Enable Background" +INVISIBLE +STARTLINE}
+  addUserKnob {26 ""}
+  addUserKnob {41 xjustify l Justify T FileName.xjustify}
+  addUserKnob {41 yjustify l "" -STARTLINE T FileName.yjustify}
+  addUserKnob {7 size l "Overall Size" R -50 50}
+  size {{parent.LabelFromRead2.size}}
+  addUserKnob {7 x_pos l "X Pos" R -100 100}
+  x_pos {{parent.LabelFromRead2.x_pos}}
+  addUserKnob {7 YPos l "Y Pos" R -100 100}
+  YPos {{parent.LabelFromRead2.YPos}}
+  addUserKnob {26 ""}
+  addUserKnob {41 mix T Merge1.mix}
+  addUserKnob {20 info l Info}
+  addUserKnob {26 creator l Creator: T "<b><big>Tony Lyons"}
+  addUserKnob {26 desc l Description: t "Takes the last section of the filename and displays in on the top of frame\n\n- Can toggle dsiplay of a User Description\n- Can adjust size and position of Text" T LabelFromRead}
+  addUserKnob {26 text l Version: T v05}
+ }
+  Input {
+   inputs 0
+   name Input
+   xpos -195
+   ypos -608
+  }
+  Dot {
+   name Dot1
+   xpos -161
+   ypos -550
+  }
+set N4a43200 [stack 0]
+  Remove {
+   operation keep
+   channels rgba
+   name Remove1
+   xpos -339
+   ypos -553
+  }
+  Shuffle {
+   red black
+   green black
+   blue black
+   alpha black
+   name Shuffle1
+   label "\[value in]"
+   xpos -339
+   ypos -529
+  }
+  Text2 {
+   font_size_toolbar 100
+   font_width_toolbar 100
+   font_height_toolbar 100
+   message "\[value parent.inputDesc]"
+   old_expression_markers {{0 -1}
+     }
+   box {0 {input.height-(input.height/5)} {input.width} {input.height-(input.height/37.25)}}
+   xjustify {{parent.FileName.xjustify}}
+   yjustify {{parent.FileName.yjustify}}
+   transforms {{0 2}
+     }
+   font {{ Arial : Regular : arial.ttf : 0 }}
+   global_font_scale {{(input.width/35+parent.size)/100}}
+   scale {1 1}
+   cursor_initialised true
+   autofit_bbox false
+   initial_cursor_position {{0 1556}
+     }
+   group_animations {{0} imported: 0 selected: items: "root transform"}
+   animation_layers {{1 11 0 {input.height-(input.height/7)} {"input.width/40+ parent.x_pos"} {parent.YPos} 1 1 0 0 0 0}
+     }
+   color {{parent.color} {parent.color} {parent.color} 1}
+   background_border_x 0
+   background_border_y 0
+   enable_shadows true
+   shadow_color {{parent.borderColor} {parent.borderColor} {parent.borderColor} 1}
+   shadow_opacity 1
+   shadow_distance 0
+   shadow_size {{parent.borderSize}}
+   name Description
+   xpos -339
+   ypos -453
+   disable {{!parent.descCheck}}
+  }
+  Text2 {
+   font_size_toolbar 100
+   font_width_toolbar 100
+   font_height_toolbar 100
+   message "\n\[value parent.finalFilePath]"
+   old_message {{10 75 69 77 32 49 50 48 48 32 112 108 97 116 101 114 101 102 32 118 48 48 50}
+     }
+   old_expression_markers {{1 22}
+     }
+   box {0 {input.height-(input.height/5)} {input.width} {input.height-(input.height/37.25)}}
+   transforms {{0 2}
+     }
+   cursor_position 28
+   font {{ Arial : Regular : arial.ttf : 0 }}
+   global_font_scale {{(input.width/35+parent.size)/100}}
+   scale {1 1}
+   cursor_initialised true
+   autofit_bbox false
+   initial_cursor_position {{0 1556}
+     }
+   group_animations {{0} imported: 0 selected: items: "root transform"}
+   animation_layers {{1 11 0 {input.height-(input.height/7)} {"input.width/40+ parent.x_pos"} {"descCheck == 1 ? parent.YPos : input.height/20 + parent.YPos"} 1 1 0 0 0 0}
+     }
+   color {{parent.color} {parent.color} {parent.color} 1}
+   enable_background {{parent.enableBackground}}
+   background_border_x 0
+   background_border_y 0
+   enable_shadows true
+   shadow_color {{parent.borderColor} {parent.borderColor} {parent.borderColor} 1}
+   shadow_opacity 1
+   shadow_distance 0
+   shadow_size {{parent.borderSize}}
+   name FileName
+   xpos -339
+   ypos -408
+   disable {{!parent.filenameCheck}}
+  }
+  Dot {
+   name Dot2
+   xpos -305
+   ypos -342
+  }
+push $N4a43200
+  Merge2 {
+   inputs 2
+   bbox B
+   mix {{parent.parent.LabelFromRead2.Merge1.mix}}
+   name Merge1
+   xpos -195
+   ypos -345
+  }
+  Output {
+   name Output1
+   xpos -195
+   ypos -201
+  }
+ end_group
+push $N49f9d00
+ Group {
+  name LabelFromRead2
+  tile_color 0x1f1f1fff
+  label "\[ expr \{ \[value splitPath] ? \[value finalFilePath] : \[] \} ]\n\[value inputDesc]"
+  note_font Verdana
+  note_font_color 0xe5e500ff
+  xpos -222
+  ypos -16
+  disable {{!parent.labelToggle}}
+  addUserKnob {20 LabelFromRead}
+  addUserKnob {1 inputName}
+  inputName "\[value parent.inputName1]"
+  addUserKnob {1 fullPath}
+  fullPath "\[value parent.fullPath1]"
+  addUserKnob {6 filenameCheck l "Include FIle Name?" +STARTLINE}
+  filenameCheck true
+  addUserKnob {4 pathType l "" -STARTLINE M {"Full Path" Tail ""}}
+  addUserKnob {6 splitPath l "Split Path" -STARTLINE}
+  splitPath true
+  addUserKnob {1 whichPath}
+  whichPath "\[ expr  \{ \[value pathType] == \"Full Path\" ? \[value fullPath] : \[value inputName] \} ]"
+  addUserKnob {3 rangeStart l range}
+  rangeStart 5
+  addUserKnob {3 rangeEnd l " -  " -STARTLINE}
+  rangeEnd 6
+  addUserKnob {1 splitText l "Split with" -STARTLINE}
+  splitText /
+  addUserKnob {1 masterText}
+  masterText master
+  addUserKnob {1 masterVer}
+  masterVer "\[lrange \[split \[lrange \[split \[value parent.fullPath1] _ ] 2 2] / ] 0 0 ]"
+  addUserKnob {1 masterExtra}
+  masterExtra "\[expr \{ !\[value parent.plateType] ? \[value masterText] : \[] \}]"
+  addUserKnob {1 masterExtra2}
+  masterExtra2 "\[expr \{ !\[value parent.plateType] ? \[value masterVer] : \[] \}]"
+  addUserKnob {1 fileRange +INVISIBLE}
+  fileRange "\[ expr \{ \[value splitPath] ? \[ expr \{ \[value filenameCheck] ? \[lrange \[split \[value whichPath] \[value splitText] ] \[value rangeStart] \[value rangeEnd] ] : \[] \} ] : \[value whichPath] \} ]"
+  addUserKnob {1 finalFilePath +INVISIBLE}
+  finalFilePath "\[value fileRange]"
+  addUserKnob {6 descCheck l "Include Description?" +STARTLINE}
+  addUserKnob {1 inputDesc l Description}
+  addUserKnob {26 ""}
+  addUserKnob {6 color_rgb_panelDropped l "panel dropped state" +HIDDEN +STARTLINE}
+  addUserKnob {18 color l "Text Color"}
+  color {1 1 0}
+  addUserKnob {6 color_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {18 borderColor l "Border Color"}
+  borderColor {0 0 0}
+  addUserKnob {6 borderColor_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 color_rgb_panelDropped_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {7 borderSize l "Border Size" R 0 5}
+  borderSize 2
+  addUserKnob {6 enableBackground l "Enable Background" +INVISIBLE +STARTLINE}
+  addUserKnob {26 ""}
+  addUserKnob {41 xjustify l Justify T FileName.xjustify}
+  addUserKnob {41 yjustify l "" -STARTLINE T FileName.yjustify}
+  addUserKnob {7 size l "Overall Size" R -50 50}
+  size 50
+  addUserKnob {7 x_pos l "X Pos" R -100 100}
+  addUserKnob {7 YPos l "Y Pos" R -100 100}
+  addUserKnob {26 ""}
+  addUserKnob {41 mix T Merge1.mix}
+  addUserKnob {20 info l Info}
+  addUserKnob {26 creator l Creator: T "<b><big>Tony Lyons"}
+  addUserKnob {26 desc l Description: t "Takes the last section of the filename and displays in on the top of frame\n\n- Can toggle dsiplay of a User Description\n- Can adjust size and position of Text" T LabelFromRead}
+  addUserKnob {26 text l Version: T v05}
+ }
+  Input {
+   inputs 0
+   name Input
+   xpos -195
+   ypos -608
+  }
+  Dot {
+   name Dot1
+   xpos -161
+   ypos -550
+  }
+set N4bea400 [stack 0]
+  Remove {
+   operation keep
+   channels rgba
+   name Remove1
+   xpos -339
+   ypos -553
+  }
+  Shuffle {
+   red black
+   green black
+   blue black
+   alpha black
+   name Shuffle1
+   label "\[value in]"
+   xpos -339
+   ypos -513
+  }
+  Text2 {
+   font_size_toolbar 100
+   font_width_toolbar 100
+   font_height_toolbar 100
+   message "\[value parent.inputDesc]"
+   old_expression_markers {{0 -1}
+     }
+   box {0 {input.height-(input.height/5)} {input.width} {input.height-(input.height/37.25)}}
+   xjustify {{parent.FileName.xjustify}}
+   yjustify {{parent.FileName.yjustify}}
+   transforms {{0 2}
+     }
+   font {{ Arial : Regular : arial.ttf : 0 }}
+   global_font_scale {{(input.width/35+parent.size)/100}}
+   scale {1 1}
+   cursor_initialised true
+   autofit_bbox false
+   initial_cursor_position {{0 1556}
+     }
+   group_animations {{0} imported: 0 selected: items: "root transform"}
+   animation_layers {{1 11 0 {input.height-(input.height/7)} {"input.width/40+ parent.x_pos"} {parent.YPos} 1 1 0 0 0 0}
+     }
+   color {{parent.color} {parent.color} {parent.color} 1}
+   background_border_x 0
+   background_border_y 0
+   enable_shadows true
+   shadow_color {{parent.borderColor} {parent.borderColor} {parent.borderColor} 1}
+   shadow_opacity 1
+   shadow_distance 0
+   shadow_size {{parent.borderSize}}
+   name Description
+   xpos -339
+   ypos -452
+   disable {{!parent.descCheck}}
+  }
+  Text2 {
+   font_size_toolbar 100
+   font_width_toolbar 100
+   font_height_toolbar 100
+   message "\n\[value parent.finalFilePath] \[value parent.masterExtra] \[value parent.masterExtra2]"
+   old_message {{10 75 69 77 32 49 48 50 48 32 32}
+     }
+   old_expression_markers {{1 8 10 9 11 10}
+     }
+   box {0 {input.height-(input.height/5)} {input.width} {input.height-(input.height/37.25)}}
+   xjustify {{parent.parent.xjustify}}
+   yjustify {{parent.parent.yjustify}}
+   transforms {{0 2}
+     }
+   cursor_position 30
+   font {{ Arial : Regular : arial.ttf : 0 }}
+   global_font_scale {{(input.width/35+parent.size)/100}}
+   scale {1 1}
+   cursor_initialised true
+   autofit_bbox false
+   initial_cursor_position {{0 1556}
+     }
+   group_animations {{0} imported: 0 selected: items: "root transform"}
+   animation_layers {{1 11 0 {input.height-(input.height/7)} {"input.width/40+ parent.x_pos"} {"descCheck == 1 ? parent.YPos : input.height/20 + parent.YPos"} 1 1 0 0 0 0}
+     }
+   color {{parent.color} {parent.color} {parent.color} 1}
+   enable_background {{parent.enableBackground}}
+   background_border_x 0
+   background_border_y 0
+   enable_shadows true
+   shadow_color {{parent.borderColor} {parent.borderColor} {parent.borderColor} 1}
+   shadow_opacity 1
+   shadow_distance 0
+   shadow_size {{parent.borderSize}}
+   name FileName
+   xpos -339
+   ypos -405
+   disable {{!parent.filenameCheck}}
+  }
+  Dot {
+   name Dot2
+   xpos -305
+   ypos -342
+  }
+push $N4bea400
+  Merge2 {
+   inputs 2
+   bbox B
+   name Merge1
+   xpos -195
+   ypos -345
+  }
+  Output {
+   name Output1
+   xpos -195
+   ypos -201
+  }
+ end_group
+ Switch {
+  inputs 2
+  which {{parent.plateType}}
+  name Switch5
+  label "\[value which]"
+  xpos -222
+  ypos 48
+ }
+ FrameHold {
+  first_frame {{parent.heroFrame}}
+  name FrameHold92
+  xpos -222
+  ypos 142
+  disable {{!parent.heroFrameOn}}
+ }
+ FrameRange {
+  first_frame 1001
+  last_frame 1001
+  time ""
+  name FrameRange2
+  xpos -222
+  ypos 205
+  disable {{!parent.heroFrameOn}}
+ }
+set N4baa400 [stack 0]
+ Input {
+  inputs 0
+  name Inputcomp
+  xpos -457
+  ypos -137
+ }
+ tx_viewport_overlay {
+  name tx_viewport_overlay1
+  xpos -457
+  ypos -80
+  disable {{!parent.deliveryOverlay}}
+  draw_line false
+  inner_matte 1
+  delivery_matte 1
+ }
+ Group {
+  name LabelFromRead
+  tile_color 0x1f1f1fff
+  label "\[ expr \{ \[value splitPath] ? \[value finalFilePath] : \[] \} ]\n\[value inputDesc]"
+  note_font Verdana
+  note_font_color 0xe5e500ff
+  xpos -457
+  ypos -16
+  disable {{!parent.labelToggle}}
+  addUserKnob {20 LabelFromRead}
+  addUserKnob {1 inputName}
+  inputName "\[value parent.inputName0]"
+  addUserKnob {1 fullPath}
+  fullPath "\[value parent.fullPath0]"
+  addUserKnob {6 filenameCheck l "Include FIle Name?" +STARTLINE}
+  filenameCheck {{parent.LabelFromRead2.filenameCheck}}
+  addUserKnob {4 pathType l "" -STARTLINE M {"Full Path" Tail}}
+  pathType Tail
+  addUserKnob {6 splitPath l "Split Path" -STARTLINE}
+  splitPath true
+  addUserKnob {1 whichPath +INVISIBLE}
+  whichPath "\[ expr  \{ \[value pathType] == \"Full Path\" ? \[value fullPath] : \[value inputName] \} ]"
+  addUserKnob {3 rangeStart l range}
+  rangeStart 1
+  addUserKnob {3 rangeEnd l " -  " -STARTLINE}
+  rangeEnd 4
+  addUserKnob {1 splitText l "Split with" -STARTLINE}
+  splitText _
+  addUserKnob {1 fileRange +INVISIBLE}
+  fileRange "\[ expr \{ \[value splitPath] ? \[ expr \{ \[value filenameCheck] ? \[lrange \[split \[value whichPath] \[value splitText] ] \[value rangeStart] \[value rangeEnd] ] : \[] \} ] : \[value whichPath] \} ]"
+  addUserKnob {1 finalFilePath +INVISIBLE}
+  finalFilePath "\[value fileRange]"
+  addUserKnob {6 descCheck l "Include Description?" +STARTLINE}
+  descCheck {{parent.LabelFromRead2.descCheck}}
+  addUserKnob {1 inputDesc l Description}
+  inputDesc "\[value parent.LabelFromRead2.inputDesc]"
+  addUserKnob {26 ""}
+  addUserKnob {6 color_rgb_panelDropped l "panel dropped state" +HIDDEN +STARTLINE}
+  addUserKnob {18 color l "Text Color"}
+  color {{parent.LabelFromRead2.color} {parent.LabelFromRead2.color} {parent.LabelFromRead2.color}}
+  addUserKnob {6 color_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {18 borderColor l "Border Color"}
+  borderColor {{parent.LabelFromRead2.borderColor} {parent.LabelFromRead2.borderColor} {parent.LabelFromRead2.borderColor}}
+  addUserKnob {6 borderColor_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 color_rgb_panelDropped_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {7 borderSize l "Border Size" R 0 5}
+  borderSize {{parent.LabelFromRead2.borderSize}}
+  addUserKnob {6 enableBackground l "Enable Background" +INVISIBLE +STARTLINE}
+  addUserKnob {26 ""}
+  addUserKnob {41 xjustify l Justify T FileName.xjustify}
+  addUserKnob {41 yjustify l "" -STARTLINE T FileName.yjustify}
+  addUserKnob {7 size l "Overall Size" R -50 50}
+  size {{parent.LabelFromRead2.size}}
+  addUserKnob {7 x_pos l "X Pos" R -100 100}
+  x_pos {{parent.LabelFromRead2.x_pos}}
+  addUserKnob {7 YPos l "Y Pos" R -100 100}
+  YPos {{parent.LabelFromRead2.YPos}}
+  addUserKnob {26 ""}
+  addUserKnob {41 mix T Merge1.mix}
+  addUserKnob {20 info l Info}
+  addUserKnob {26 creator l Creator: T "<b><big>Tony Lyons"}
+  addUserKnob {26 desc l Description: t "Takes the last section of the filename and displays in on the top of frame\n\n- Can toggle dsiplay of a User Description\n- Can adjust size and position of Text" T LabelFromRead}
+  addUserKnob {26 text l Version: T v05}
+ }
+  Input {
+   inputs 0
+   name Input
+   xpos -195
+   ypos -608
+  }
+  Dot {
+   name Dot1
+   xpos -161
+   ypos -550
+  }
+set N45e6b00 [stack 0]
+  Remove {
+   operation keep
+   channels rgba
+   name Remove1
+   xpos -339
+   ypos -553
+  }
+  Shuffle {
+   red black
+   green black
+   blue black
+   alpha black
+   name Shuffle1
+   label "\[value in]"
+   xpos -339
+   ypos -529
+  }
+  Text2 {
+   font_size_toolbar 100
+   font_width_toolbar 100
+   font_height_toolbar 100
+   message "\[value parent.inputDesc]"
+   old_expression_markers {{0 -1}
+     }
+   box {0 {input.height-(input.height/5)} {input.width} {input.height-(input.height/37.25)}}
+   xjustify {{parent.FileName.xjustify}}
+   yjustify {{parent.FileName.yjustify}}
+   transforms {{0 2}
+     }
+   font {{ Arial : Regular : arial.ttf : 0 }}
+   global_font_scale {{(input.width/35+parent.size)/100}}
+   scale {1 1}
+   cursor_initialised true
+   autofit_bbox false
+   initial_cursor_position {{0 1556}
+     }
+   group_animations {{0} imported: 0 selected: items: "root transform"}
+   animation_layers {{1 11 0 {input.height-(input.height/7)} {"input.width/40+ parent.x_pos"} {parent.YPos} 1 1 0 0 0 0}
+     }
+   color {{parent.color} {parent.color} {parent.color} 1}
+   background_border_x 0
+   background_border_y 0
+   enable_shadows true
+   shadow_color {{parent.borderColor} {parent.borderColor} {parent.borderColor} 1}
+   shadow_opacity 1
+   shadow_distance 0
+   shadow_size {{parent.borderSize}}
+   name Description
+   xpos -339
+   ypos -480
+   disable {{!parent.descCheck}}
+  }
+  Text2 {
+   font_size_toolbar 100
+   font_width_toolbar 100
+   font_height_toolbar 100
+   message "\n\[value parent.finalFilePath]"
+   old_message {{10}
+     }
+   old_expression_markers {{1 0}
+     }
+   box {0 {input.height-(input.height/5)} {input.width} {input.height-(input.height/37.25)}}
+   transforms {{0 2}
+     }
+   cursor_position 29
+   font {{ Arial : Regular : arial.ttf : 0 }}
+   global_font_scale {{(input.width/35+parent.size)/100}}
+   scale {1 1}
+   cursor_initialised true
+   autofit_bbox false
+   initial_cursor_position {{0 1556}
+     }
+   group_animations {{0} imported: 0 selected: items: "root transform"}
+   animation_layers {{1 11 0 {input.height-(input.height/7)} {"input.width/40+ parent.x_pos"} {"descCheck == 1 ? parent.YPos : input.height/20 + parent.YPos"} 1 1 0 0 0 0}
+     }
+   color {{parent.color} {parent.color} {parent.color} 1}
+   enable_background {{parent.enableBackground}}
+   background_border_x 0
+   background_border_y 0
+   enable_shadows true
+   shadow_color {{parent.borderColor} {parent.borderColor} {parent.borderColor} 1}
+   shadow_opacity 1
+   shadow_distance 0
+   shadow_size {{parent.borderSize}}
+   name FileName
+   selected true
+   xpos -339
+   ypos -437
+   disable {{!parent.filenameCheck}}
+  }
+  Text2 {
+   font_size_toolbar 100
+   font_width_toolbar 100
+   font_height_toolbar 100
+   message "\n\n\[metadata exr/tx/uid]"
+   old_message {{10 10}
+     }
+   old_expression_markers {{2 1}
+     }
+   box {0 {input.height-(input.height/5)} {input.width} {input.height-(input.height/37.25)}}
+   transforms {{0 2}
+     }
+   cursor_position 1
+   font {{ Arial : Regular : arial.ttf : 0 }}
+   global_font_scale {{(input.width/35+parent.size)/100}}
+   scale {1 1}
+   cursor_initialised true
+   autofit_bbox false
+   initial_cursor_position {{0 1556}
+     }
+   group_animations {{0} imported: 0 selected: items: "root transform"}
+   animation_layers {{1 11 0 {input.height-(input.height/7)} {"input.width/40+ parent.x_pos"} {"descCheck == 1 ? parent.YPos : input.height/20 + parent.YPos"} 1 1 0 0 0 0}
+     }
+   color {{parent.color} {parent.color} {parent.color} 1}
+   enable_background {{parent.enableBackground}}
+   background_border_x 0
+   background_border_y 0
+   enable_shadows true
+   shadow_color {{parent.borderColor} {parent.borderColor} {parent.borderColor} 1}
+   shadow_opacity 1
+   shadow_distance 0
+   shadow_size {{parent.borderSize}}
+   name ArtistName
+   xpos -339
+   ypos -393
+   disable {{!parent.parent.artistName}}
+  }
+  Dot {
+   name Dot2
+   xpos -305
+   ypos -342
+  }
+push $N45e6b00
+  Merge2 {
+   inputs 2
+   bbox B
+   mix {{parent.parent.LabelFromRead2.Merge1.mix}}
+   name Merge1
+   xpos -195
+   ypos -345
+  }
+  Output {
+   name Output1
+   xpos -195
+   ypos -201
+  }
+ end_group
+ FrameHold {
+  first_frame {{parent.heroFrame}}
+  name FrameHold1
+  xpos -457
+  ypos 139
+  disable {{!parent.heroFrameOn}}
+ }
+ FrameRange {
+  first_frame 1001
+  last_frame 1001
+  time ""
+  name FrameRange1
+  xpos -457
+  ypos 202
+ }
+set N45a4f00 [stack 0]
+ ContactSheet {
+  inputs 7
+  width {{input.width*columns*resMult x1005 6672}}
+  height {{input.height*rows*resMult x1005 4644}}
+  rows {{"\[expr \{int( (sqrt( \[numvalue inputs] ) ) )\} ] * \[expr \{int( ceil ( (\[numvalue inputs] /(sqrt( \[numvalue inputs] ) ) )) )\} ] < \[numvalue inputs]   ? \[expr \{int( (sqrt( \[numvalue inputs] ) ) )\} ] +1 : \[expr \{int( (sqrt( \[numvalue inputs] ) ) )\} ]" x1005 3}}
+  columns {{"\[expr \{int( ceil ( (\[numvalue inputs] /(sqrt( \[numvalue inputs] )) )) )\} ]" x1005 3}}
+  center true
+  roworder TopBottom
+  name ContactSheetAuto
+  knobChanged "tn = nuke.thisNode()\nk = nuke.thisKnob()\nkn = k.name()\n\nif kn == \"inputChange\":\n    import thread\n    import math\n    def runner(x = 0):\n        tn\['get'].execute()\n        for one in tn.knobs():\n            if 'dude' in one:\n                x = x+1\n        num = x/2   \n        if num.is_integer():\n            dude =  \"dude\"+str(int(num)) \n        else:\n            dude =  \"dude\"+str(int(math.floor(num)))\n        tn\[dude].execute()\n    thread.start_new_thread(nuke.executeInMainThread,(runner,()))\n\n    "
+  tile_color 0xff69f7ff
+  label "\[value rows]X\[value columns]"
+  xpos -50
+  ypos 512
+  addUserKnob {20 Settings}
+  addUserKnob {7 resMult l "Resolution Multiplier" R 0.1 2}
+  resMult 1
+  addUserKnob {20 tab1 l Tools}
+  addUserKnob {26 lrow l "" +STARTLINE T rows}
+  addUserKnob {22 addRow l <b>+</b> -STARTLINE T "\nimport math\nn = nuke.thisNode()\ninputs = \[]\ndudes = 0\ncount = 1\nvariations = \{\}\n\nwhile n.input(dudes) is not None:\n     inputs.append(n.input(dudes))\n     dudes = dudes + 1\n\nif dudes != 0:\n    rows = n\['rows'].value()\n    columns = n\['columns'].value()\n    width = n\['width'].value()/columns\n    height = n\['height'].value()/rows\n    \n    rows = rows+1\n    \n    if dudes % rows == 0: \n       columns = dudes/rows\n    else:\n        columns = dudes/rows+1\n    \n    columns = math.floor(columns)\n    \n    \n    n\['rows'].setValue(rows)\n    n\['columns'].setValue(columns)\n    n\['width'].setValue(width*columns)\n    n\['height'].setValue(height*rows)"}
+  addUserKnob {22 removeRow l <b>-</b> -STARTLINE T "\nimport math\nn = nuke.thisNode()\ninputs = \[]\ndudes = 0\ncount = 1\nvariations = \{\}\n\nwhile n.input(dudes) is not None:\n     inputs.append(n.input(dudes))\n     dudes = dudes + 1\n\nif dudes != 0:\n    rows = n\['rows'].value()\n    columns = n\['columns'].value()\n    width = n\['width'].value()/columns\n    height = n\['height'].value()/rows\n    \n    rows = max(1, (rows-1))\n    \n    if dudes % rows == 0: \n       columns = dudes/rows\n    else:\n        columns = dudes/rows+1\n    \n    columns = math.floor(columns)\n    \n    \n    n\['rows'].setValue(rows)\n    n\['columns'].setValue(columns)\n    n\['width'].setValue(width*columns)\n    n\['height'].setValue(height*rows)"}
+  addUserKnob {26 lcolumn l "" -STARTLINE T columns}
+  addUserKnob {22 addColumn l <b>+</b> -STARTLINE T "import math\nn = nuke.thisNode()\ninputs = \[]\ndudes = 0\ncount = 1\nvariations = \{\}\n\nwhile n.input(dudes) is not None:\n     inputs.append(n.input(dudes))\n     dudes = dudes + 1\n\nif dudes != 0:\n    rows = n\['rows'].value()\n    columns = n\['columns'].value()\n    width = n\['width'].value()/columns\n    height = n\['height'].value()/rows\n    \n    columns = columns+1\n    \n    if dudes % columns == 0: \n       rows = dudes/columns\n    else:\n        rows = dudes/columns+1\n    \n    rows = math.floor(rows)\n    \n    \n    n\['rows'].setValue(rows)\n    n\['columns'].setValue(columns)\n    n\['width'].setValue(width*columns)\n    n\['height'].setValue(height*rows)"}
+  addUserKnob {22 removeColumn l <b>-</b> -STARTLINE T "import math\nn = nuke.thisNode()\ninputs = \[]\ndudes = 0\ncount = 1\nvariations = \{\}\n\nwhile n.input(dudes) is not None:\n     inputs.append(n.input(dudes))\n     dudes = dudes + 1\n\nif dudes != 0:\n    rows = n\['rows'].value()\n    columns = n\['columns'].value()\n    width = n\['width'].value()/columns\n    height = n\['height'].value()/rows\n    \n    columns = max(1, columns-1)\n    \n    if dudes % columns == 0: \n       rows = dudes/columns\n    else:\n        rows = dudes/columns+1\n    \n    rows = math.floor(rows)\n    \n    \n    n\['rows'].setValue(rows)\n    n\['columns'].setValue(columns)\n    n\['width'].setValue(width*columns)\n    n\['height'].setValue(height*rows)"}
+  addUserKnob {26 div1 l "" +STARTLINE}
+  addUserKnob {22 downres -STARTLINE T "\nn = nuke.thisNode()\n\nfactor = n\['Downres'].value()\nwidth = n\['width'].value()\nheight = n\['height'].value()\n\n\n\nn\['width'].setValue(width/factor)\nn\['height'].setValue(height/factor)"}
+  addUserKnob {22 upres -STARTLINE T "\nn = nuke.thisNode()\n\nfactor = n\['Downres'].value()\nwidth = n\['width'].value()\nheight = n\['height'].value()\n\n\n\nn\['width'].setValue(width*factor)\nn\['height'].setValue(height*factor)"}
+  addUserKnob {7 Downres l factor t "the resolution will be devided by this number" -STARTLINE R 0.0001 10}
+  Downres 2
+  addUserKnob {26 div3 l "" +STARTLINE T " "}
+  addUserKnob {22 get l "get inputs" T "import math\n\nn = nuke.thisNode()\nknobs = n.knobs()\nfor knob in knobs:\n    if \"dude\" in knob:\n        n.removeKnob(knobs\[ knob ])\n\ninputs = \[]\ndudes = 0\ncount = 1\n\nwhile n.input(dudes) is not None:\n     inputs.append(n.input(dudes))\n     dudes = dudes + 1\n\n\nif dudes != 0:\n    aspect = n.dependencies()\[0].format().pixelAspect()\n    width = inputs\[0].width()\n    height = inputs\[0].height()/aspect\n\nwhile count < dudes+1:\n    rows = int(math.ceil(dudes/count))\n    columns = int(count)\n            \n    m = nuke.PyScript_Knob(\"dude\"+str(count),str(rows) + \"X\" + str(columns),\"\"\" \n\nrowss = int(nuke.thisKnob().label().rpartition(\"X\")\[0])\nn\['rows'].setValue(rowss)\ncolumnss = int(nuke.thisKnob().label().rpartition(\"X\")\[2])\nn\['columns'].setValue(columnss)\nwidths = int(nuke.thisKnob().label().rpartition(\"X\")\[2])*inputs\[0].width()\nn\['width'].setValue(widths)\nheights = int(nuke.thisKnob().label().rpartition(\"X\")\[0])*height\nn\['height'].setValue(heights)\n\"\"\")\n    n.addKnob(m)\n    count = count + 1" +STARTLINE}
+  addUserKnob {26 div2 l "" -STARTLINE}
+  addUserKnob {22 dude1 l 7X1 -STARTLINE T " \n\nrowss = int(nuke.thisKnob().label().rpartition(\"X\")\[0])\nn\['rows'].setValue(rowss)\ncolumnss = int(nuke.thisKnob().label().rpartition(\"X\")\[2])\nn\['columns'].setValue(columnss)\nwidths = int(nuke.thisKnob().label().rpartition(\"X\")\[2])*inputs\[0].width()\nn\['width'].setValue(widths)\nheights = int(nuke.thisKnob().label().rpartition(\"X\")\[0])*height\nn\['height'].setValue(heights)\n"}
+  addUserKnob {22 dude2 l 4X2 -STARTLINE T " \n\nrowss = int(nuke.thisKnob().label().rpartition(\"X\")\[0])\nn\['rows'].setValue(rowss)\ncolumnss = int(nuke.thisKnob().label().rpartition(\"X\")\[2])\nn\['columns'].setValue(columnss)\nwidths = int(nuke.thisKnob().label().rpartition(\"X\")\[2])*inputs\[0].width()\nn\['width'].setValue(widths)\nheights = int(nuke.thisKnob().label().rpartition(\"X\")\[0])*height\nn\['height'].setValue(heights)\n"}
+  addUserKnob {22 dude3 l 3X3 -STARTLINE T " \n\nrowss = int(nuke.thisKnob().label().rpartition(\"X\")\[0])\nn\['rows'].setValue(rowss)\ncolumnss = int(nuke.thisKnob().label().rpartition(\"X\")\[2])\nn\['columns'].setValue(columnss)\nwidths = int(nuke.thisKnob().label().rpartition(\"X\")\[2])*inputs\[0].width()\nn\['width'].setValue(widths)\nheights = int(nuke.thisKnob().label().rpartition(\"X\")\[0])*height\nn\['height'].setValue(heights)\n"}
+  addUserKnob {22 dude4 l 2X4 -STARTLINE T " \n\nrowss = int(nuke.thisKnob().label().rpartition(\"X\")\[0])\nn\['rows'].setValue(rowss)\ncolumnss = int(nuke.thisKnob().label().rpartition(\"X\")\[2])\nn\['columns'].setValue(columnss)\nwidths = int(nuke.thisKnob().label().rpartition(\"X\")\[2])*inputs\[0].width()\nn\['width'].setValue(widths)\nheights = int(nuke.thisKnob().label().rpartition(\"X\")\[0])*height\nn\['height'].setValue(heights)\n"}
+  addUserKnob {22 dude5 l 2X5 -STARTLINE T " \n\nrowss = int(nuke.thisKnob().label().rpartition(\"X\")\[0])\nn\['rows'].setValue(rowss)\ncolumnss = int(nuke.thisKnob().label().rpartition(\"X\")\[2])\nn\['columns'].setValue(columnss)\nwidths = int(nuke.thisKnob().label().rpartition(\"X\")\[2])*inputs\[0].width()\nn\['width'].setValue(widths)\nheights = int(nuke.thisKnob().label().rpartition(\"X\")\[0])*height\nn\['height'].setValue(heights)\n"}
+  addUserKnob {22 dude6 l 2X6 -STARTLINE T " \n\nrowss = int(nuke.thisKnob().label().rpartition(\"X\")\[0])\nn\['rows'].setValue(rowss)\ncolumnss = int(nuke.thisKnob().label().rpartition(\"X\")\[2])\nn\['columns'].setValue(columnss)\nwidths = int(nuke.thisKnob().label().rpartition(\"X\")\[2])*inputs\[0].width()\nn\['width'].setValue(widths)\nheights = int(nuke.thisKnob().label().rpartition(\"X\")\[0])*height\nn\['height'].setValue(heights)\n"}
+  addUserKnob {22 dude7 l 1X7 -STARTLINE T " \n\nrowss = int(nuke.thisKnob().label().rpartition(\"X\")\[0])\nn\['rows'].setValue(rowss)\ncolumnss = int(nuke.thisKnob().label().rpartition(\"X\")\[2])\nn\['columns'].setValue(columnss)\nwidths = int(nuke.thisKnob().label().rpartition(\"X\")\[2])*inputs\[0].width()\nn\['width'].setValue(widths)\nheights = int(nuke.thisKnob().label().rpartition(\"X\")\[0])*height\nn\['height'].setValue(heights)\n"}
+ }
+push $Na01c0100
+push $N9ffccf00
+push $N9fd74f00
+push $N4e11d00
+push $N49fab00
+push $N4baa400
+push $N45a4f00
+ Switch {
+  inputs 7
+  which {{parent.output}}
+  name Switch1
+  label "\[value which]"
+  xpos -95
+  ypos 359
+ }
+push $Na01c0100
+push $N9ffccf00
+push $N9fd74f00
+push $N4e11d00
+push $N49fab00
+push $N4baa400
+push $N45a4f00
+ AppendClip {
+  inputs 7
+  firstFrame 1001
+  meta_from_first false
+  time ""
+  name AppendClip1
+  xpos -457
+  ypos 349
+ }
+ Switch {
+  inputs 2
+  which 1
+  name Switch2
+  label "\[value which]"
+  xpos -457
+  ypos 489
+  disable {{parent.useAppendClip}}
+ }
+ Switch {
+  inputs 2
+  which {{parent.viewContactSheet}}
+  name Switch3
+  label "\[value which]"
+  xpos -457
+  ypos 616
+ }
+ OCIOLookTransform {
+  in_colorspace scene_linear
+  look -shot_cdl
+  out_colorspace scene_linear
+  key1 SEQUENCE
+  value1 "\[value TrixterShotData.sequence]"
+  key2 SHOT
+  value2 "\[value TrixterShotData.shot]"
+  name OCIOLookTransform4
+  label "Current shot_CDL\\ninvert\n\[value value1] \[value value2]"
+  note_font_size 14
+  xpos -457
+  ypos 843
+  disable {{!parent.ocioShotDisplay}}
+ }
+ OCIOLookTransform {
+  in_colorspace scene_linear
+  look shot_cdl
+  out_colorspace scene_linear
+  key1 SEQUENCE
+  value1 "\[lrange  \[split \[value fullPath\[value parent.Switch1.which] ] /] 5 5 ]"
+  key2 SHOT
+  value2 "\[lrange  \[split \[value fullPath\[value parent.Switch1.which] ] /] 6 6 ]"
+  name OCIOLookTransform3
+  label "read Shot CDL\\napply\n\[value value1] \[value value2]"
+  note_font_size 14
+  xpos -457
+  ypos 942
+  disable {{!parent.ocioShotDisplay}}
+ }
+ Dot {
+  name Dot4
+  note_font_size 41
+  xpos -423
+  ypos 1085
+ }
+set N4589600 [stack 0]
+ Dot {
+  name Dot2
+  note_font_size 41
+  xpos 114
+  ypos 1085
+ }
+set N4588f00 [stack 0]
+ Text2 {
+  font_size_toolbar 100
+  font_width_toolbar 100
+  font_height_toolbar 100
+  message " ON HOLD "
+  old_message {{32 79 78 32 72 79 76 68 32}
+    }
+  box {{"xjustify == 0 ? width/25 :0"} 0 {"xjustify == 2 ? width-(width/25) : width"} {height}}
+  yjustify center
+  transforms {{0 2}
+    }
+  cursor_position 9
+  font {{ Arial : Regular : arial.ttf : 0 }}
+  global_font_scale {{(input.width/35+parent.size)/100}}
+  center {1112 774}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{204.6999512 774.3001709}
+    }
+  group_animations {{0} imported: 0 selected: items: "root transform/"}
+  animation_layers {{1 11 1112 774 0 0 1 1 0 0 0 0}
+    }
+  enable_background true
+  background_color {0.6 0.18 0 1}
+  background_opacity 0.9
+  enable_shadows true
+  shadow_opacity 1
+  shadow_distance 0
+  shadow_size 7
+  name Text7
+  xpos 600
+  ypos 1193
+ }
+push $N4588f00
+ Text2 {
+  font_size_toolbar 100
+  font_width_toolbar 100
+  font_height_toolbar 100
+  message " OMIT "
+  old_message {{32 79 77 73 84 32}
+    }
+  box {{"xjustify == 0 ? width/25 :0"} 0 {"xjustify == 2 ? width-(width/25) : width"} {height}}
+  yjustify center
+  transforms {{0 2}
+    }
+  cursor_position 5
+  font {{ Arial : Regular : arial.ttf : 0 }}
+  global_font_scale {{(input.width/35+parent.size)/100}}
+  center {1112 774}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{204.6999512 774.3001709}
+    }
+  group_animations {{0} imported: 0 selected: items: "root transform/"}
+  animation_layers {{1 11 1112 774 0 0 1 1 0 0 0 0}
+    }
+  enable_background true
+  background_color {0.4 0 0 1}
+  background_opacity 0.9
+  enable_shadows true
+  shadow_opacity 1
+  shadow_distance 0
+  shadow_size 7
+  name Text6
+  xpos 494
+  ypos 1193
+ }
+push $N4588f00
+ Text2 {
+  font_size_toolbar 100
+  font_width_toolbar 100
+  font_height_toolbar 100
+  message " FNL "
+  old_message {{32 70 78 76 32}
+    }
+  box {{"xjustify == 0 ? width/25 :0"} 0 {"xjustify == 2 ? width-(width/25) : width"} {height}}
+  yjustify center
+  transforms {{0 2}
+    }
+  kern_values {{1 0}
+    }
+  cursor_position 1
+  font {{ Arial : Regular : arial.ttf : 0 }}
+  global_font_scale {{(input.width/35+parent.size)/100}}
+  center {1112 774}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{204.6999512 774.3001709}
+    }
+  group_animations {{0} imported: 0 selected: items: "root transform/"}
+  animation_layers {{1 11 1112 774 0 0 1 1 0 0 0 0}
+    }
+  enable_background true
+  background_color {0 0.75 0 1}
+  background_opacity 0.9
+  enable_shadows true
+  shadow_opacity 1
+  shadow_distance 0
+  shadow_size 7
+  name Text1
+  xpos 386
+  ypos 1192
+ }
+push $N4588f00
+ Text2 {
+  font_size_toolbar 100
+  font_width_toolbar 100
+  font_height_toolbar 100
+  message " PTC "
+  old_message {{32 80 84 67 32}
+    }
+  box {{"xjustify == 0 ? width/25 :0"} 0 {"xjustify == 2 ? width-(width/25) : width"} {height}}
+  yjustify center
+  transforms {{0 2}
+    }
+  cursor_position 4
+  font {{ Arial : Regular : arial.ttf : 0 }}
+  global_font_scale {{(input.width/35+parent.size)/100}}
+  center {1112 774}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{204.6999512 774.3001709}
+    }
+  group_animations {{0} imported: 0 selected: items: "root transform/"}
+  animation_layers {{1 11 1112 774 0 0 1 1 0 0 0 0}
+    }
+  enable_background true
+  background_color {0.2 0.1 0 1}
+  background_opacity 0.9
+  enable_shadows true
+  shadow_opacity 1
+  shadow_distance 0
+  shadow_size 7
+  name Text9
+  xpos 249
+  ypos 1196
+ }
+push $N4588f00
+ Text2 {
+  font_size_toolbar 100
+  font_width_toolbar 100
+  font_height_toolbar 100
+  message APTC
+  old_message {{65 80 84 67}
+    }
+  box {{"xjustify == 0 ? width/25 :0"} 0 {"xjustify == 2 ? width-(width/25) : width"} {height}}
+  yjustify center
+  transforms {{0 2}
+    }
+  cursor_position 1
+  font {{ Arial : Regular : arial.ttf : 0 }}
+  global_font_scale {{(input.width/35+parent.size)/100}}
+  center {1112 774}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{204.6999512 774.3001709}
+    }
+  group_animations {{0} imported: 0 selected: items: "root transform/"}
+  animation_layers {{1 11 1112 774 0 0 1 1 0 0 0 0}
+    }
+  enable_background true
+  background_color {0.25 1 0.1 1}
+  background_opacity 0.9
+  enable_shadows true
+  shadow_opacity 1
+  shadow_distance 0
+  shadow_size 7
+  name Text5
+  xpos 127
+  ypos 1191
+ }
+push $N4588f00
+ Text2 {
+  font_size_toolbar 100
+  font_width_toolbar 100
+  font_height_toolbar 100
+  message " TWK "
+  old_message {{32 84 87 75 32}
+    }
+  box {{"xjustify == 0 ? width/25 :0"} 0 {"xjustify == 2 ? width-(width/25) : width"} {height}}
+  yjustify center
+  transforms {{0 2}
+    }
+  cursor_position 4
+  font {{ Arial : Regular : arial.ttf : 0 }}
+  global_font_scale {{(input.width/35+parent.size)/100}}
+  center {1112 774}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{204.6999512 774.3001709}
+    }
+  group_animations {{0} imported: 0 selected: items: "root transform/"}
+  animation_layers {{1 11 1112 774 0 0 1 1 0 0 0 0}
+    }
+  enable_background true
+  background_color {1 0.1 0.5 1}
+  background_opacity 0.9
+  enable_shadows true
+  shadow_opacity 1
+  shadow_distance 0
+  shadow_size 7
+  name Text4
+  xpos 11
+  ypos 1194
+ }
+push $N4588f00
+ Text2 {
+  font_size_toolbar 100
+  font_width_toolbar 100
+  font_height_toolbar 100
+  message " IP "
+  old_message {{32 73 80 32}
+    }
+  box {{"xjustify == 0 ? width/25 :0"} 0 {"xjustify == 2 ? width-(width/25) : width"} {height}}
+  yjustify center
+  transforms {{0 2}
+    }
+  cursor_position 3
+  font {{ Arial : Regular : arial.ttf : 0 }}
+  global_font_scale {{(input.width/35+parent.size)/100}}
+  center {1112 774}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{204.6999512 774.3001709}
+    }
+  group_animations {{0} imported: 0 selected: items: "root transform/"}
+  animation_layers {{1 11 1112 774 0 0 1 1 0 0 0 0}
+    }
+  enable_background true
+  background_color {0.6 0.7 0 1}
+  background_opacity 0.9
+  enable_shadows true
+  shadow_opacity 1
+  shadow_distance 0
+  shadow_size 7
+  name Text2
+  xpos -105
+  ypos 1195
+ }
+push $N4588f00
+ Text2 {
+  font_size_toolbar 100
+  font_width_toolbar 100
+  font_height_toolbar 100
+  message " INIT "
+  old_message {{32 73 78 73 84 32}
+    }
+  box {{"xjustify == 0 ? width/25 :0"} 0 {"xjustify == 2 ? width-(width/25) : width"} {height}}
+  yjustify center
+  transforms {{0 2}
+    }
+  cursor_position 5
+  font {{ Arial : Regular : arial.ttf : 0 }}
+  global_font_scale {{(input.width/35+parent.size)/100}}
+  center {1112 774}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{204.6999512 774.3001709}
+    }
+  group_animations {{0} imported: 0 selected: items: "root transform/"}
+  animation_layers {{1 11 1112 774 0 0 1 1 0 0 0 0}
+    }
+  enable_background true
+  background_color {1 0.4 1 1}
+  background_opacity 0.9
+  enable_shadows true
+  shadow_opacity 1
+  shadow_distance 0
+  shadow_size 7
+  name Text8
+  xpos -211
+  ypos 1198
+ }
+push $N4588f00
+ Text2 {
+  font_size_toolbar 100
+  font_width_toolbar 100
+  font_height_toolbar 100
+  message " NS "
+  old_message {{32 78 83 32}
+    }
+  box {{"xjustify == 0 ? width/25 :0"} 0 {"xjustify == 2 ? width-(width/25) : width"} {height}}
+  yjustify center
+  transforms {{0 2}
+    }
+  cursor_position 3
+  font {{ Arial : Regular : arial.ttf : 0 }}
+  global_font_scale {{(input.width/35+parent.size)/100}}
+  center {1112 774}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{204.6999512 774.3001709}
+    }
+  group_animations {{0} imported: 0 selected: items: "root transform/"}
+  animation_layers {{1 11 1112 774 0 0 1 1 0 0 0 0}
+    }
+  enable_background true
+  background_color {0.5 0.5 0.5 1}
+  background_opacity 0.9
+  enable_shadows true
+  shadow_opacity 1
+  shadow_distance 0
+  shadow_size 7
+  name Text3
+  xpos -333
+  ypos 1197
+ }
+push $N4589600
+ Switch {
+  inputs 10
+  which {{"shotStatus1 == 0 ? 0 :shotStatus+1"}}
+  name Switch4
+  label "\[value which]"
+  xpos -457
+  ypos 1408
+ }
+ Dot {
+  name Dot5
+  note_font_size 41
+  xpos -423
+  ypos 1600
+ }
+set N46bc100 [stack 0]
+ Fill {
+  color {{parent.color_1} {parent.color_1} {parent.color_1} {parent.color_1}}
+  name Fill1
+  xpos -153
+  ypos 1596
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy1
+  xpos -153
+  ypos 1657
+ }
+ Premult {
+  name Premult1
+  xpos -153
+  ypos 1711
+ }
+ Merge2 {
+  inputs 2
+  operation under
+  name Merge3
+  label "\[ expr \{ \[value mix] == 1 ? \" \" : \[concat Mix: \[value mix]] \}]"
+  xpos -153
+  ypos 1773
+  addUserKnob {20 TRX}
+  addUserKnob {22 swap l "swap to Merge All Node" -STARTLINE T "import convertMergeToMergeAll;convertMergeToMergeAll.convertMergeToMergeAll()"}
+ }
+push $N46bc100
+ Merge2 {
+  inputs 2
+  name Merge2
+  label "\[ expr \{ \[value mix] == 1 ? \" \" : \[concat Mix: \[value mix]] \}]"
+  xpos -457
+  ypos 1773
+  disable {{!showDot}}
+  addUserKnob {20 TRX}
+  addUserKnob {22 swap l "swap to Merge All Node" -STARTLINE T "import convertMergeToMergeAll;convertMergeToMergeAll.convertMergeToMergeAll()"}
+ }
+ Output {
+  name Output1
+  xpos -457
+  ypos 1905
+ }
+end_group
