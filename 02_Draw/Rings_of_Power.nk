@@ -48,8 +48,31 @@ Group {
  addUserKnob {20 endGroup_1 l endGroup n -1}
  addUserKnob {26 ""}
  addUserKnob {41 overscan T BBoxToFormat.overscanPercent}
+ addUserKnob {26 "" l mask T ""}
+ addUserKnob {41 maskChannelInput l "" -STARTLINE T Merge1.maskChannelInput}
+ addUserKnob {41 inject -STARTLINE T Merge1.inject}
+ addUserKnob {41 invert_mask l invert -STARTLINE T Merge1.invert_mask}
+ addUserKnob {41 fringe -STARTLINE T Merge1.fringe}
  addUserKnob {41 mix T Circles.mix}
 }
+ NoOp {
+  inputs 0
+  name NoOp1
+  xpos 226
+  ypos -530
+  addUserKnob {20 User}
+  addUserKnob {7 speed R 0 4}
+  speed 0.25
+  addUserKnob {7 output}
+  output {{-((frame-1000)*(parent.speed/2)*50)}}
+ }
+ Input {
+  inputs 0
+  name Inputmask
+  xpos -319
+  ypos 117
+  number 1
+ }
  Reformat {
   inputs 0
   format "4096 4096 0 0 4096 4096 1 square_4k"
@@ -676,28 +699,41 @@ push $N9a1ec800
   ypos 69
  }
 push $N9a1ecf00
+ Merge2 {
+  inputs 2+1
+  operation copy
+  name Merge1
+  label "\[ expr \{ \[value mix] == 1 ? \" \" : \[concat Mix: \[value mix]] \}]"
+  selected true
+  xpos -489
+  ypos 117
+  addUserKnob {20 TRX}
+  addUserKnob {22 swap l "swap to Merge All Node" -STARTLINE T "import convertMergeToMergeAll;convertMergeToMergeAll.convertMergeToMergeAll()"}
+ }
+push $N9a1ecf00
+ Dot {
+  name Dot9
+  note_font_size 41
+  xpos -565
+  ypos -492
+ }
+ Dot {
+  name Dot7
+  note_font_size 41
+  xpos -565
+  ypos 188
+ }
  Switch {
   inputs 2
   which {{"parent.size == 0 || parent.outerRadius == 0 || parent.Circles.mix == 0 ? 0 : 1"}}
   name Switch1
   label "\[value which]"
   xpos -489
-  ypos 154
+  ypos 178
  }
  Output {
   name Output1
   xpos -489
-  ypos 257
- }
- NoOp {
-  inputs 0
-  name NoOp1
-  xpos 226
-  ypos -530
-  addUserKnob {20 User}
-  addUserKnob {7 speed R 0 4}
-  speed 0.25
-  addUserKnob {7 output}
-  output {{-((frame-1000)*(parent.speed/2)*50)}}
+  ypos 380
  }
 end_group
