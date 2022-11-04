@@ -24,6 +24,11 @@ Group {
  addUserKnob {41 plinear_1 l "perceptually linear" -STARTLINE T RadialInner.plinear}
  addUserKnob {41 innerBlur l blur T Blur1.size}
  addUserKnob {26 ""}
+ addUserKnob {26 "" l mask T ""}
+ addUserKnob {41 maskChannelInput l "" -STARTLINE T Merge1.maskChannelInput}
+ addUserKnob {41 inject -STARTLINE T Merge1.inject}
+ addUserKnob {41 invert_mask l invert -STARTLINE T Merge1.invert_mask}
+ addUserKnob {41 fringe -STARTLINE T Merge1.fringe}
  addUserKnob {41 mix T RadialOuter.opacity}
  addUserKnob {20 Noise}
  addUserKnob {6 noiseCheck l Enable +STARTLINE}
@@ -156,7 +161,6 @@ push $N84d93200
   translate {{parent.center.x} {parent.center.y}}
   scale {{parent.overallSize} {parent.overallSize}}
   name Noise1
-  selected true
   xpos -85
   ypos -404
  }
@@ -215,6 +219,7 @@ push $N84db2400
   operation copy
   name Merge1
   label "\[ expr \{ \[value mix] == 1 ? \" \" : \[concat Mix: \[value mix]] \}]"
+  selected true
   xpos -489
   ypos 128
   addUserKnob {20 TRX}
