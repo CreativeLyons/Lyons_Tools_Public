@@ -1,0 +1,254 @@
+Group {
+ name SpotLight
+ onCreate "n = nuke.thisNode()\nn.knob('outerRadius').setRange(0, 2)\nn.knob('innerRadius').setRange(0, 2)\nn.knob('outerBlur').setRange(0, 400)\nn.knob('innerBlur').setRange(0, 400)\nn.knob('overallSize').setRange(0, 4)"
+ tile_color 0x4c7b7fff
+ note_font_color 0xffffffff
+ selected true
+ addUserKnob {20 SpotLight}
+ addUserKnob {12 center}
+ center {3334.5 1137}
+ addUserKnob {22 setCenter l "set center" -STARTLINE T "n = nuke.thisNode()\nw= n.width()\nh=n.height()\nn\['center'].setValue(\[w/2,h/2])"}
+ addUserKnob {14 overallSize l "Overall Size" R 0 4}
+ overallSize 1
+ addUserKnob {26 outerMask l "<b> <font color = turquoise>Outer Mask" T " "}
+ addUserKnob {14 outerRadius l size R 0 2}
+ outerRadius 0.4
+ addUserKnob {41 softness T RadialOuter.softness}
+ addUserKnob {41 plinear l "perceptually linear" -STARTLINE T RadialOuter.plinear}
+ addUserKnob {41 outerBlur l blur T Blur2.size}
+ addUserKnob {26 innerMask l "<b> <font color = turquoise>Inner Mask" T " "}
+ addUserKnob {6 innerMaskCheck l toggle -STARTLINE}
+ addUserKnob {14 innerRadius l size R 0 2}
+ innerRadius 0.3
+ addUserKnob {41 softness_1 l softness T RadialInner.softness}
+ addUserKnob {41 plinear_1 l "perceptually linear" -STARTLINE T RadialInner.plinear}
+ addUserKnob {41 innerBlur l blur T Blur1.size}
+ addUserKnob {26 ""}
+ addUserKnob {41 mix T RadialOuter.opacity}
+ addUserKnob {20 Noise}
+ addUserKnob {6 noiseCheck l Enable +STARTLINE}
+ addUserKnob {41 type T Noise1.type}
+ addUserKnob {41 size l x/ysize T Noise1.size}
+ addUserKnob {7 noiseZ l z R 0 5}
+ addUserKnob {7 zSpeed l "z speed"}
+ addUserKnob {41 octaves T Noise1.octaves}
+ addUserKnob {41 nyquist l "clip at Nyquist limit" T Noise1.nyquist}
+ addUserKnob {41 lacunarity T Noise1.lacunarity}
+ addUserKnob {41 gain T Noise1.gain}
+ addUserKnob {41 gamma T Noise1.gamma}
+ addUserKnob {41 noiseMix l mix T Noise1.opacity}
+}
+ Input {
+  inputs 0
+  name Input
+  xpos -487
+  ypos -803
+ }
+ Input {
+  inputs 0
+  name Inputmask
+  xpos -201
+  ypos 128
+  number 1
+ }
+ Reformat {
+  inputs 0
+  type "to box"
+  box_width {{"\[exists input0] ? parent.width : root.format.w"}}
+  box_height {{"\[exists input0] ? parent.height : root.format.h"}}
+  box_fixed true
+  resize none
+  center false
+  pbb true
+  name Reformat1
+  xpos -489
+  ypos -648
+ }
+ Dot {
+  name Dot1
+  note_font_size 41
+  xpos -455
+  ypos -492
+ }
+set N84db2400 [stack 0]
+ Dot {
+  name Dot5
+  note_font_size 41
+  xpos -321
+  ypos -492
+ }
+set N84db1d00 [stack 0]
+ Radial {
+  output {-rgba.red -rgba.green -rgba.blue rgba.alpha}
+  cliptype none
+  replace true
+  invert_mask true
+  area {{"parent.center.x-(1+( (width/2)* (innerRadius.w*overallSize) ) )"} {"parent.center.y-(1+( (width/2)* (innerRadius.h*overallSize) ) )"} {"parent.center.x+(1+( (width/2)* (innerRadius.w*overallSize) ) )"} {"parent.center.y+(1+( (width/2)* (innerRadius.h*overallSize)) )"}}
+  softness 0.8
+  name RadialInner
+  xpos -355
+  ypos -409
+ }
+ Blur {
+  channels {-rgba.red -rgba.green -rgba.blue rgba.alpha}
+  name Blur1
+  label "\[value size]"
+  xpos -355
+  ypos -349
+ }
+ Dot {
+  name Dot6
+  note_font_size 41
+  xpos -321
+  ypos -242
+ }
+push $N84db1d00
+ Dot {
+  name Dot3
+  note_font_size 41
+  xpos -180
+  ypos -492
+ }
+set N84d93200 [stack 0]
+ Radial {
+  output {-rgba.red -rgba.green -rgba.blue rgba.alpha}
+  cliptype none
+  replace true
+  area {{"parent.center.x-(1+( (width/2)* (outerRadius.w*overallSize) ) )"} {"parent.center.y-(1+( (width/2)* (outerRadius.h*overallSize) ) )"} {"parent.center.x+(1+( (width/2)* (outerRadius.w*overallSize) ) )"} {"parent.center.y+(1+( (width/2)* (outerRadius.h*overallSize) ) )"}}
+  name RadialOuter
+  xpos -214
+  ypos -409
+ }
+ Blur {
+  channels {-rgba.red -rgba.green -rgba.blue rgba.alpha}
+  name Blur2
+  label "\[value size]"
+  xpos -214
+  ypos -351
+ }
+ Multiply {
+  inputs 1+1
+  channels {-rgba.red -rgba.green -rgba.blue rgba.alpha}
+  value 0
+  name Multiply2
+  label "\[value value]"
+  xpos -214
+  ypos -258
+  disable {{!parent.innerMaskCheck}}
+ }
+set N84d90f00 [stack 0]
+push $N84d93200
+ Dot {
+  name Dot2
+  note_font_size 41
+  xpos -51
+  ypos -492
+ }
+ Noise {
+  output {-rgba.red -rgba.green -rgba.blue rgba.alpha}
+  replace true
+  size {250}
+  zoffset {{parent.noiseZ+(frame*zSpeed)*.2}}
+  octaves {10}
+  lacunarity {2}
+  gain {0.5}
+  gamma {0.5}
+  translate {{parent.center.x} {parent.center.y}}
+  scale {{parent.overallSize} {parent.overallSize}}
+  name Noise1
+  selected true
+  xpos -85
+  ypos -404
+ }
+ Merge2 {
+  inputs 2
+  name Merge2
+  label "\[ expr \{ \[value mix] == 1 ? \" \" : \[concat Mix: \[value mix]] \}]"
+  xpos -85
+  ypos -246
+  addUserKnob {20 TRX}
+  addUserKnob {22 swap l "swap to Merge All Node" -STARTLINE T "import convertMergeToMergeAll;convertMergeToMergeAll.convertMergeToMergeAll()"}
+ }
+ Dot {
+  name Dot9
+  note_font_size 41
+  xpos -51
+  ypos -172
+ }
+push $N84d90f00
+ Multiply {
+  inputs 1+1
+  channels {-rgba.red -rgba.green -rgba.blue rgba.alpha}
+  value 0
+  invert_mask true
+  name Multiply1
+  label "\[value value]"
+  xpos -214
+  ypos -188
+  disable {{!parent.noiseCheck}}
+ }
+ Shuffle {
+  red alpha
+  green alpha
+  blue alpha
+  name Shuffle2
+  tile_color 0xffffffff
+  note_font_size 22
+  note_font_color 0xffffffff
+  xpos -214
+  ypos -60
+ }
+ BlackOutside {
+  name BlackOutside1
+  xpos -214
+  ypos -1
+ }
+ Dot {
+  name Dot8
+  note_font_size 41
+  xpos -180
+  ypos 67
+ }
+push $N84db2400
+ Merge2 {
+  inputs 2+1
+  operation copy
+  name Merge1
+  label "\[ expr \{ \[value mix] == 1 ? \" \" : \[concat Mix: \[value mix]] \}]"
+  xpos -489
+  ypos 128
+  addUserKnob {20 TRX}
+  addUserKnob {22 swap l "swap to Merge All Node" -STARTLINE T "import convertMergeToMergeAll;convertMergeToMergeAll.convertMergeToMergeAll()"}
+ }
+push $N84db2400
+ Dot {
+  name Dot7
+  note_font_size 41
+  xpos -699
+  ypos -492
+ }
+ Dot {
+  name Dot4
+  note_font_size 41
+  xpos -699
+  ypos 279
+ }
+ Switch {
+  inputs 2
+  which {{"parent.outerRadius == 0 ? 0 : 1"}}
+  name Switch1
+  label "\[value which]"
+  xpos -489
+  ypos 269
+ }
+ BlackOutside {
+  name BlackOutside2
+  xpos -489
+  ypos 346
+ }
+ Output {
+  name Output1
+  xpos -489
+  ypos 482
+ }
+end_group
