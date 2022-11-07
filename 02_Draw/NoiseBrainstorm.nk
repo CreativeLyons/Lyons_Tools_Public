@@ -1,0 +1,455 @@
+Group {
+ name NoiseBrainstorm
+ help "Brain_storm_noise is to generate random noise pattern for ideas.."
+ selected true
+ addUserKnob {20 Brainstorm}
+ addUserKnob {26 ""}
+ addUserKnob {41 resMult l "Resolution Multiplier" T ContactSheetAuto.resMult}
+ addUserKnob {41 width l Resolution T ContactSheetAuto.width}
+ addUserKnob {26 ""}
+ addUserKnob {41 Brainstorm_1 l Brainstorm T NoOp1.Brainstorm}
+}
+ Input {
+  inputs 0
+  name Input1
+  xpos 1142
+  ypos -806
+ }
+set N50912b00 [stack 0]
+ Noise {
+  type turbulence
+  size {{parent.NoOp1.text09}}
+  zoffset {{parent.NoOp1.text09}}
+  octaves 130
+  gain {{parent.NoOp1.text09/1000}}
+  gamma {{parent.NoOp1.text09/1000}}
+  center {1024 778}
+  name Noise9
+  xpos 2000
+  ypos -526
+ }
+ Text2 {
+  font_size_toolbar 52
+  font_width_toolbar 100
+  font_height_toolbar 100
+  message "Size : \[value Noise9.size]   Gain : \[value Noise9.gain] \tGamma : \[value Noise9.gamma]  Lacunarity : \[value Noise9.lacunarity]\n"
+  old_message {{83 105 122 101 32 58 32 49 55 55 46 48 48 57 51 48 49 50 32 32 32 71 97 105 110 32 58 32 48 46 49 55 55 48 48 57 51 48 49 50 32 9 71 97 109 109 97 32 58 32 48 46 49 55 55 48 48 57 51 48 49 50 32 32 76 97 99 117 110 97 114 105 116 121 32 58 32 50 10}
+    }
+  old_expression_markers {{7 17 28 39 50 61 77 77}
+    }
+  box {2 3 1850 56}
+  transforms {{0 2}
+    }
+  font_size_values {{0 52 1 52 2 52 3 52 4 52 5 52 6 52 7 52 8 52 9 52 10 52 11 52 12 52 13 52 14 52 15 52 16 52 17 52 18 52 19 52 20 52 21 52 22 52 23 52 24 52 25 52 26 52 27 52 28 52 29 52 30 52 31 52 32 52 33 52 34 52 35 52 36 52 37 52 38 52 39 52 40 52 41 52 42 52 43 52 44 52 45 52 46 52 47 52 48 52 49 52 50 52 51 52 52 52 53 52 54 52 55 52 56 52 57 52 58 52 59 52 60 52 61 52 62 52 62 55 63 52 64 52 65 52 66 52 67 52 68 52 69 52 70 52 71 52 72 52 73 52 74 52 75 52 76 52 77 52 78 52 0 86 1 86 2 86 3 86 4 86 5 86 6 86 7 86 8 86 9 86 18 86 19 86 20 86 23 86 24 86 25 86 26 86 27 86 28 86 29 86 40 86 78 86}
+    }
+  cursor_position 40
+  font_size 52
+  scale {1 1}
+  cursor_initialised true
+  initial_cursor_position {{2 56}
+    }
+  group_animations {{0} imported: 0 selected: items: "root transform/"}
+  animation_layers {{1 11 960 540 0 0 1 1 0 0 0 0}
+    }
+  color {1 1 1 1}
+  color_panelDropped true
+  name Text9
+  xpos 2000
+  ypos -467
+ }
+push $N50912b00
+ Noise {
+  type turbulence
+  size {{parent.NoOp1.text08*5}}
+  zoffset {{parent.NoOp1.text09}}
+  octaves 130
+  gain {{parent.NoOp1.text06/10}}
+  gamma {{parent.NoOp1.text08/10}}
+  center {1024 778}
+  name Noise8
+  xpos 1768
+  ypos -537
+ }
+ Text2 {
+  font_size_toolbar 52
+  font_width_toolbar 100
+  font_height_toolbar 100
+  message "Size : \[value Noise8.size]   Gain : \[value Noise8.gain] \tGamma : \[value Noise8.gamma]  Lacunarity : \[value Noise8.lacunarity]\n"
+  old_message {{83 105 122 101 32 58 32 49 54 52 46 49 49 56 49 57 55 50 32 32 32 71 97 105 110 32 58 32 48 46 49 51 56 57 48 54 49 50 54 49 32 9 71 97 109 109 97 32 58 32 51 46 50 56 50 51 54 51 57 52 51 32 32 76 97 99 117 110 97 114 105 116 121 32 58 32 50 10}
+    }
+  old_expression_markers {{7 17 28 39 50 60 76 76}
+    }
+  box {2 3 1850 56}
+  transforms {{0 2}
+    }
+  font_size_values {{0 52 1 52 2 52 3 52 4 52 5 52 6 52 7 52 8 52 9 52 10 52 11 52 12 52 13 52 14 52 15 52 16 52 17 52 18 52 19 52 20 52 21 52 22 52 23 52 24 52 25 52 26 52 27 52 28 52 29 52 30 52 31 52 32 52 33 52 34 52 35 52 36 52 37 52 38 52 39 52 40 52 41 52 42 52 43 52 44 52 45 52 46 52 47 52 48 52 49 52 50 52 51 52 52 52 53 52 54 52 55 52 56 52 57 52 58 52 59 52 60 52 61 52 61 55 62 52 63 52 64 52 65 52 66 52 67 52 68 52 69 52 70 52 71 52 72 52 73 52 74 52 75 52 76 52 77 52 0 86 1 86 2 86 3 86 4 86 5 86 6 86 7 86 8 86 9 86 18 86 19 86 20 86 23 86 24 86 25 86 26 86 27 86 28 86 29 86 40 86 77 86}
+    }
+  cursor_position 71
+  font_size 52
+  scale {1 1}
+  cursor_initialised true
+  initial_cursor_position {{2 56}
+    }
+  group_animations {{0} imported: 0 selected: items: "root transform/"}
+  animation_layers {{1 11 960 540 0 0 1 1 0 0 0 0}
+    }
+  color {1 1 1 1}
+  color_panelDropped true
+  name Text8
+  xpos 1768
+  ypos -478
+ }
+push $N50912b00
+ Noise {
+  type turbulence
+  size {{parent.NoOp1.text07}}
+  zoffset 3.3
+  octaves 130
+  gain 0.27
+  gamma {{parent.NoOp1.text07/10}}
+  center {1024 778}
+  name Noise7
+  xpos 1543
+  ypos -537
+ }
+ Text2 {
+  font_size_toolbar 52
+  font_width_toolbar 100
+  font_height_toolbar 100
+  message "Size : \[value Noise7.size]   Gain : \[value Noise7.gain] \tGamma : \[value Noise7.gamma]  Lacunarity : \[value Noise7.lacunarity]\n"
+  old_message {{83 105 122 101 32 58 32 51 56 46 56 48 52 49 51 51 52 52 32 32 32 71 97 105 110 32 58 32 48 46 50 55 32 9 71 97 109 109 97 32 58 32 51 46 56 56 48 52 49 51 51 52 52 32 32 76 97 99 117 110 97 114 105 116 121 32 58 32 50 10}
+    }
+  old_expression_markers {{7 17 28 31 42 52 68 68}
+    }
+  box {2 3 1570 56}
+  transforms {{0 2}
+    }
+  font_size_values {{0 52 1 52 2 52 3 52 4 52 5 52 6 52 7 52 8 52 9 52 10 52 11 52 12 52 13 52 14 52 15 52 16 52 17 52 18 52 19 52 20 52 21 52 22 52 23 52 24 52 25 52 26 52 27 52 28 52 29 52 30 52 31 52 32 52 33 52 34 52 35 52 36 52 37 52 38 52 39 52 40 52 41 52 42 52 43 52 44 52 45 52 46 52 47 52 48 52 49 52 50 52 51 52 52 52 53 52 53 55 54 52 55 52 56 52 57 52 58 52 59 52 60 52 61 52 62 52 63 52 64 52 65 52 66 52 67 52 68 52 69 52 0 86 1 86 2 86 3 86 4 86 5 86 6 86 7 86 8 86 9 86 18 86 19 86 20 86 23 86 24 86 25 86 26 86 27 86 28 86 29 86 32 86 69 86}
+    }
+  cursor_position 52
+  font_size 52
+  scale {1 1}
+  cursor_initialised true
+  initial_cursor_position {{2 56}
+    }
+  group_animations {{0} imported: 0 selected: items: "root transform/"}
+  animation_layers {{1 11 960 540 0 0 1 1 0 0 0 0}
+    }
+  color {1 1 1 1}
+  color_panelDropped true
+  name Text7
+  xpos 1543
+  ypos -478
+ }
+push $N50912b00
+ Noise {
+  size {{parent.NoOp1.text06}}
+  zoffset 3.3
+  octaves 130
+  gain {{parent.NoOp1.text06/100}}
+  gamma {{parent.NoOp1.text06/10}}
+  center {1024 778}
+  name Noise6
+  xpos 1363
+  ypos -536
+ }
+ Text2 {
+  font_size_toolbar 52
+  font_width_toolbar 100
+  font_height_toolbar 100
+  message "Size : \[value Noise6.size]   Gain : \[value Noise6.gain] \tGamma : \[value Noise6.gamma]  Lacunarity : \[value Noise6.lacunarity]\n"
+  old_message {{83 105 122 101 32 58 32 49 46 51 56 57 48 54 49 50 54 49 32 32 32 71 97 105 110 32 58 32 48 46 48 49 51 56 57 48 54 49 50 54 49 32 9 71 97 109 109 97 32 58 32 48 46 49 51 56 57 48 54 49 50 54 49 32 32 76 97 99 117 110 97 114 105 116 121 32 58 32 50 10}
+    }
+  old_expression_markers {{7 17 28 40 51 62 78 78}
+    }
+  box {2 3 2046 56}
+  transforms {{0 2}
+    }
+  font_size_values {{0 52 1 52 2 52 3 52 4 52 5 52 6 52 7 52 8 52 9 52 10 52 11 52 12 52 13 52 14 52 15 52 16 52 17 52 18 52 19 52 20 52 21 52 22 52 23 52 24 52 25 52 26 52 27 52 28 52 29 52 30 52 31 52 32 52 33 52 34 52 35 52 36 52 37 52 38 52 39 52 40 52 41 52 42 52 43 52 44 52 45 52 46 52 47 52 48 52 49 52 50 52 51 52 52 52 53 52 54 52 55 52 56 52 57 52 58 52 59 52 60 52 61 52 62 52 63 52 63 55 64 52 65 52 66 52 67 52 68 52 69 52 70 52 71 52 72 52 73 52 74 52 75 52 76 52 77 52 78 52 79 52 0 86 1 86 2 86 3 86 4 86 5 86 6 86 7 86 8 86 9 86 18 86 19 86 20 86 23 86 24 86 25 86 26 86 27 86 28 86 29 86 41 86 79 86}
+    }
+  cursor_position 86
+  font_size 52
+  scale {1 1}
+  cursor_initialised true
+  initial_cursor_position {{2 56}
+    }
+  group_animations {{0} imported: 0 selected: items: "root transform/"}
+  animation_layers {{1 11 960 540 0 0 1 1 0 0 0 0}
+    }
+  color {1 1 1 1}
+  color_panelDropped true
+  name Text5
+  xpos 1363
+  ypos -478
+ }
+push $N50912b00
+ Noise {
+  size {{parent.NoOp1.text05}}
+  zoffset 3.3
+  octaves 130
+  gain 0.585
+  gamma {{parent.NoOp1.text05/100}}
+  center {1024 778}
+  name Noise5
+  xpos 1165
+  ypos -534
+ }
+ Text2 {
+  font_size_toolbar 52
+  font_width_toolbar 100
+  font_height_toolbar 100
+  message " Size : \[value Noise5.size]   Gain : \[value Noise5.gain] \tGamma : \[value Noise5.gamma]  Lacunarity : \[value Noise5.lacunarity]\n"
+  old_message {{32 83 105 122 101 32 58 32 54 55 46 48 55 54 56 55 56 57 51 32 32 32 71 97 105 110 32 58 32 48 46 53 56 53 32 9 71 97 109 109 97 32 58 32 48 46 54 55 48 55 54 56 55 56 57 51 32 32 76 97 99 117 110 97 114 105 116 121 32 58 32 50 10}
+    }
+  old_expression_markers {{8 18 29 33 44 55 71 71}
+    }
+  box {2 3 1862 56}
+  transforms {{0 2}
+    }
+  font_size_values {{0 52 1 52 2 52 3 52 4 52 5 52 6 52 7 52 8 52 9 52 10 52 11 52 12 52 13 52 14 52 15 52 16 52 17 52 18 52 19 52 20 52 21 52 22 52 23 52 24 52 25 52 26 52 27 52 28 52 29 52 30 52 31 52 32 52 33 52 34 52 35 52 36 52 37 52 38 52 39 52 40 52 41 52 42 52 43 52 44 52 45 52 46 52 47 52 48 52 49 52 50 52 51 52 52 52 53 52 54 52 55 52 56 52 56 55 57 52 58 52 59 52 60 52 61 52 62 52 63 52 64 52 65 52 66 52 67 52 68 52 69 52 70 52 71 52 72 52 0 86 1 86 2 86 3 86 4 86 5 86 6 86 7 86 8 86 9 86 10 86 19 86 20 86 21 86 24 86 25 86 26 86 27 86 28 86 29 86 30 86 34 86 72 86}
+    }
+  cursor_position 79
+  font_size 52
+  scale {1 1}
+  cursor_initialised true
+  initial_cursor_position {{2 56}
+    }
+  group_animations {{0} imported: 0 selected: items: "root transform/"}
+  animation_layers {{1 11 960 540 0 0 1 1 0 0 0 0}
+    }
+  color {1 1 1 1}
+  color_panelDropped true
+  name Text4
+  xpos 1165
+  ypos -476
+ }
+push $N50912b00
+ Noise {
+  size {{parent.NoOp1.text04*80}}
+  zoffset 3.3
+  octaves 130
+  gain 0.86
+  gamma {{parent.NoOp1.text04/500}}
+  center {1024 778}
+  name Noise4
+  xpos 934
+  ypos -545
+ }
+ Text2 {
+  font_size_toolbar 52
+  font_width_toolbar 100
+  font_height_toolbar 100
+  message " Size : \[value Noise4.size]   Gain : \[value Noise4.gain] \tGamma : \[value Noise4.gamma]  Lacunarity : \[value Noise4.lacunarity]\n"
+  old_message {{32 83 105 122 101 32 58 32 53 48 53 57 57 46 52 54 52 52 55 32 32 32 71 97 105 110 32 58 32 48 46 56 54 32 9 71 97 109 109 97 32 58 32 49 46 50 54 52 57 56 54 54 49 50 32 32 76 97 99 117 110 97 114 105 116 121 32 58 32 50 10}
+    }
+  old_expression_markers {{8 18 29 32 43 53 69 69}
+    }
+  box {2 3 1610 56}
+  transforms {{0 2}
+    }
+  font_size_values {{0 52 1 52 2 52 3 52 4 52 5 52 6 52 7 52 8 52 9 52 10 52 11 52 12 52 13 52 14 52 15 52 16 52 17 52 18 52 19 52 20 52 21 52 22 52 23 52 24 52 25 52 26 52 27 52 28 52 29 52 30 52 31 52 32 52 33 52 34 52 35 52 36 52 37 52 38 52 39 52 40 52 41 52 42 52 43 52 44 52 45 52 46 52 47 52 48 52 49 52 50 52 51 52 52 52 53 52 54 52 54 55 55 52 56 52 57 52 58 52 59 52 60 52 61 52 62 52 63 52 64 52 65 52 66 52 67 52 68 52 69 52 70 52 0 86 1 86 2 86 3 86 4 86 5 86 6 86 7 86 8 86 9 86 10 86 19 86 20 86 21 86 24 86 25 86 26 86 27 86 28 86 29 86 33 86 70 86}
+    }
+  cursor_position 63
+  font_size 52
+  scale {1 1}
+  cursor_initialised true
+  initial_cursor_position {{2 56}
+    }
+  group_animations {{0} imported: 0 selected: items: "root transform/"}
+  animation_layers {{1 11 960 540 0 0 1 1 0 0 0 0}
+    }
+  color {1 1 1 1}
+  color_panelDropped true
+  name Text3
+  xpos 934
+  ypos -487
+ }
+push $N50912b00
+ Noise {
+  size {{parent.NoOp1.text03*5}}
+  zoffset 3.3
+  octaves 130
+  gain {{parent.NoOp1.text03/500}}
+  gamma {{parent.NoOp1.text03/200}}
+  center {1024 778}
+  name Noise3
+  xpos 683
+  ypos -554
+ }
+ Text2 {
+  font_size_toolbar 52
+  font_width_toolbar 100
+  font_height_toolbar 100
+  message " Size : \[value Noise3.size]   Gain : \[value Noise3.gain] \tGamma : \[value Noise3.gamma]  Lacunarity : \[value Noise3.lacunarity]\n"
+  old_message {{32 83 105 122 101 32 58 32 49 52 50 53 46 54 52 49 50 56 32 32 32 71 97 105 110 32 58 32 48 46 53 55 48 50 53 54 53 49 49 56 32 9 71 97 109 109 97 32 58 32 49 46 52 50 53 54 52 49 50 55 57 32 32 76 97 99 117 110 97 114 105 116 121 32 58 32 50 10}
+    }
+  old_expression_markers {{8 17 28 39 50 60 76 76}
+    }
+  box {2 3 1778 56}
+  transforms {{0 2}
+    }
+  font_size_values {{0 52 1 52 2 52 3 52 4 52 5 52 6 52 7 52 8 52 9 52 10 52 11 52 12 52 13 52 14 52 15 52 16 52 17 52 18 52 19 52 20 52 21 52 22 52 23 52 24 52 25 52 26 52 27 52 28 52 29 52 30 52 31 52 32 52 33 52 34 52 35 52 36 52 37 52 38 52 39 52 40 52 41 52 42 52 43 52 44 52 45 52 46 52 47 52 48 52 49 52 50 52 51 52 52 52 53 52 54 52 55 52 56 52 57 52 58 52 59 52 60 52 61 52 61 55 62 52 63 52 64 52 65 52 66 52 67 52 68 52 69 52 70 52 71 52 72 52 73 52 74 52 75 52 76 52 77 52 0 86 1 86 2 86 3 86 4 86 5 86 6 86 7 86 8 86 9 86 10 86 18 86 19 86 20 86 23 86 24 86 25 86 26 86 27 86 28 86 29 86 40 86 77 86}
+    }
+  cursor_position 70
+  font_size 52
+  scale {1 1}
+  cursor_initialised true
+  initial_cursor_position {{2 56}
+    }
+  group_animations {{0} imported: 0 selected: items: "root transform/"}
+  animation_layers {{1 11 960 540 0 0 1 1 0 0 0 0}
+    }
+  color {1 1 1 1}
+  color_panelDropped true
+  name Text2
+  xpos 683
+  ypos -496
+ }
+push $N50912b00
+ Noise {
+  size {{parent.NoOp1.text02*2}}
+  zoffset 3.3
+  octaves 130
+  gain {{parent.NoOp1.text02/500}}
+  gamma {{parent.NoOp1.text02/200}}
+  center {1024 778}
+  name Noise1
+  xpos 447
+  ypos -558
+ }
+ Text2 {
+  font_size_toolbar 52
+  font_width_toolbar 100
+  font_height_toolbar 100
+  message " Size : \[value Noise1.size]   Gain : \[value Noise1.gain] \tGamma : \[value Noise1.gamma]  Lacunarity : \[value Noise1.lacunarity]\n"
+  old_message {{32 83 105 122 101 32 58 32 49 51 57 46 51 55 49 51 54 48 53 32 32 32 71 97 105 110 32 58 32 48 46 49 51 57 51 55 49 51 54 48 53 32 9 71 97 109 109 97 32 58 32 48 46 51 52 56 52 50 56 52 48 49 52 32 32 76 97 99 117 110 97 114 105 116 121 32 58 32 50 10}
+    }
+  old_expression_markers {{8 18 29 40 51 62 78 78}
+    }
+  box {2 3 1862 56}
+  transforms {{0 2}
+    }
+  font_size_values {{0 52 1 52 2 52 3 52 4 52 5 52 6 52 7 52 8 52 9 52 10 52 11 52 12 52 13 52 14 52 15 52 16 52 17 52 18 52 19 52 20 52 21 52 22 52 23 52 24 52 25 52 26 52 27 52 28 52 29 52 30 52 31 52 32 52 33 52 34 52 35 52 36 52 37 52 38 52 39 52 40 52 41 52 42 52 43 52 44 52 45 52 46 52 47 52 48 52 49 52 50 52 51 52 52 52 53 52 54 52 55 52 56 52 57 52 58 52 59 52 60 52 61 52 62 52 63 52 63 55 64 52 65 52 66 52 67 52 68 52 69 52 70 52 71 52 72 52 73 52 74 52 75 52 76 52 77 52 78 52 79 52 0 86 1 86 2 86 3 86 4 86 5 86 6 86 7 86 8 86 9 86 10 86 19 86 20 86 21 86 24 86 25 86 26 86 27 86 28 86 29 86 30 86 41 86 79 86}
+    }
+  cursor_position 79
+  font_size 52
+  scale {1 1}
+  cursor_initialised true
+  initial_cursor_position {{2 56}
+    }
+  group_animations {{0} imported: 0 selected: items: "root transform/"}
+  animation_layers {{1 11 960 540 0 0 1 1 0 0 0 0}
+    }
+  color {1 1 1 1}
+  color_panelDropped true
+  name Text6
+  xpos 447
+  ypos -500
+ }
+push $N50912b00
+ Noise {
+  size {{parent.NoOp1.text01*2}}
+  zoffset 3.3
+  octaves 130
+  gain {{parent.NoOp1.text01/100}}
+  gamma {{parent.NoOp1.text01/100}}
+  center {1024 778}
+  name Noise2
+  xpos 202
+  ypos -570
+ }
+ Text2 {
+  font_size_toolbar 52
+  font_width_toolbar 100
+  font_height_toolbar 100
+  message " Size : \[value Noise2.size]   Gain : \[value Noise2.gain] \tGamma : \[value Noise2.gamma]  Lacunarity : \[value Noise2.lacunarity]\n"
+  old_message {{32 83 105 122 101 32 58 32 50 54 46 54 57 52 56 54 57 49 50 32 32 32 71 97 105 110 32 58 32 48 46 49 51 51 52 55 52 51 52 53 54 32 9 71 97 109 109 97 32 58 32 48 46 49 51 51 52 55 52 51 52 53 54 32 32 76 97 99 117 110 97 114 105 116 121 32 58 32 50 10}
+    }
+  old_expression_markers {{8 18 29 40 51 62 78 78}
+    }
+  box {2 3 1862 56}
+  transforms {{0 2}
+    }
+  font_size_values {{0 52 1 52 2 52 3 52 4 52 5 52 6 52 7 52 8 52 9 52 10 52 11 52 12 52 13 52 14 52 15 52 16 52 17 52 18 52 19 52 20 52 21 52 22 52 23 52 24 52 25 52 26 52 27 52 28 52 29 52 30 52 31 52 32 52 33 52 34 52 35 52 36 52 37 52 38 52 39 52 40 52 41 52 42 52 43 52 44 52 45 52 46 52 47 52 48 52 49 52 50 52 51 52 52 52 53 52 54 52 55 52 56 52 57 52 58 52 59 52 60 52 61 52 62 52 63 52 63 55 64 52 65 52 66 52 67 52 68 52 69 52 70 52 71 52 72 52 73 52 74 52 75 52 76 52 77 52 78 52 79 52 0 86 1 86 2 86 3 86 4 86 5 86 6 86 7 86 8 86 9 86 10 86 19 86 20 86 21 86 24 86 25 86 26 86 27 86 28 86 29 86 30 86 41 86 79 86}
+    }
+  cursor_position 126
+  font_size 52
+  scale {1 1}
+  cursor_initialised true
+  initial_cursor_position {{2 56}
+    }
+  group_animations {{0} imported: 0 selected: items: "root transform/"}
+  animation_layers {{1 11 960 540 0 0 1 1 0 0 0 0}
+    }
+  color {1 1 1 1}
+  color_panelDropped true
+  name Text1
+  selected true
+  xpos 202
+  ypos -499
+ }
+ ContactSheet {
+  inputs 9
+  width {{input.width*columns*resMult}}
+  height {{input.height*rows*resMult}}
+  rows {{"\[expr \{int( (sqrt( \[numvalue inputs] ) ) )\} ] * \[expr \{int( ceil ( (\[numvalue inputs] /(sqrt( \[numvalue inputs] ) ) )) )\} ] < \[numvalue inputs]   ? \[expr \{int( (sqrt( \[numvalue inputs] ) ) )\} ] +1 : \[expr \{int( (sqrt( \[numvalue inputs] ) ) )\} ]"}}
+  columns {{"\[expr \{int( ceil ( (\[numvalue inputs] /(sqrt( \[numvalue inputs] )) )) )\} ]"}}
+  center true
+  roworder TopBottom
+  name ContactSheetAuto
+  tile_color 0xff69f7ff
+  label "\[value rows]X\[value columns]"
+  xpos 1165
+  ypos -195
+  addUserKnob {20 Settings}
+  addUserKnob {7 resMult l "Resolution Multiplier" R 0.1 2}
+  resMult 0.25
+  addUserKnob {20 tab1 l Tools}
+  addUserKnob {26 lrow l "" +STARTLINE T rows}
+  addUserKnob {22 addRow l <b>+</b> -STARTLINE T "\nimport math\nn = nuke.thisNode()\ninputs = \[]\ndudes = 0\ncount = 1\nvariations = \{\}\n\nwhile n.input(dudes) is not None:\n     inputs.append(n.input(dudes))\n     dudes = dudes + 1\n\nif dudes != 0:\n    rows = n\['rows'].value()\n    columns = n\['columns'].value()\n    width = n\['width'].value()/columns\n    height = n\['height'].value()/rows\n    \n    rows = rows+1\n    \n    if dudes % rows == 0: \n       columns = dudes/rows\n    else:\n        columns = dudes/rows+1\n    \n    columns = math.floor(columns)\n    \n    \n    n\['rows'].setValue(rows)\n    n\['columns'].setValue(columns)\n    n\['width'].setValue(width*columns)\n    n\['height'].setValue(height*rows)"}
+  addUserKnob {22 removeRow l <b>-</b> -STARTLINE T "\nimport math\nn = nuke.thisNode()\ninputs = \[]\ndudes = 0\ncount = 1\nvariations = \{\}\n\nwhile n.input(dudes) is not None:\n     inputs.append(n.input(dudes))\n     dudes = dudes + 1\n\nif dudes != 0:\n    rows = n\['rows'].value()\n    columns = n\['columns'].value()\n    width = n\['width'].value()/columns\n    height = n\['height'].value()/rows\n    \n    rows = max(1, (rows-1))\n    \n    if dudes % rows == 0: \n       columns = dudes/rows\n    else:\n        columns = dudes/rows+1\n    \n    columns = math.floor(columns)\n    \n    \n    n\['rows'].setValue(rows)\n    n\['columns'].setValue(columns)\n    n\['width'].setValue(width*columns)\n    n\['height'].setValue(height*rows)"}
+  addUserKnob {26 lcolumn l "" -STARTLINE T columns}
+  addUserKnob {22 addColumn l <b>+</b> -STARTLINE T "import math\nn = nuke.thisNode()\ninputs = \[]\ndudes = 0\ncount = 1\nvariations = \{\}\n\nwhile n.input(dudes) is not None:\n     inputs.append(n.input(dudes))\n     dudes = dudes + 1\n\nif dudes != 0:\n    rows = n\['rows'].value()\n    columns = n\['columns'].value()\n    width = n\['width'].value()/columns\n    height = n\['height'].value()/rows\n    \n    columns = columns+1\n    \n    if dudes % columns == 0: \n       rows = dudes/columns\n    else:\n        rows = dudes/columns+1\n    \n    rows = math.floor(rows)\n    \n    \n    n\['rows'].setValue(rows)\n    n\['columns'].setValue(columns)\n    n\['width'].setValue(width*columns)\n    n\['height'].setValue(height*rows)"}
+  addUserKnob {22 removeColumn l <b>-</b> -STARTLINE T "import math\nn = nuke.thisNode()\ninputs = \[]\ndudes = 0\ncount = 1\nvariations = \{\}\n\nwhile n.input(dudes) is not None:\n     inputs.append(n.input(dudes))\n     dudes = dudes + 1\n\nif dudes != 0:\n    rows = n\['rows'].value()\n    columns = n\['columns'].value()\n    width = n\['width'].value()/columns\n    height = n\['height'].value()/rows\n    \n    columns = max(1, columns-1)\n    \n    if dudes % columns == 0: \n       rows = dudes/columns\n    else:\n        rows = dudes/columns+1\n    \n    rows = math.floor(rows)\n    \n    \n    n\['rows'].setValue(rows)\n    n\['columns'].setValue(columns)\n    n\['width'].setValue(width*columns)\n    n\['height'].setValue(height*rows)"}
+  addUserKnob {26 div1 l "" +STARTLINE}
+  addUserKnob {22 downres -STARTLINE T "\nn = nuke.thisNode()\n\nfactor = n\['Downres'].value()\nwidth = n\['width'].value()\nheight = n\['height'].value()\n\n\n\nn\['width'].setValue(width/factor)\nn\['height'].setValue(height/factor)"}
+  addUserKnob {22 upres -STARTLINE T "\nn = nuke.thisNode()\n\nfactor = n\['Downres'].value()\nwidth = n\['width'].value()\nheight = n\['height'].value()\n\n\n\nn\['width'].setValue(width*factor)\nn\['height'].setValue(height*factor)"}
+  addUserKnob {7 Downres l factor t "the resolution will be devided by this number" -STARTLINE R 0.0001 10}
+  Downres 2
+  addUserKnob {26 div3 l "" +STARTLINE T " "}
+  addUserKnob {22 get l "get inputs" T "import math\n\nn = nuke.thisNode()\nknobs = n.knobs()\nfor knob in knobs:\n    if \"dude\" in knob:\n        n.removeKnob(knobs\[ knob ])\n\ninputs = \[]\ndudes = 0\ncount = 1\n\nwhile n.input(dudes) is not None:\n     inputs.append(n.input(dudes))\n     dudes = dudes + 1\n\n\nif dudes != 0:\n    aspect = n.dependencies()\[0].format().pixelAspect()\n    width = inputs\[0].width()\n    height = inputs\[0].height()/aspect\n\nwhile count < dudes+1:\n    rows = int(math.ceil(dudes/count))\n    columns = int(count)\n            \n    m = nuke.PyScript_Knob(\"dude\"+str(count),str(rows) + \"X\" + str(columns),\"\"\" \n\nrowss = int(nuke.thisKnob().label().rpartition(\"X\")\[0])\nn\['rows'].setValue(rowss)\ncolumnss = int(nuke.thisKnob().label().rpartition(\"X\")\[2])\nn\['columns'].setValue(columnss)\nwidths = int(nuke.thisKnob().label().rpartition(\"X\")\[2])*inputs\[0].width()\nn\['width'].setValue(widths)\nheights = int(nuke.thisKnob().label().rpartition(\"X\")\[0])*height\nn\['height'].setValue(heights)\n\"\"\")\n    n.addKnob(m)\n    count = count + 1" +STARTLINE}
+  addUserKnob {6 autoupdate l "auto update" -STARTLINE}
+  addUserKnob {26 div2 l "" -STARTLINE}
+ }
+ Output {
+  name Output1
+  xpos 1165
+  ypos -89
+ }
+ NoOp {
+  inputs 0
+  name NoOp1
+  xpos -9
+  ypos -681
+  addUserKnob {20 User}
+  addUserKnob {22 Brainstorm T "import nuke\nimport random\n\nnuke.thisNode().knob('text01').setValue(random.random()*50)\n\nnuke.thisNode().knob('text02').setValue(random.random()*300)\n\nnuke.thisNode().knob('text03').setValue(random.random()*500)\n\nnuke.thisNode().knob('text04').setValue(random.random()*1000)\n\nnuke.thisNode().knob('text05').setValue(random.random()*100)\n\nnuke.thisNode().knob('text06').setValue(random.random()*10)\n\nnuke.thisNode().knob('text07').setValue(random.random()*70)\n\nnuke.thisNode().knob('text08').setValue(random.random()*150)\n\nnuke.thisNode().knob('text09').setValue(random.random()*600)\n\n\n\n\n\n\n" +STARTLINE}
+  addUserKnob {3 text01}
+  text01 13.34743456
+  addUserKnob {3 text02}
+  text02 69.68568027
+  addUserKnob {3 text03}
+  text03 285.1282559
+  addUserKnob {3 text04}
+  text04 632.4933059
+  addUserKnob {3 text05}
+  text05 67.07687893
+  addUserKnob {3 text06}
+  text06 1.389061261
+  addUserKnob {3 text07}
+  text07 38.80413344
+  addUserKnob {3 text08}
+  text08 32.82363943
+  addUserKnob {3 text09}
+  text09 177.0093012
+ }
+end_group
