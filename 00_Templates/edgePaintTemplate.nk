@@ -1,0 +1,388 @@
+set cut_paste_input [stack 0]
+BackdropNode {
+ inputs 0
+ name BackdropNode10
+ tile_color 0x6e6c55ff
+ label "Cloning Prep"
+ note_font_size 76
+ note_font_color 0xffffffff
+ selected true
+ xpos 7284
+ ypos -3340
+ bdwidth 542
+ bdheight 480
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode11
+ tile_color 0x765c7200
+ label "Brush Painting"
+ note_font_size 55
+ note_font_color 0xffffffff
+ selected true
+ xpos 7281
+ ypos -2826
+ bdwidth 553
+ bdheight 436
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode8
+ tile_color 0x395230ff
+ label "Add Alpha"
+ note_font_size 76
+ note_font_color 0xffffffff
+ selected true
+ xpos 6392
+ ypos -3333
+ bdwidth 559
+ bdheight 493
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode9
+ tile_color 0x4e3737ff
+ label "Subtract Alpha"
+ note_font_size 53
+ note_font_color 0xffffffff
+ selected true
+ xpos 6396
+ ypos -2809
+ bdwidth 549
+ bdheight 509
+}
+RotoPaint {
+ inputs 0
+ cliptype none
+ curves {{{v x3f99999a}
+  {f 0}
+  {n
+   {layer Root
+    {f 0}
+    {t x44700000 x44070000}
+    {a pt1x 0 pt1y 0 pt2x 0 pt2y 0 pt3x 0 pt3y 0 pt4x 0 pt4y 0 ptex00 0 ptex01 0 ptex02 0 ptex03 0 ptex10 0 ptex11 0 ptex12 0 ptex13 0 ptex20 0 ptex21 0 ptex22 0 ptex23 0 ptex30 0 ptex31 0 ptex32 0 ptex33 0 ptof1x 0 ptof1y 0 ptof2x 0 ptof2y 0 ptof3x 0 ptof3y 0 ptof4x 0 ptof4y 0 pterr 0 ptrefset 0 ptmot x40800000 ptref 0}}}}}
+ toolbox {brush {
+  { selectAll str 1 ssx 1 ssy 1 sf 1 }
+  { createBezier str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createBezierCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createBSpline str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createEllipse str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangle str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangleCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { brush str 1 ssx 1 ssy 1 sf 1 sb 1 tt 17 }
+  { eraser src 2 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { clone src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { reveal src 3 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { dodge src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { burn src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { blur src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { sharpen src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { smear src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+} }
+ toolbar_brush_hardness 0.200000003
+ toolbar_lifetime_type single
+ toolbar_source_transform_scale {1 1}
+ toolbar_source_transform_center {960 540}
+ name RotoPaint3
+ selected true
+ xpos 6543
+ ypos -2460
+}
+Dot {
+ name Dot14
+ note_font_size 41
+ selected true
+ xpos 6577
+ ypos -2390
+}
+RotoPaint {
+ inputs 0
+ cliptype none
+ curves {{{v x3f99999a}
+  {f 0}
+  {n
+   {layer Root
+    {f 0}
+    {t x44700000 x44070000}
+    {a pt1x 0 pt1y 0 pt2x 0 pt2y 0 pt3x 0 pt3y 0 pt4x 0 pt4y 0 ptex00 0 ptex01 0 ptex02 0 ptex03 0 ptex10 0 ptex11 0 ptex12 0 ptex13 0 ptex20 0 ptex21 0 ptex22 0 ptex23 0 ptex30 0 ptex31 0 ptex32 0 ptex33 0 ptof1x 0 ptof1y 0 ptof2x 0 ptof2y 0 ptof3x 0 ptof3y 0 ptof4x 0 ptof4y 0 pterr 0 ptrefset 0 ptmot x40800000 ptref 0}}}}}
+ toolbox {brush {
+  { selectAll str 1 ssx 1 ssy 1 sf 1 }
+  { createBezier str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createBezierCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createBSpline str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createEllipse str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangle str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangleCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { brush str 1 ssx 1 ssy 1 sf 1 sb 1 tt 17 }
+  { eraser src 2 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { clone src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { reveal src 3 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { dodge src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { burn src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { blur src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { sharpen src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { smear src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+} }
+ toolbar_brush_hardness 0.200000003
+ toolbar_lifetime_type single
+ toolbar_source_transform_scale {1 1}
+ toolbar_source_transform_center {960 540}
+ name RotoPaint2
+ selected true
+ xpos 6509
+ ypos -3009
+}
+Dot {
+ name Dot13
+ note_font_size 41
+ selected true
+ xpos 6543
+ ypos -2939
+}
+push 0
+Dot {
+ name Dot11
+ label "Roto / Alpha"
+ note_font_size 41
+ selected true
+ xpos 6807
+ ypos -3578
+}
+Merge2 {
+ inputs 2
+ name Merge36
+ label "\[ expr \{ \[value mix] == 1 ? \" \" : \[concat Mix: \[value mix]] \}]"
+ selected true
+ xpos 6773
+ ypos -2942
+}
+Merge2 {
+ inputs 2
+ operation stencil
+ bbox B
+ name Merge37
+ label "\[ expr \{ \[value mix] == 1 ? \" \" : \[concat Mix: \[value mix]] \}]"
+ selected true
+ xpos 6773
+ ypos -2393
+}
+Dot {
+ name Dot9
+ note_font_size 41
+ selected true
+ xpos 6807
+ ypos -2180
+}
+push $cut_paste_input
+Dot {
+ name Dot10
+ label "Img / Prep"
+ note_font_size 41
+ selected true
+ xpos 7685
+ ypos -3574
+}
+Dot {
+ name Dot16
+ note_font_size 41
+ selected true
+ xpos 7685
+ ypos -3192
+}
+set Nb64ed400 [stack 0]
+Dot {
+ name Dot15
+ note_font_size 41
+ selected true
+ xpos 7436
+ ypos -3192
+}
+set Nb64ed800 [stack 0]
+Dot {
+ name Dot19
+ note_font_size 41
+ selected true
+ xpos 7326
+ ypos -3192
+}
+Dot {
+ name Dot18
+ note_font_size 41
+ selected true
+ xpos 7326
+ ypos -3120
+}
+push 0
+push $Nb64ed800
+RotoPaint {
+ inputs 2+1
+ cliptype none
+ replace true
+ curves {{{v x3f99999a}
+  {f 0}
+  {n
+   {layer Root
+    {f 2097152}
+    {t x4415e000 x44200000}
+    {a pt1x 0 pt1y 0 pt2x 0 pt2y 0 pt3x 0 pt3y 0 pt4x 0 pt4y 0 ptex00 0 ptex01 0 ptex02 0 ptex03 0 ptex10 0 ptex11 0 ptex12 0 ptex13 0 ptex20 0 ptex21 0 ptex22 0 ptex23 0 ptex30 0 ptex31 0 ptex32 0 ptex33 0 ptof1x 0 ptof1y 0 ptof2x 0 ptof2y 0 ptof3x 0 ptof3y 0 ptof4x 0 ptof4y 0 pterr 0 ptrefset 0 ptmot x40800000 ptref 0}}}}}
+ toolbox {clone {
+  { selectAll str 1 ssx 1 ssy 1 sf 1 }
+  { createBezier str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createBezierCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createBSpline str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createEllipse str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangle str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangleCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { brush str 1 ssx 1 ssy 1 sf 1 sb 1 tt 17 }
+  { eraser src 2 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { clone bs 87 src 3 stx 80.8 sty 21 str 1 ssx 1 ssy 1 sf 1 sb 1 ltn 10 ltm 10 tt 19 }
+  { reveal src 3 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { dodge src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { burn src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { blur src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { sharpen src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { smear src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+} }
+ toolbar_brush_size 87
+ toolbar_brush_hardness 0.200000003
+ toolbar_lifetime_type single
+ toolbar_lifetime_start 10
+ toolbar_lifetime_end 10
+ toolbar_paint_source "bg 1"
+ toolbar_source_transform_translate {80.79998779 21}
+ toolbar_source_transform_scale {1 1}
+ toolbar_source_transform_center {599.5 640}
+ colorOverlay {0 0 0 0}
+ paint_source "background 1"
+ lifetime_start 10
+ lifetime_end 10
+ view {}
+ motionblur_on true
+ brush_size 87
+ brush_spacing 0.05000000075
+ brush_hardness 0.200000003
+ source_black_outside true
+ name RotoPaint4
+ label "set clone layer\nto bg1"
+ selected true
+ xpos 7402
+ ypos -3132
+}
+Dot {
+ name Dot17
+ note_font_size 41
+ selected true
+ xpos 7436
+ ypos -2961
+}
+push $Nb64ed400
+Merge2 {
+ inputs 2
+ name Merge38
+ label "\[ expr \{ \[value mix] == 1 ? \" \" : \[concat Mix: \[value mix]] \}]"
+ selected true
+ xpos 7651
+ ypos -2964
+}
+Dot {
+ name Dot20
+ note_font_size 41
+ selected true
+ xpos 7685
+ ypos -2729
+}
+set N6ed7cc00 [stack 0]
+Dot {
+ name Dot22
+ note_font_size 41
+ selected true
+ xpos 7436
+ ypos -2729
+}
+RotoPaint {
+ cliptype none
+ replace true
+ curves {{{v x3f99999a}
+  {f 0}
+  {n
+   {layer Root
+    {f 0}
+    {t x44700000 x44070000}
+    {a pt1x 0 pt1y 0 pt2x 0 pt2y 0 pt3x 0 pt3y 0 pt4x 0 pt4y 0 ptex00 0 ptex01 0 ptex02 0 ptex03 0 ptex10 0 ptex11 0 ptex12 0 ptex13 0 ptex20 0 ptex21 0 ptex22 0 ptex23 0 ptex30 0 ptex31 0 ptex32 0 ptex33 0 ptof1x 0 ptof1y 0 ptof2x 0 ptof2y 0 ptof3x 0 ptof3y 0 ptof4x 0 ptof4y 0 pterr 0 ptrefset 0 ptmot x40800000 ptref 0}}}}}
+ toolbox {brush {
+  { selectAll str 1 ssx 1 ssy 1 sf 1 }
+  { createBezier str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createBezierCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createBSpline str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createEllipse str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangle str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangleCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { brush str 1 ssx 1 ssy 1 sf 1 sb 1 tt 17 }
+  { eraser src 2 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { clone src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { reveal src 3 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { dodge src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { burn src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { blur src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { sharpen src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { smear src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+} }
+ toolbar_brush_hardness 0.200000003
+ toolbar_lifetime_type single
+ toolbar_source_transform_scale {1 1}
+ toolbar_source_transform_center {960 540}
+ name RotoPaint5
+ selected true
+ xpos 7402
+ ypos -2657
+}
+Dot {
+ name Dot25
+ note_font_size 41
+ selected true
+ xpos 7436
+ ypos -2468
+}
+push $N6ed7cc00
+Shuffle {
+ alpha white
+ name Shuffle8
+ label "Set alpha 1\nview while color picking"
+ note_font_size 15
+ note_font_color 0xffffffff
+ selected true
+ xpos 7651
+ ypos -2664
+}
+Merge2 {
+ inputs 2
+ name Merge39
+ label "\[ expr \{ \[value mix] == 1 ? \" \" : \[concat Mix: \[value mix]] \}]"
+ selected true
+ xpos 7651
+ ypos -2471
+}
+Copy {
+ inputs 2
+ from0 rgba.alpha
+ to0 rgba.alpha
+ bbox A
+ name Copy2
+ selected true
+ xpos 7651
+ ypos -2187
+}
+Premult {
+ name Premult29
+ selected true
+ xpos 7651
+ ypos -2107
+}
+Dot {
+ name Dot12
+ label output
+ note_font_size 41
+ selected true
+ xpos 7685
+ ypos -1969
+}
