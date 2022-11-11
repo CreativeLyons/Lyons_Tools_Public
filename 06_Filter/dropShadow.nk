@@ -1,0 +1,156 @@
+Group {
+ name dropShadow
+ tile_color 0x1c1c1cff
+ note_font_color 0xffffffff
+ selected true
+ addUserKnob {20 dropShadow}
+ addUserKnob {4 output M {"Under Original" "RGBA (matte)" "Alpha Only" "" ""}}
+ addUserKnob {18 shadowColor l "shadow color"}
+ shadowColor {0 0 0}
+ addUserKnob {7 distance R 0 20}
+ distance 5
+ addUserKnob {7 angle R -180 180}
+ angle 45
+ addUserKnob {14 expand R 0 100}
+ expand 1
+ addUserKnob {14 blurSize l "blur size" R 0 100}
+ blurSize 3
+ addUserKnob {26 "" +STARTLINE}
+ addUserKnob {26 "" l mask T ""}
+ addUserKnob {41 maskChannelInput l "" -STARTLINE T Merge2.maskChannelInput}
+ addUserKnob {41 inject -STARTLINE T Merge2.inject}
+ addUserKnob {41 invert_mask l invert -STARTLINE T Merge2.invert_mask}
+ addUserKnob {41 fringe -STARTLINE T Merge2.fringe}
+ addUserKnob {41 mix T Merge2.mix}
+ addUserKnob {6 color_rgb_panelDropped l "panel dropped state" +HIDDEN +STARTLINE}
+}
+ Input {
+  inputs 0
+  name Inputmask
+  xpos 997
+  ypos -112
+  number 1
+ }
+ Input {
+  inputs 0
+  name Input
+  xpos 632
+  ypos -526
+ }
+ Dot {
+  name Dot2
+  note_font_size 41
+  xpos 666
+  ypos -452
+ }
+set Na417d800 [stack 0]
+ Dot {
+  name Dot1
+  note_font_size 41
+  xpos 852
+  ypos -452
+ }
+ Remove {
+  operation keep
+  channels rgba
+  name Remove1
+  xpos 818
+  ypos -392
+ }
+ Shuffle {
+  red black
+  green black
+  blue black
+  name Shuffle1
+  note_font_size 15
+  note_font_color 0xffffffff
+  xpos 818
+  ypos -353
+ }
+set Na417e000 [stack 0]
+ Transform {
+  translate {{-sin(radians(-angle))*distance} {-cos(radians(-angle))*distance}}
+  center {256 256}
+  name Transform42
+  xpos 923
+  ypos -311
+  addUserKnob {20 User}
+  addUserKnob {7 distance R 0 100}
+  distance {{parent.distance}}
+  addUserKnob {7 angle R -180 180}
+  angle {{parent.angle}}
+ }
+ Erode {
+  size {{-parent.expand}}
+  name Erode1
+  xpos 923
+  ypos -265
+ }
+ Blur {
+  channels {-rgba.red -rgba.green -rgba.blue rgba.alpha}
+  size {{parent.blurSize}}
+  name Blur1
+  label "\[value size]"
+  xpos 923
+  ypos -206
+ }
+push $Na417e000
+ Shuffle {
+  alpha black
+  name Shuffle2
+  note_font_size 15
+  note_font_color 0xffffffff
+  xpos 818
+  ypos -251
+  disable {{"parent.output == 0 ? 1 : 0"}}
+ }
+ Merge2 {
+  inputs 2+1
+  operation copy
+  name Merge2
+  label "\[ expr \{ \[value mix] == 1 ? \" \" : \[concat Mix: \[value mix]] \}]"
+  xpos 818
+  ypos -112
+ }
+set Nc591bc00 [stack 0]
+ Dot {
+  name Dot3
+  note_font_size 41
+  xpos 941
+  ypos 41
+ }
+push $Nc591bc00
+ Shuffle {
+  red alpha
+  green alpha
+  blue alpha
+  name Shuffle3
+  tile_color 0xffffffff
+  note_font_size 15
+  note_font_color 0xffffffff
+  xpos 818
+  ypos -22
+ }
+push $Nc591bc00
+push $Na417d800
+ Merge2 {
+  inputs 2
+  operation under
+  name Merge1
+  label "\[ expr \{ \[value mix] == 1 ? \" \" : \[concat Mix: \[value mix]] \}]"
+  xpos 632
+  ypos -26
+ }
+ Switch {
+  inputs 3
+  which {{parent.output}}
+  name Switch1
+  xpos 632
+  ypos 38
+ }
+ Output {
+  name Output1
+  xpos 632
+  ypos 284
+ }
+end_group
