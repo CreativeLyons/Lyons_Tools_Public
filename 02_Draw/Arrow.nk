@@ -6,19 +6,29 @@ Group {
  selected true
  addUserKnob {20 Arrow}
  addUserKnob {6 color_rgb_panelDropped l "panel dropped state" +HIDDEN +STARTLINE}
+ addUserKnob {6 arrowHead l "Arrow Head" +STARTLINE}
+ arrowHead true
+ addUserKnob {6 dottedToggle l "Dotted Line" -STARTLINE}
+ dottedToggle true
  addUserKnob {18 color}
- color {1 0.8512568474 0.4049999714}
+ color {1 1 1}
+ addUserKnob {6 color_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
  addUserKnob {7 lineWidth l "line width" R 0 4}
- lineWidth 0.86
+ lineWidth 0.4
  addUserKnob {7 arrowLength l "arrow length" R 0 4}
  arrowLength 0.63
  addUserKnob {7 arrowWidth l "arrow width" R 0 4}
- arrowWidth 0.58
- addUserKnob {12 start}
- start {315 660}
- addUserKnob {12 end}
- end {959 219}
+ arrowWidth 0.08
+ addUserKnob {26 dottedLineText l "<b><font color=skyblue>Dotted Line"}
+ addUserKnob {41 thickness T Lines_Vertical.thickness}
+ addUserKnob {41 wide T Lines_Vertical.wide}
+ addUserKnob {41 offset T Lines_Vertical.offset}
  addUserKnob {26 "" +STARTLINE}
+ addUserKnob {12 start}
+ start {364.5 670.5}
+ addUserKnob {12 end}
+ end {1052 333}
+ addUserKnob {26 ""}
  addUserKnob {26 "" l mask T ""}
  addUserKnob {41 maskChannelInput l "" -STARTLINE T Merge1.maskChannelInput}
  addUserKnob {41 inject -STARTLINE T Merge1.inject}
@@ -30,7 +40,7 @@ Group {
   inputs 0
   name NoOp1
   xpos 513
-  ypos -530
+  ypos -580
   addUserKnob {20 User}
   addUserKnob {7 lineWidth l "line width" R 0 4}
   lineWidth {{parent.lineWidth}}
@@ -50,7 +60,7 @@ Group {
   inputs 0
   name Input
   xpos 389
-  ypos -589
+  ypos -639
  }
  Crop {
   box {0 -29 1057 37}
@@ -58,9 +68,9 @@ Group {
   crop false
   name Crop4
   xpos 389
-  ypos -529
+  ypos -579
  }
-set N5cab5400 [stack 0]
+set N3dbd6800 [stack 0]
  Roto {
   cliptype none
   replace true
@@ -131,7 +141,8 @@ set N5cab5400 [stack 0]
   source_black_outside true
   name Roto5
   xpos 512
-  ypos -456
+  ypos -506
+  disable {{!parent.arrowHead}}
  }
  Dot {
   name Dot9
@@ -139,7 +150,7 @@ set N5cab5400 [stack 0]
   xpos 546
   ypos -414
  }
-push $N5cab5400
+push $N3dbd6800
  Roto {
   cliptype none
   replace true
@@ -200,7 +211,42 @@ push $N5cab5400
   source_black_outside true
   name Roto6
   xpos 389
-  ypos -456
+  ypos -506
+ }
+set N3dbd5c00 [stack 0]
+ Expression {
+  channel0 rgba
+  expr0 "( sin((x / wide) + offset ) + thickness ) / 2"
+  channel1 {-rgba.red -rgba.green -rgba.blue none}
+  channel2 {-rgba.red -rgba.green -rgba.blue none}
+  name Lines_Vertical
+  xpos 248
+  ypos -506
+  addUserKnob {20 User}
+  addUserKnob {7 thickness R 1 3}
+  thickness 1.5
+  addUserKnob {7 wide R 0 10}
+  wide 10
+  addUserKnob {7 offset R -100 100}
+ }
+ Grade {
+  channels rgba
+  blackpoint 1
+  white_clamp true
+  name Grade128
+  xpos 248
+  ypos -471
+ }
+push $N3dbd5c00
+ Merge2 {
+  inputs 2
+  operation stencil
+  bbox B
+  name Merge2
+  label "\[ expr \{ \[value mix] == 1 ? \" \" : \[concat Mix: \[value mix]] \}]"
+  xpos 389
+  ypos -471
+  disable {{!dottedToggle}}
  }
  Merge2 {
   inputs 2
@@ -265,7 +311,6 @@ push 0
   operation copy
   name Merge1
   label "\[ expr \{ \[value mix] == 1 ? \" \" : \[concat Mix: \[value mix]] \}]"
-  selected true
   xpos 389
   ypos -76
  }
