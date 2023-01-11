@@ -56,7 +56,7 @@ Group {
   xpos 389
   ypos -579
  }
-set N6bbc5400 [stack 0]
+set Na0421400 [stack 0]
  Roto {
   cliptype none
   replace true
@@ -167,7 +167,7 @@ set N6bbc5400 [stack 0]
   xpos 546
   ypos -414
  }
-push $N6bbc5400
+push $Na0421400
  Roto {
   cliptype none
   replace true
@@ -220,7 +220,7 @@ push $N6bbc5400
    {{x41200000 0}}
    {{x41200000 0}}
    {{x41200000 0}}
-   {"=parent.arrowHead\ ?\ .975\ :\ .9975"
+   {"=parent.arrowHead\ ?\ (1-(0.025*parent.arrowLength))\ :\ .9975"
     {{0 1 -}}}
    {=1057/parent.NoOp1.distance
     {{0 1 -}}}
@@ -282,7 +282,7 @@ push $N6bbc5400
   xpos 389
   ypos -506
  }
-set N6bbc4800 [stack 0]
+set Na0420800 [stack 0]
  Expression {
   channel0 rgba
   expr0 "( sin((x / wide) + offset ) + thickness ) / 2"
@@ -306,7 +306,7 @@ set N6bbc4800 [stack 0]
   xpos 248
   ypos -471
  }
-push $N6bbc4800
+push $Na0420800
  Merge2 {
   inputs 2
   operation stencil
