@@ -1,0 +1,126 @@
+Group {
+ name FrameGhost
+ tile_color 0x9c9252ff
+ label "\[value alignedTo]"
+ note_font "Bitstream Vera Sans Bold"
+ note_font_color 0xffffffff
+ selected true
+ addUserKnob {20 FrameGhost}
+ addUserKnob {41 channels T Merge1.also_merge}
+ addUserKnob {26 "" +STARTLINE}
+ addUserKnob {4 inputSpeed l "Input Speed" M {"Half Speed" "Quarter Speed" "" ""}}
+ addUserKnob {3 alignedFrame l "Aligned Frame"}
+ alignedFrame 1025
+ addUserKnob {3 offset -STARTLINE +DISABLED}
+ offset -23
+ addUserKnob {22 align l Align T "n = nuke.thisNode()\ncurrentFrame = nuke.frame()\nalignedFrame = n.knob(\"alignedFrame\").value()\ntimeOffset = n.knob(\"offset\")\nalignTo = n.knob(\"alignedTo\")\ninputSpeed = n.knob(\"inputSpeed\").value()\n\nif inputSpeed == \"Quarter Speed\":\n    frame_offset = ((currentFrame  - alignedFrame ) * 3)\nelif inputSpeed == \"Half Speed\":\n    frame_offset = ((currentFrame  - alignedFrame ) * 2 ) / 2\n\ntimeOffset.setValue(-frame_offset)\nalignTo.setValue(currentFrame)" +STARTLINE}
+ addUserKnob {3 alignedTo l "Aligned To:" -STARTLINE +DISABLED}
+ alignedTo 1048
+ addUserKnob {26 "" +STARTLINE}
+ addUserKnob {41 divisions T TimeBlur4.divisions}
+ addUserKnob {41 shutter l Shutter T TimeBlur4.shutter}
+ addUserKnob {41 shutteroffset l "Shutter Offset" T TimeBlur4.shutteroffset}
+ addUserKnob {26 "" +STARTLINE}
+ addUserKnob {6 applyMotionBlur l "Apply Motion Blur" +STARTLINE}
+ addUserKnob {41 scale l "motion amount" T VectorBlur1.scale}
+ addUserKnob {41 motion_falloff l "motion falloff" T VectorBlur1.motion_falloff}
+ addUserKnob {41 offset_1 l "shutter offset" T VectorBlur1.offset}
+ addUserKnob {26 "" +STARTLINE}
+ addUserKnob {26 "" l mask T ""}
+ addUserKnob {41 maskChannelInput l "" -STARTLINE T Merge1.maskChannelInput}
+ addUserKnob {41 inject -STARTLINE T Merge1.inject}
+ addUserKnob {41 invert_mask l invert -STARTLINE T Merge1.invert_mask}
+ addUserKnob {41 fringe -STARTLINE T Merge1.fringe}
+ addUserKnob {41 mix T Merge1.mix}
+}
+ Input {
+  inputs 0
+  name Inputmask
+  xpos -377
+  ypos 547
+  number 1
+ }
+ Input {
+  inputs 0
+  name Input
+  xpos -525
+  ypos -169
+ }
+ Dot {
+  name Dot9
+  note_font_size 41
+  xpos -491
+  ypos 58
+ }
+set N3a70d120 [stack 0]
+ VectorGenerator {
+  motionEstimation Regularized
+  name VectorGenerator2
+  xpos -387
+  ypos 123
+ }
+ VectorBlur2 {
+  uv forward
+  scale 1
+  motion_falloff 0.5
+  soft_lines true
+  normalize false
+  name VectorBlur1
+  xpos -387
+  ypos 173
+ }
+push $N3a70d120
+ Switch {
+  inputs 2
+  which {{parent.applyMotionBlur}}
+  name Switch8
+  xpos -525
+  ypos 254
+ }
+ TimeOffset {
+  time_offset {{parent.offset}}
+  time ""
+  name TimeOffset6
+  label "\[value time_offset]"
+  xpos -525
+  ypos 352
+ }
+ TimeBlur {
+  divisions 20
+  shutter 5
+  shutteroffset centred
+  shuttercustomoffset 0
+  name TimeBlur4
+  xpos -525
+  ypos 433
+ }
+push $N3a70d120
+ Dot {
+  name Dot1
+  note_font_size 41
+  xpos -747
+  ypos 58
+ }
+ Dot {
+  name Dot2
+  note_font_size 41
+  xpos -747
+  ypos 557
+ }
+ Merge2 {
+  inputs 2+1
+  operation copy
+  also_merge all
+  name Merge1
+  label "\[ expr \{ \[value mix] == 1 ? \" \" : \[concat Mix: \[value mix]] \}]"
+  xpos -525
+  ypos 553
+  addUserKnob {20 TRX}
+  addUserKnob {22 swap l "swap to Merge All Node" -STARTLINE T "from csnuke_tools.trixter.snippets import convertMergeToAll as convertMergeToAll;convertMergeToAll.convToAll()"}
+ }
+ Output {
+  name Output1
+  xpos -525
+  ypos 685
+ }
+end_group
