@@ -1,0 +1,634 @@
+Group {
+ name TimeTrails
+ knobChanged "n = nuke.thisNode()\nk = nuke.thisKnob()\n\n## Start Past Frames actions\n\nif k.name() in \['past_trail_frames', 'future_trail_frames']:\n    \n    if k.name() == 'past_trail_frames':\n    \n        past_trail_frames = int(n.knob(\"past_trail_frames\").value())\n        future_trail_frames = int(n.knob(\"future_trail_frames\").value())\n        \n        if past_trail_frames < 0:\n            n.knob(\"past_trail_frames\").setValue(0)\n        if past_trail_frames > 12:\n            n.knob(\"past_trail_frames\").setValue(12)\n        \n        n.begin()\n        \n        pastTrailStart = nuke.toNode(\"PastTrail\")\n        pastTrailStart_xpos = int(pastTrailStart.xpos())\n        pastTrailStart_ypos = int(pastTrailStart.ypos())\n        \n        pastTrailMerge = nuke.toNode(\"Merge_PastTrail\")    \n        pastTrailBlend = nuke.toNode(\"Blend_PastTrail\")\n        \n        futureTrailMerge = nuke.toNode(\"Merge_FutureTrail\")\n        futureTrailBlend = nuke.toNode(\"Blend_FutureTrail\")\n        \n        for node in nuke.allNodes():\n            node.setSelected(False)\n        \n        for input in range(pastTrailMerge.inputs() + 10 ):\n            pastTrailMerge.setInput(input,None)\n            pastTrailBlend.setInput(input,None)\n            \n        for input in range(futureTrailMerge.inputs() + 10 ):\n            futureTrailMerge.setInput(input,None)\n            futureTrailBlend.setInput(input,None)\n            \n        for node in nuke.allNodes():\n            if \"TimeOffsetPast\" in node.name():\n                nuke.delete(node)\n        \n        for i, past_trail_frame in enumerate( range(past_trail_frames) ):\n            past_timeOffset = nuke.createNode(\"TimeOffset\", inpanel=False)\n            past_timeOffset.setName(\"TimeOffsetPast_\" + str(i) )\n            past_timeOffset.setXYpos( (pastTrailStart_xpos - (i*100) ) , (pastTrailStart_ypos + 150) )\n            past_timeOffset.knob(\"time_offset\").setValue(i+1)\n            past_timeOffset.setInput(0, pastTrailStart)\n        \n        for i in range(past_trail_frames):\n            pastTrailMerge.setInput(i if i<2 else i+1, nuke.toNode(\"TimeOffsetPast_\"+str(i) ) )\n            pastTrailBlend.setInput(i if i<2 else i+1, nuke.toNode(\"TimeOffsetPast_\"+str(i) ) )\n        \n        for i in range(future_trail_frames):\n            futureTrailMerge.setInput(i if i<2 else i+1, nuke.toNode(\"TimeOffsetFuture_\"+str(i) ) )\n            futureTrailBlend.setInput(i if i<2 else i+1, nuke.toNode(\"TimeOffsetFuture_\"+str(i) ) )\n            \n        if past_trail_frames == 1:\n            pastTrailMerge.setInput(1,nuke.toNode(\"TimeOffsetPast_0\"))\n            pastTrailBlend.setInput(1,nuke.toNode(\"TimeOffsetPast_0\"))\n        \n        if future_trail_frames == 1:\n            futureTrailMerge.setInput(1,nuke.toNode(\"TimeOffsetFuture_0\"))\n            futureTrailBlend.setInput(1,nuke.toNode(\"TimeOffsetFuture_0\"))\n            \n        for node in nuke.allNodes():\n            node.setSelected(False)\n        \n        n.end()\n\n## Start Future Frames actions\n    elif k.name() == 'future_trail_frames':\n        \n        past_trail_frames = int(n.knob(\"past_trail_frames\").value())\n        future_trail_frames = int(n.knob(\"future_trail_frames\").value())\n        \n        if future_trail_frames < 0:\n            n.knob(\"future_trail_frames\").setValue(0)\n        if future_trail_frames > 12:\n            n.knob(\"future_trail_frames\").setValue(12)\n            \n        n.begin()\n            \n        futureTrailStart = nuke.toNode(\"FutureTrail\")\n        futureTrailStart_xpos = int(futureTrailStart.xpos())\n        futureTrailStart_ypos = int(futureTrailStart.ypos())\n        \n        futureTrailMerge = nuke.toNode(\"Merge_FutureTrail\")\n        futureTrailBlend = nuke.toNode(\"Blend_FutureTrail\")\n        \n        for node in nuke.allNodes():\n            node.setSelected(False)\n        \n        for input in range(pastTrailMerge.inputs() + 10 ):\n            pastTrailMerge.setInput(input,None)\n            pastTrailBlend.setInput(input,None)\n        \n        for input in range(futureTrailMerge.inputs() + 10 ):\n            futureTrailMerge.setInput(input,None)\n            futureTrailBlend.setInput(input,None)\n        \n        for node in nuke.allNodes():\n            if \"TimeOffsetFuture\" in node.name():\n                nuke.delete(node)\n        \n        for i, future_trail_frame in enumerate( range(future_trail_frames) ):\n            future_timeOffset = nuke.createNode(\"TimeOffset\", inpanel=False)\n            future_timeOffset.setName(\"TimeOffsetFuture_\" + str(i) )\n            future_timeOffset.setXYpos( (futureTrailStart_xpos + (i*100) ) , (futureTrailStart_ypos + 150) )\n            future_timeOffset.knob(\"time_offset\").setValue( -(i+1) )\n            future_timeOffset.setInput(0, futureTrailStart)\n    \n        for i in range(past_trail_frames):\n            pastTrailMerge.setInput(i if i<2 else i+1, nuke.toNode(\"TimeOffsetPast_\"+str(i) ) )\n            pastTrailBlend.setInput(i if i<2 else i+1, nuke.toNode(\"TimeOffsetPast_\"+str(i) ) )\n        \n        for i in range(future_trail_frames):\n            futureTrailMerge.setInput(i if i<2 else i+1, nuke.toNode(\"TimeOffsetFuture_\"+str(i) ) )\n            futureTrailBlend.setInput(i if i<2 else i+1, nuke.toNode(\"TimeOffsetFuture_\"+str(i) ) )\n            \n        if past_trail_frames == 1:\n            pastTrailMerge.setInput(1,nuke.toNode(\"TimeOffsetPast_0\"))\n            pastTrailBlend.setInput(1,nuke.toNode(\"TimeOffsetPast_0\"))\n        \n        if future_trail_frames == 1:\n            futureTrailMerge.setInput(1,nuke.toNode(\"TimeOffsetFuture_0\"))\n            futureTrailBlend.setInput(1,nuke.toNode(\"TimeOffsetFuture_0\"))\n            \n        for node in nuke.allNodes():\n            node.setSelected(False)\n    \n        n.end()"
+ tile_color 0x9c9252ff
+ label "(\[value inputSpeed])\nPast: \[value past_trail_frames] frame \[value pastOperation]\nFuture: \[value future_trail_frames] frame \[value futureOperation]"
+ note_font "Bitstream Vera Sans Bold"
+ note_font_color 0xffffffff
+ selected true
+ addUserKnob {20 TimeTrails}
+ addUserKnob {41 also_merge l channels T Merge1.also_merge}
+ addUserKnob {26 ""}
+ addUserKnob {4 inputSpeed l "Input Speed" M {Realtime "Half Speed" "Quarter Speed" "" ""}}
+ inputSpeed "Half Speed"
+ addUserKnob {41 operation l "Overall Operation" T MergePastOverall.operation}
+ addUserKnob {6 keepOriginal l "Keep Original" +STARTLINE}
+ addUserKnob {26 ""}
+ addUserKnob {6 pastTrailCheck l "" +STARTLINE +STARTLINE}
+ pastTrailCheck true
+ addUserKnob {3 past_trail_frames l "  Past Trail Frames" -STARTLINE}
+ past_trail_frames 12
+ addUserKnob {41 pastOperation l "" -STARTLINE T Merge_PastTrail.operation}
+ addUserKnob {26 ""}
+ addUserKnob {6 futureTrailCheck l "" +STARTLINE +STARTLINE}
+ futureTrailCheck true
+ addUserKnob {3 future_trail_frames l "Future Trail Frames" -STARTLINE}
+ future_trail_frames 12
+ addUserKnob {41 futureOperation l "" -STARTLINE T Merge_FutureTrail.operation}
+ addUserKnob {26 ""}
+ addUserKnob {6 applyMotionBlur l "Apply Motion Blur" +STARTLINE}
+ addUserKnob {41 scale l "motion amount" T VectorBlur1.scale}
+ addUserKnob {41 motion_falloff l "motion falloff" T VectorBlur1.motion_falloff}
+ addUserKnob {26 ""}
+ addUserKnob {26 "" l mask T ""}
+ addUserKnob {41 maskChannelInput l "" -STARTLINE T Merge1.maskChannelInput}
+ addUserKnob {41 inject -STARTLINE T Merge1.inject}
+ addUserKnob {41 invert_mask l invert -STARTLINE T Merge1.invert_mask}
+ addUserKnob {41 fringe -STARTLINE T Merge1.fringe}
+ addUserKnob {41 mix T Merge1.mix}
+}
+ Input {
+  inputs 0
+  name Inputmask
+  xpos -177
+  ypos 1586
+  number 1
+ }
+ Input {
+  inputs 0
+  name Input
+  xpos -348
+  ypos -663
+ }
+ Dot {
+  name Dot9
+  note_font_size 41
+  selected true
+  xpos -314
+  ypos -413
+ }
+set N144093c0 [stack 0]
+ VectorGenerator {
+  motionEstimation Regularized
+  name VectorGenerator2
+  selected true
+  xpos -210
+  ypos -348
+ }
+ VectorBlur2 {
+  uv forward
+  scale 1
+  motion_falloff 0.5
+  soft_lines true
+  normalize false
+  name VectorBlur1
+  selected true
+  xpos -210
+  ypos -298
+ }
+push $N144093c0
+ Switch {
+  inputs 2
+  which {{parent.applyMotionBlur}}
+  name Switch8
+  selected true
+  xpos -348
+  ypos -217
+ }
+ Dot {
+  name Dot50
+  note_font_size 41
+  xpos -314
+  ypos 54
+ }
+set N14438080 [stack 0]
+ Dot {
+  name Dot3
+  note_font_size 41
+  xpos 63
+  ypos 54
+ }
+ NoOp {
+  name FutureTrail
+  xpos 29
+  ypos 116
+ }
+set N14442280 [stack 0]
+ TimeOffset {
+  time_offset -12
+  time ""
+  name TimeOffsetFuture_11
+  label "\[value time_offset]"
+  xpos 1129
+  ypos 266
+ }
+set N14447440 [stack 0]
+push $N14442280
+ TimeOffset {
+  time_offset -11
+  time ""
+  name TimeOffsetFuture_10
+  label "\[value time_offset]"
+  xpos 1029
+  ypos 266
+ }
+set N14450e60 [stack 0]
+push $N14442280
+ TimeOffset {
+  time_offset -10
+  time ""
+  name TimeOffsetFuture_9
+  label "\[value time_offset]"
+  xpos 929
+  ypos 266
+ }
+set N1445a920 [stack 0]
+push $N14442280
+ TimeOffset {
+  time_offset -9
+  time ""
+  name TimeOffsetFuture_8
+  label "\[value time_offset]"
+  xpos 829
+  ypos 266
+ }
+set N14464370 [stack 0]
+push $N14442280
+ TimeOffset {
+  time_offset -8
+  time ""
+  name TimeOffsetFuture_7
+  label "\[value time_offset]"
+  xpos 729
+  ypos 266
+ }
+set N1446de30 [stack 0]
+push $N14442280
+ TimeOffset {
+  time_offset -7
+  time ""
+  name TimeOffsetFuture_6
+  label "\[value time_offset]"
+  xpos 629
+  ypos 266
+ }
+set N14477960 [stack 0]
+push $N14442280
+ TimeOffset {
+  time_offset -6
+  time ""
+  name TimeOffsetFuture_5
+  label "\[value time_offset]"
+  xpos 529
+  ypos 266
+ }
+set N144813b0 [stack 0]
+push $N14442280
+ TimeOffset {
+  time_offset -5
+  time ""
+  name TimeOffsetFuture_4
+  label "\[value time_offset]"
+  xpos 429
+  ypos 266
+ }
+set N1448ae70 [stack 0]
+push $N14442280
+ TimeOffset {
+  time_offset -4
+  time ""
+  name TimeOffsetFuture_3
+  label "\[value time_offset]"
+  xpos 329
+  ypos 266
+ }
+set N14494a20 [stack 0]
+push $N14442280
+ TimeOffset {
+  time_offset -3
+  time ""
+  name TimeOffsetFuture_2
+  label "\[value time_offset]"
+  xpos 229
+  ypos 266
+ }
+set N1449e4e0 [stack 0]
+push 0
+push $N14442280
+ TimeOffset {
+  time_offset -2
+  time ""
+  name TimeOffsetFuture_1
+  label "\[value time_offset]"
+  xpos 129
+  ypos 266
+ }
+set N144a7f30 [stack 0]
+push $N14442280
+ TimeOffset {
+  time_offset -1
+  time ""
+  name TimeOffsetFuture_0
+  label "\[value time_offset]"
+  xpos 29
+  ypos 266
+ }
+set N144b1a60 [stack 0]
+ Blend {
+  inputs 12+1
+  name Blend_FutureTrail
+  xpos 179
+  ypos 446
+ }
+push $N14447440
+push $N14450e60
+push $N1445a920
+push $N14464370
+push $N1446de30
+push $N14477960
+push $N144813b0
+push $N1448ae70
+push $N14494a20
+push $N1449e4e0
+push 0
+push $N144a7f30
+push $N144b1a60
+ Merge2 {
+  inputs 12+1
+  operation average
+  also_merge all
+  name Merge_FutureTrail
+  label "\[ expr \{ \[value mix] == 1 ? \" \" : \[concat Mix: \[value mix]] \}]"
+  xpos 29
+  ypos 442
+  addUserKnob {20 TRX}
+  addUserKnob {22 swap l "swap to Merge All Node" -STARTLINE T "from csnuke_tools.trixter.snippets import convertMergeToAll as convertMergeToAll;convertMergeToAll.convToAll()"}
+ }
+ Switch {
+  inputs 2
+  which {{"Merge_FutureTrail.operation == 1 ? 1 : 0"}}
+  name Switch_futureFrameAverage
+  xpos 29
+  ypos 501
+ }
+set N144db850 [stack 0]
+push $N14438080
+ Dot {
+  name Dot1
+  note_font_size 41
+  xpos -740
+  ypos 54
+ }
+ NoOp {
+  name PastTrail
+  xpos -774
+  ypos 116
+ }
+set N144e8bb0 [stack 0]
+ TimeOffset {
+  time_offset 12
+  time ""
+  name TimeOffsetPast_11
+  label "\[value time_offset]"
+  xpos -1874
+  ypos 266
+ }
+set N144eddb0 [stack 0]
+push $N144e8bb0
+ TimeOffset {
+  time_offset 11
+  time ""
+  name TimeOffsetPast_10
+  label "\[value time_offset]"
+  xpos -1774
+  ypos 266
+ }
+set N144f7820 [stack 0]
+push $N144e8bb0
+ TimeOffset {
+  time_offset 10
+  time ""
+  name TimeOffsetPast_9
+  label "\[value time_offset]"
+  xpos -1674
+  ypos 266
+ }
+set N145012e0 [stack 0]
+push $N144e8bb0
+ TimeOffset {
+  time_offset 9
+  time ""
+  name TimeOffsetPast_8
+  label "\[value time_offset]"
+  xpos -1574
+  ypos 266
+ }
+set N1450ad30 [stack 0]
+push $N144e8bb0
+ TimeOffset {
+  time_offset 8
+  time ""
+  name TimeOffsetPast_7
+  label "\[value time_offset]"
+  xpos -1474
+  ypos 266
+ }
+set N14514860 [stack 0]
+push $N144e8bb0
+ TimeOffset {
+  time_offset 7
+  time ""
+  name TimeOffsetPast_6
+  label "\[value time_offset]"
+  xpos -1374
+  ypos 266
+ }
+set N1451e320 [stack 0]
+push $N144e8bb0
+ TimeOffset {
+  time_offset 6
+  time ""
+  name TimeOffsetPast_5
+  label "\[value time_offset]"
+  xpos -1274
+  ypos 266
+ }
+set N14527d80 [stack 0]
+push $N144e8bb0
+ TimeOffset {
+  time_offset 5
+  time ""
+  name TimeOffsetPast_4
+  label "\[value time_offset]"
+  xpos -1174
+  ypos 266
+ }
+set N145319d0 [stack 0]
+push $N144e8bb0
+ TimeOffset {
+  time_offset 4
+  time ""
+  name TimeOffsetPast_3
+  label "\[value time_offset]"
+  xpos -1074
+  ypos 266
+ }
+set N1453b470 [stack 0]
+push $N144e8bb0
+ TimeOffset {
+  time_offset 3
+  time ""
+  name TimeOffsetPast_2
+  label "\[value time_offset]"
+  xpos -974
+  ypos 266
+ }
+set N14544ec0 [stack 0]
+push 0
+push $N144e8bb0
+ TimeOffset {
+  time_offset 2
+  time ""
+  name TimeOffsetPast_1
+  label "\[value time_offset]"
+  xpos -874
+  ypos 266
+ }
+set N1454e980 [stack 0]
+push $N144e8bb0
+ TimeOffset {
+  time_offset 1
+  time ""
+  name TimeOffsetPast_0
+  label "\[value time_offset]"
+  xpos -774
+  ypos 266
+ }
+set N145584b0 [stack 0]
+ Blend {
+  inputs 12+1
+  name Blend_PastTrail
+  xpos -917
+  ypos 434
+ }
+push $N144eddb0
+push $N144f7820
+push $N145012e0
+push $N1450ad30
+push $N14514860
+push $N1451e320
+push $N14527d80
+push $N145319d0
+push $N1453b470
+push $N14544ec0
+push 0
+push $N1454e980
+push $N145584b0
+ Merge2 {
+  inputs 12+1
+  operation average
+  also_merge all
+  name Merge_PastTrail
+  label "\[ expr \{ \[value mix] == 1 ? \" \" : \[concat Mix: \[value mix]] \}]"
+  xpos -774
+  ypos 442
+  addUserKnob {20 TRX}
+  addUserKnob {22 swap l "swap to Merge All Node" -STARTLINE T "from csnuke_tools.trixter.snippets import convertMergeToAll as convertMergeToAll;convertMergeToAll.convToAll()"}
+ }
+ Switch {
+  inputs 2
+  which {{"Merge_PastTrail.operation == 1 ? 1 : 0"}}
+  name Switch_pastFrameAverage
+  xpos -774
+  ypos 501
+ }
+ Dot {
+  name Dot2
+  note_font_size 41
+  xpos -740
+  ypos 598
+ }
+set N1458ac00 [stack 0]
+ Switch {
+  inputs 2
+  which {{"past_trail_frames < 1 ? 1 : !parent.pastTrailCheck"}}
+  name Switch5
+  xpos -78
+  ypos 996
+ }
+push $N1458ac00
+push $N144db850
+ Switch {
+  inputs 2
+  which {{"future_trail_frames < 1 ? 1 : !parent.futureTrailCheck"}}
+  name Switch6
+  xpos 204
+  ypos 1005
+ }
+ Blend {
+  inputs 2
+  name Blend4
+  xpos 103
+  ypos 1073
+ }
+push $N1458ac00
+push $N14438080
+ Dot {
+  name Dot5
+  note_font_size 41
+  xpos -314
+  ypos 444
+ }
+set N145aedd0 [stack 0]
+ Blend {
+  inputs 2
+  name Blend1
+  xpos -259
+  ypos 767
+ }
+push $N144db850
+ Dot {
+  name Dot4
+  note_font_size 41
+  xpos 63
+  ypos 684
+ }
+set N145c2330 [stack 0]
+push $N145aedd0
+ Blend {
+  inputs 2
+  name Blend2
+  xpos 29
+  ypos 772
+ }
+push $N145c2330
+push 0
+push $N1458ac00
+push $N145aedd0
+ Blend {
+  inputs 3+1
+  name Blend3
+  xpos -120
+  ypos 768
+ }
+ Switch {
+  inputs 2
+  which {{"past_trail_frames < 1 ? 1 : !parent.pastTrailCheck"}}
+  name Switch2
+  xpos -120
+  ypos 847
+ }
+ Switch {
+  inputs 2
+  which {{"future_trail_frames < 1 ? 1 : !parent.futureTrailCheck"}}
+  name Switch3
+  xpos -160
+  ypos 906
+ }
+push $N145c2330
+push $N1458ac00
+push $N145aedd0
+ Merge2 {
+  inputs 2
+  operation average
+  name MergePastOverall
+  label "\[ expr \{ \[value mix] == 1 ? \" \" : \[concat Mix: \[value mix]] \}]"
+  xpos -348
+  ypos 594
+  disable {{"past_trail_frames < 1 ? 1 : !parent.pastTrailCheck"}}
+  addUserKnob {20 TRX}
+  addUserKnob {22 swap l "swap to Merge All Node" -STARTLINE T "from csnuke_tools.trixter.snippets import convertMergeToAll as convertMergeToAll;convertMergeToAll.convToAll()"}
+ }
+ Merge2 {
+  inputs 2
+  operation {{MergePastOverall.operation}}
+  name MergeFutureOverall
+  label "\[ expr \{ \[value mix] == 1 ? \" \" : \[concat Mix: \[value mix]] \}]"
+  xpos -348
+  ypos 680
+  disable {{"future_trail_frames < 1 ? 1 : !parent.futureTrailCheck"}}
+  addUserKnob {20 TRX}
+  addUserKnob {22 swap l "swap to Merge All Node" -STARTLINE T "from csnuke_tools.trixter.snippets import convertMergeToAll as convertMergeToAll;convertMergeToAll.convToAll()"}
+ }
+ Switch {
+  inputs 2
+  which {{"parent.pastTrailCheck + parent.futureTrailCheck == 0 ? 0 : MergePastOverall.operation == 1 ? 1 : 0"}}
+  name Switch1
+  xpos -350
+  ypos 976
+ }
+ Switch {
+  inputs 2
+  which {{"parent.pastTrailCheck + parent.futureTrailCheck == 0 ? 0 : parent.keepOriginal == 1 ? 0 : 1"}}
+  name Switch7
+  xpos -350
+  ypos 1140
+ }
+ Dot {
+  name Dot8
+  note_font_size 41
+  xpos -316
+  ypos 1280
+ }
+set N14628db0 [stack 0]
+ Retime {
+  input.first 1025
+  input.first_lock true
+  input.last 1225
+  output.first 1025
+  output.last 1075
+  speed 4
+  before continue
+  after continue
+  filter nearest
+  time ""
+  name Retime7
+  label "\[value speed]x\n"
+  xpos -138
+  ypos 1401
+ }
+push $N14628db0
+ Retime {
+  input.first 1025
+  input.first_lock true
+  input.last 1206
+  output.first 1025
+  output.last 1115
+  speed 2
+  before continue
+  after continue
+  filter nearest
+  time ""
+  name Retime13
+  label "\[value speed]x\n"
+  xpos -256
+  ypos 1397
+ }
+push $N14628db0
+ Switch {
+  inputs 3
+  which {{parent.inputSpeed}}
+  name Switch4
+  xpos -350
+  ypos 1479
+ }
+push $N144093c0
+ Dot {
+  name Dot6
+  note_font_size 41
+  xpos -460
+  ypos -334
+ }
+ Dot {
+  name Dot7
+  note_font_size 41
+  xpos -460
+  ypos 1596
+ }
+ Merge2 {
+  inputs 2+1
+  operation copy
+  also_merge rgb
+  name Merge1
+  label "\[ expr \{ \[value mix] == 1 ? \" \" : \[concat Mix: \[value mix]] \}]"
+  xpos -350
+  ypos 1592
+  addUserKnob {20 TRX}
+  addUserKnob {22 swap l "swap to Merge All Node" -STARTLINE T "from csnuke_tools.trixter.snippets import convertMergeToAll as convertMergeToAll;convertMergeToAll.convToAll()"}
+ }
+ Output {
+  name Output1
+  xpos -350
+  ypos 1762
+ }
+end_group
