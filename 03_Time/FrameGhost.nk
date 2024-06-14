@@ -63,7 +63,7 @@ Group {
   xpos -491
   ypos -43
  }
-set N41d37b40 [stack 0]
+set N1cfe76b0 [stack 0]
  VectorGenerator {
   motionEstimation Regularized
   name VectorGenerator2
@@ -82,7 +82,7 @@ set N41d37b40 [stack 0]
   xpos -233
   ypos 113
  }
-push $N41d37b40
+push $N1cfe76b0
  Colorspace {
   colorspace_out AlexaV3LogC
   name Colorspace1
@@ -96,7 +96,7 @@ push $N41d37b40
   xpos -491
   ypos 41
  }
-set Nddcec380 [stack 0]
+set N7ebf4ae0 [stack 0]
  Dot {
   name Dot4
   note_font_size 41
@@ -119,7 +119,7 @@ set Nddcec380 [stack 0]
   xpos -387
   ypos 186
  }
-push $Nddcec380
+push $N7ebf4ae0
  Switch {
   inputs 2
   which {{parent.applyMotionBlur}}
@@ -140,6 +140,7 @@ push $Nddcec380
   shutteroffset centred
   shuttercustomoffset 0
   name TimeBlur4
+  selected true
   xpos -525
   ypos 433
  }
@@ -151,7 +152,7 @@ push $Nddcec380
   ypos 483
   disable {{!parent.colorspaceCheck}}
  }
-push $N41d37b40
+push $N1cfe76b0
  Dot {
   name Dot1
   note_font_size 41
