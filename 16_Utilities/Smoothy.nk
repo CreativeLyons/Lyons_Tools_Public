@@ -1,0 +1,12 @@
+NoOp {
+ name Smoothy
+ selected true
+ addUserKnob {20 Smoothy}
+ addUserKnob {22 smooth l Smoothy! T "thisNode = nuke.thisNode()\nselectedNodes = nuke.selectedNodes()\[::-1]\nknobToSmooth = thisNode.knob(\"knobName\").value()\nsmoothType = thisNode.knob(\"type\").value()\n\nNumberOfNodes = len(selectedNodes)\n\nfor i, node in enumerate(selectedNodes):\n    normalized_value = 1 - (i / NumberOfNodes)\n    expression = (\n        'Smoothy.type == 0 ? ( (1 - Smoothy.falloff) + Smoothy.falloff * ( \{value\} ) ) : '\n        'Smoothy.type == 1 ? ( (1 - Smoothy.falloff) + Smoothy.falloff * ( pow(\{value\}, 3) ) + Smoothy.falloff * 1 ) : '\n        'Smoothy.type == 2 ?  ( (1 - Smoothy.falloff) + Smoothy.falloff * ( \{value\} * \{value\} * (3 - 2 * \{value\}) ) ) : '\n        'Smoothy.type == 3 ? ( (1 - Smoothy.falloff) + Smoothy.falloff * ( \{value\} * \{value\} * (2 - \{value\}) ) + Smoothy.falloff * 1 ) : '\n        'Smoothy.type == 4 ? ( (1 - Smoothy.falloff) + Smoothy.falloff * ( \{value\} * (1 + \{value\} * (1 - \{value\})) ) ) : 0'\n    ).format(value=normalized_value)\n    node.knob(knobToSmooth).setExpression(expression)\n\n" +STARTLINE}
+ addUserKnob {1 knobName l "Knob Name"}
+ knobName size
+ addUserKnob {7 falloff}
+ falloff 1
+ addUserKnob {4 type M {linear plinear smooth0 smooth1 smooth}}
+ type smooth
+}
