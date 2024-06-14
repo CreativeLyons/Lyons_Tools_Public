@@ -7,31 +7,42 @@ Group {
  selected true
  addUserKnob {20 FrameGhost}
  addUserKnob {41 channels T Merge1.also_merge}
- addUserKnob {26 "" +STARTLINE}
- addUserKnob {4 inputSpeed l "Input Speed" M {"Half Speed" "Quarter Speed" "" ""}}
- addUserKnob {3 alignedFrame l "Aligned Frame"}
+ addUserKnob {6 colorspaceCheck l "Apply in Colorspace" +STARTLINE}
+ colorspaceCheck true
+ addUserKnob {41 colorspace_out l "" -STARTLINE T Colorspace1.colorspace_out}
+ addUserKnob {26 AlignFrameText l "<b> <font color = skyblue>Align Frame"}
+ addUserKnob {4 inputSpeed l "<b> <font color = white> Input Speed" M {"Half Speed" "Quarter Speed" "" "" ""}}
+ inputSpeed "Quarter Speed"
+ addUserKnob {3 alignedFrame l "Matched Frame"}
  alignedFrame 1025
  addUserKnob {3 offset -STARTLINE +DISABLED}
- offset -23
- addUserKnob {22 align l Align T "n = nuke.thisNode()\ncurrentFrame = nuke.frame()\nalignedFrame = n.knob(\"alignedFrame\").value()\ntimeOffset = n.knob(\"offset\")\nalignTo = n.knob(\"alignedTo\")\ninputSpeed = n.knob(\"inputSpeed\").value()\n\nif inputSpeed == \"Quarter Speed\":\n    frame_offset = ((currentFrame  - alignedFrame ) * 3)\nelif inputSpeed == \"Half Speed\":\n    frame_offset = ((currentFrame  - alignedFrame ) * 2 ) / 2\n\ntimeOffset.setValue(-frame_offset)\nalignTo.setValue(currentFrame)" +STARTLINE}
- addUserKnob {3 alignedTo l "Aligned To:" -STARTLINE +DISABLED}
- alignedTo 1048
- addUserKnob {26 "" +STARTLINE}
- addUserKnob {41 divisions T TimeBlur4.divisions}
- addUserKnob {41 shutter l Shutter T TimeBlur4.shutter}
+ offset -126
+ addUserKnob {22 align l "<font color = gold> Align" T "n = nuke.thisNode()\ncurrentFrame = nuke.frame()\nalignedFrame = n.knob(\"alignedFrame\").value()\ntimeOffset = n.knob(\"offset\")\nalignTo = n.knob(\"alignedTo\")\ninputSpeed = n.knob(\"inputSpeed\").value()\n\nif inputSpeed == \"Quarter Speed\":\n    frame_offset = ((currentFrame  - alignedFrame ) * 3)\nelif inputSpeed == \"Half Speed\":\n    frame_offset = ((currentFrame  - alignedFrame ) * 2 ) / 2\n\ntimeOffset.setValue(-frame_offset)\nalignTo.setValue(currentFrame)" +STARTLINE}
+ addUserKnob {3 alignedTo l "Aligned To Frame" -STARTLINE +DISABLED}
+ alignedTo 1067
+ addUserKnob {26 timeBlurText l "<b> <font color = skyblue>TimeBlur"}
+ addUserKnob {41 divisions l "<b> <font color = white> divisions" T TimeBlur4.divisions}
+ addUserKnob {41 shutter l "<b> <font color = white> Shutter" T TimeBlur4.shutter}
  addUserKnob {41 shutteroffset l "Shutter Offset" T TimeBlur4.shutteroffset}
- addUserKnob {26 "" +STARTLINE}
+ addUserKnob {41 shuttercustomoffset l "" -STARTLINE T TimeBlur4.shuttercustomoffset}
+ addUserKnob {26 motionBlurText l "<b> <font color = skyblue>Motion Blur"}
  addUserKnob {6 applyMotionBlur l "Apply Motion Blur" +STARTLINE}
- addUserKnob {41 scale l "motion amount" T VectorBlur1.scale}
- addUserKnob {41 motion_falloff l "motion falloff" T VectorBlur1.motion_falloff}
+ addUserKnob {41 scale l "<b> <font color = white> Amount" T VectorBlur1.scale}
+ addUserKnob {41 motion_falloff l Falloff T VectorBlur1.motion_falloff}
  addUserKnob {41 offset_1 l "shutter offset" T VectorBlur1.offset}
- addUserKnob {26 "" +STARTLINE}
+ addUserKnob {41 soft_lines l "soft lines" T VectorBlur1.soft_lines}
+ addUserKnob {41 blur_inside l "blur inside" -STARTLINE T VectorBlur1.blur_inside}
+ addUserKnob {41 normalize -STARTLINE T VectorBlur1.normalize}
+ addUserKnob {41 smoothVectors l "Smooth Vectors" T Blur1.size}
+ addUserKnob {26 ""}
  addUserKnob {26 "" l mask T ""}
  addUserKnob {41 maskChannelInput l "" -STARTLINE T Merge1.maskChannelInput}
  addUserKnob {41 inject -STARTLINE T Merge1.inject}
  addUserKnob {41 invert_mask l invert -STARTLINE T Merge1.invert_mask}
  addUserKnob {41 fringe -STARTLINE T Merge1.fringe}
  addUserKnob {41 mix T Merge1.mix}
+ addUserKnob {26 text l " " T " "}
+ addUserKnob {26 author l " " T "<font color = grey>FrameGhost | Tony Lyons 2024"}
 }
  Input {
   inputs 0
@@ -47,29 +58,68 @@ Group {
   ypos -169
  }
  Dot {
-  name Dot9
+  name Dot3
   note_font_size 41
   xpos -491
-  ypos 58
+  ypos -43
  }
-set N3a70d120 [stack 0]
+set N41d37b40 [stack 0]
  VectorGenerator {
   motionEstimation Regularized
   name VectorGenerator2
+  xpos -267
+  ypos -53
+ }
+ Blur {
+  name Blur1
+  label "\[value size]"
+  xpos -267
+  ypos 16
+ }
+ Dot {
+  name Dot5
+  note_font_size 41
+  xpos -233
+  ypos 113
+ }
+push $N41d37b40
+ Colorspace {
+  colorspace_out AlexaV3LogC
+  name Colorspace1
+  xpos -525
+  ypos -7
+  disable {{!parent.colorspaceCheck}}
+ }
+ Dot {
+  name Dot9
+  note_font_size 41
+  xpos -491
+  ypos 41
+ }
+set Nddcec380 [stack 0]
+ Dot {
+  name Dot4
+  note_font_size 41
+  xpos -353
+  ypos 41
+ }
+ Copy {
+  inputs 2
+  channels motion
+  name Copy1
   xpos -387
-  ypos 123
+  ypos 97
  }
  VectorBlur2 {
   uv forward
   scale 1
-  motion_falloff 0.5
+  motion_falloff 1
   soft_lines true
-  normalize false
   name VectorBlur1
   xpos -387
-  ypos 173
+  ypos 186
  }
-push $N3a70d120
+push $Nddcec380
  Switch {
   inputs 2
   which {{parent.applyMotionBlur}}
@@ -86,20 +136,27 @@ push $N3a70d120
   ypos 352
  }
  TimeBlur {
-  divisions 20
-  shutter 5
+  divisions 1
   shutteroffset centred
   shuttercustomoffset 0
   name TimeBlur4
   xpos -525
   ypos 433
  }
-push $N3a70d120
+ Colorspace {
+  colorspace_in AlexaV3LogC
+  colorspace_out {{Colorspace1.colorspace_in}}
+  name Colorspace2
+  xpos -525
+  ypos 483
+  disable {{!parent.colorspaceCheck}}
+ }
+push $N41d37b40
  Dot {
   name Dot1
   note_font_size 41
   xpos -747
-  ypos 58
+  ypos -43
  }
  Dot {
   name Dot2
