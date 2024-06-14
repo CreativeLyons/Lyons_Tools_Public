@@ -1,0 +1,40 @@
+Group {
+ name FrameAlign
+ tile_color 0x9c9252ff
+ label "aligned to: \[value alignedTo]\noriginal: \[value offsetFrame]"
+ note_font "Bitstream Vera Sans Bold"
+ note_font_color 0xffffffff
+ selected true
+ addUserKnob {20 FrameAlign}
+ addUserKnob {4 inputSpeed l "<b> <font color = white> Input Speed" M {"Half Speed" "Quarter Speed" "" "" ""}}
+ inputSpeed "Quarter Speed"
+ addUserKnob {3 alignedFrame l "Matched Frame"}
+ alignedFrame 1025
+ addUserKnob {3 offset -STARTLINE +DISABLED}
+ offset -189
+ addUserKnob {22 align l "<font color = gold> Align" T "n = nuke.thisNode()\ncurrentFrame = nuke.frame()\nalignedFrame = n.knob(\"alignedFrame\").value()\ntimeOffset = n.knob(\"offset\")\nalignTo = n.knob(\"alignedTo\")\ninputSpeed = n.knob(\"inputSpeed\").value()\n\nif inputSpeed == \"Quarter Speed\":\n    frame_offset = ((currentFrame  - alignedFrame ) * 3)\nelif inputSpeed == \"Half Speed\":\n    frame_offset = ((currentFrame  - alignedFrame ) * 2 ) / 2\n\ntimeOffset.setValue(-frame_offset)\nalignTo.setValue(currentFrame)" +STARTLINE}
+ addUserKnob {3 alignedTo l "Aligned To Frame" -STARTLINE +DISABLED}
+ alignedTo 1088
+ addUserKnob {1 offsetFrame +INVISIBLE}
+ offsetFrame "\[expr \[value frame]-\[value offset]]\n"
+}
+ Input {
+  inputs 0
+  name Input
+  xpos -525
+  ypos 220
+ }
+ TimeOffset {
+  time_offset {{parent.offset}}
+  time ""
+  name TimeOffset6
+  label "\[value time_offset]"
+  xpos -525
+  ypos 352
+ }
+ Output {
+  name Output1
+  xpos -525
+  ypos 468
+ }
+end_group
