@@ -1,49 +1,44 @@
-set cut_paste_input [stack 0]
-version 11.3 v4
-push $cut_paste_input
 Group {
  name GradMagic
  help "Creates a 4 point gradient that samples corners from the input. Ability to bake color results. Outputs Grad over BG or Grad Only.\n\nSet corners to:\n- default\n- format\n- input bbox\n- bbox from viewer\n- color Ssample box\n\n- can link or bake to exisiting\n cornerpin node, and you can use\n manually adjust points to further\n tweak the position of the ramp.\n\nChoose between output colors that are:\n- Live\n- Baked on current frame\n- Baked framerange\n\nCan adjust edge blur of gradient"
  tile_color 0x621d5aff
  gl_color 0xbffffff
- note_font "Verdana Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold"
+ note_font "Verdana Bold"
  note_font_color 0x73e6e2ff
  selected true
- xpos 196
- ypos 41
  addUserKnob {20 GradMagic}
  addUserKnob {4 output1 l "<b><font color= white>Output:" M {"Grad Over BG " "Grad Only " "" "" "" "" "" ""}}
  addUserKnob {41 sampleSize l "| Sample Size" t "Sample size will be used as the area to average the colors from on each cornerpoint" -STARTLINE T Settings.sampleSize}
  addUserKnob {26 ""}
  addUserKnob {20 points l "Corner Points" n 1}
  addUserKnob {26 setPointsTo l "<b> <font color=white>Set Points To:" t "Sets points to a small box in bottom left corner of screen" T " "}
- addUserKnob {22 setToDefault l Default -STARTLINE T "#gather nodes\n\nn = nuke.thisNode()\ns = nuke.toNode(\"Settings\")\n\n#gather settings points knobs\nsetRefFrame = n.knob('setRefFrame')\n\nsettl = s.knob(\"topLeft\")\nsettr = s.knob(\"topRight\")\nsetbl = s.knob(\"bottomLeft\")\nsetbr = s.knob(\"bottomRight\")\n\n#set topLeft\nsettl.clearAnimated()\nsettl.setValue(100, 0)\nsettl.setValue(400, 1)\n\n#set topRight\nsettr.clearAnimated()\nsettr.setValue(400, 0)\nsettr.setValue(400, 1)\n\n#set bottomLeft\nsetbl.clearAnimated()\nsetbl.setValue(100, 0)\nsetbl.setValue(100, 1)\n\n#set bottomRight\nsetbr.clearAnimated()\nsetbr.setValue(400, 0)\nsetbr.setValue(100, 1)\n\nsetRefFrame.execute()"}
- addUserKnob {22 setToFormat l Format t "Sets points to input format\nif nothing is plugged into the input, takes root.format of the script" -STARTLINE T "#gather nodes\ngif = nuke.toNode(\"getInputFormat\")\ns = nuke.toNode(\"Settings\")\nn = nuke.thisNode()\n\nsetRefFrame = n.knob('setRefFrame')\n\n#gather format values\nfx = int(gif.knob(\"box\").getValue(0))\nfy = int(gif.knob(\"box\").getValue(1))\nfr = int(gif.knob(\"box\").getValue(2))\nft = int(gif.knob(\"box\").getValue(3))\n\n#gather settings points knobs\nsettl = s.knob(\"topLeft\")\nsettr = s.knob(\"topRight\")\nsetbl = s.knob(\"bottomLeft\")\nsetbr = s.knob(\"bottomRight\")\n\n#set topLeft\nsettl.clearAnimated()\nsettl.setValue(fx, 0)\nsettl.setValue(ft, 1)\n\n#set topRight\nsettr.clearAnimated()\nsettr.setValue(fr, 0)\nsettr.setValue(ft, 1)\n\n#set bottomLeft\nsetbl.clearAnimated()\nsetbl.setValue(fx, 0)\nsetbl.setValue(fy, 1)\n\n#set bottomRight\nsetbr.clearAnimated()\nsetbr.setValue(fr, 0)\nsetbr.setValue(fy, 1)\n\nsetRefFrame.execute()"}
- addUserKnob {22 setToInputBbox l "Input Bbox" t "Sets points to the input bbox" T "#gather nodes\ngib = nuke.toNode(\"getInputBbox\")\ns = nuke.toNode(\"Settings\")\nn = nuke.thisNode()\n\nsetRefFrame = n.knob('setRefFrame')\n\n#gather format values\nfx = int(gib.knob(\"box\").getValue(0))\nfy = int(gib.knob(\"box\").getValue(1))\nfr = int(gib.knob(\"box\").getValue(2))\nft = int(gib.knob(\"box\").getValue(3))\n\n#gather settings points knobs\nsettl = s.knob(\"topLeft\")\nsettr = s.knob(\"topRight\")\nsetbl = s.knob(\"bottomLeft\")\nsetbr = s.knob(\"bottomRight\")\n\n#set topLeft\nsettl.clearAnimated()\nsettl.setValue(fx, 0)\nsettl.setValue(ft, 1)\n\n#set topRight\nsettr.clearAnimated()\nsettr.setValue(fr, 0)\nsettr.setValue(ft, 1)\n\n#set bottomLeft\nsetbl.clearAnimated()\nsetbl.setValue(fx, 0)\nsetbl.setValue(fy, 1)\n\n#set bottomRight\nsetbr.clearAnimated()\nsetbr.setValue(fr, 0)\nsetbr.setValue(fy, 1)\n\nsetRefFrame.execute()" +STARTLINE}
- addUserKnob {22 setToViewerBBox l "Viewer BBox" t "Sets points to the bbox of whatever is being viewed and is displayed in the viewer" -STARTLINE T "n = nuke.thisNode()\ns = nuke.toNode(\"Settings\")\n\nsetRefFrame = n.knob('setRefFrame')\n\nbbox = nuke.activeViewer().node().input(nuke.activeViewer().activeInput()).bbox()\nvbbx = bbox.x()\nvbby = bbox.y()\nvbbr = (bbox.x()+bbox.w())\nvbbt = (bbox.y()+bbox.h())\n\nwith n:\n    s\[\"topLeft\"].clearAnimated()\n    s\[\"topLeft\"].setValue(vbbx, 0)\n    s\[\"topLeft\"].setValue(vbbt, 1)\n\n    s\[\"topRight\"].clearAnimated()\n    s\[\"topRight\"].setValue(vbbr, 0)\n    s\[\"topRight\"].setValue(vbbt, 1)\n\n    s\[\"bottomLeft\"].clearAnimated()\n    s\[\"bottomLeft\"].setValue(vbbx, 0)\n    s\[\"bottomLeft\"].setValue(vbby, 1)\n\n    s\[\"bottomRight\"].clearAnimated()\n    s\[\"bottomRight\"].setValue(vbbr, 0)\n    s\[\"bottomRight\"].setValue(vbby, 1)\n\nsetRefFrame.execute()"}
- addUserKnob {22 colorSampleBox l "Color Sample Box" t "Sets points to the color sample box that the user has set" -STARTLINE T "if nuke.activeViewer().node().input(0):\n    myNode = nuke.activeViewer().node().input(0)\n    if not nuke.selectedNodes(): #Trying to be smart by assuming that you don't want to add a node to nothing.\n        myNode.setSelected(1)\nelse:\n    myNode = nuke.activeViewer().node()\n\nbboxinfo = nuke.activeViewer().node()\['colour_sample_bbox'].value()    #Get the position info from the colour sample bbox\naspect = float(myNode.width()*myNode.pixelAspect())/float(myNode.height())  #Calcualte the aspect (thanks Tom van Dop for notifying and Jelmen Palsterman for the correction!)\ncornerA = \[(bboxinfo\[0]*0.5+0.5)*myNode.width(),(((bboxinfo\[1]*0.5)+(0.5/aspect))*aspect)*myNode.height()] #Get the button left corner\ncornerB = \[(bboxinfo\[2]*0.5+0.5)*myNode.width(),(((bboxinfo\[3]*0.5)+(0.5/aspect))*aspect)*myNode.height()] #Get the top right corner\narea_WH = \[cornerB\[0]-cornerA\[0],cornerB\[1]-cornerA\[1]] #Get the width and height of the bbox\narea_Mid = \[cornerA\[0]+(area_WH\[0]/2),cornerA\[1]+(area_WH\[1]/2)] #Get the center of the bbox\n\nn = nuke.thisNode()\nn\['bottomLeft'].setValue(\[cornerA\[0],cornerA\[1]])\nn\['bottomRight'].setValue(\[cornerB\[0],cornerA\[1]])\nn\['topRight'].setValue(\[cornerB\[0],cornerB\[1]])\nn\['topLeft'].setValue(\[cornerA\[0],cornerB\[1]])"}
+ addUserKnob {22 setToDefault l Default t "Sets Gradient Corners To Default Position\nwhich is a small square in the bottom left of frame" -STARTLINE T "# setToDefault\n#\n# Set Gradient Corners To Default Position\n#\n# The Default position will be a resolution independent \n# square on the bottom left corner of frame\n\nthis_node = nuke.thisNode()\n\n# Gather incoming format width and height\nformat_width = int(this_node.format().width())\nformat_height = int(this_node.format().height())\n\n# Define square size as 20% of the smaller dimension\nsquare_size = int(min(format_width, format_height) * 0.2)\n\n# Calculate the 10% point of the bottom-left corner\nbottom = int(format_width * 0.1)\ntop = int(format_height * 0.1)\n\nwith this_node:\n    settings_node = nuke.toNode(\"Settings\")\n\n    # Define corner positions around the 25% bottom-left anchor point\n    corner_positions = \{\n        \"topLeft\":     \[bottom, top + square_size],\n        \"topRight\":    \[bottom + square_size, top + square_size],\n        \"bottomLeft\":  \[bottom, top],\n        \"bottomRight\": \[bottom + square_size, top],\n    \}\n\n    # Apply corner positions\n    for corner_name, position_values in corner_positions.items():\n        corner_knob = settings_node.knob(corner_name)\n        corner_knob.clearAnimated()\n        for position_index, position_value in enumerate(position_values):\n            corner_knob.setValue(position_value, position_index)\n\n    this_node.knob(\"setRefFrame\").execute()"}
+ addUserKnob {22 setToFormat l Format t "Sets points to input format\nif nothing is plugged into the input, takes root.format of the script" -STARTLINE T "# setToFormat\n#\n# set the Corner Points to the input format corners\n# It defaults to root format if no input is plugged in\n\nthis_node = nuke.thisNode()\n\nwith this_node:\n    input_format_node = nuke.toNode(\"getInputFormat\")\n    settings_node = nuke.toNode(\"Settings\")\n\n    format_box = input_format_node.knob(\"box\")\n    format_x, format_y, format_r, format_t = \[int(format_box.getValue(i)) for i in range(4)]\n\n    # Map gradient corner positions to their respective values\n    corner_positions = \{\n        \"topLeft\":     \[format_x, format_t],\n        \"topRight\":    \[format_r, format_t],\n        \"bottomLeft\":  \[format_x, format_y],\n        \"bottomRight\": \[format_r, format_y],\n    \}\n\n    for corner_name, position_values in corner_positions.items():\n        corner_knob = settings_node.knob(corner_name)\n        corner_knob.clearAnimated()\n        for position_index, position_value in enumerate(position_values):\n            corner_knob.setValue(position_value, position_index)\n\n    this_node.knob(\"setRefFrame\").execute()"}
+ addUserKnob {22 setToInputBBox l "Input BBox" t "Sets points to the input bbox" T "# setToInputBBox\n#\n# Sets the gradient corners to the input BBox\n\nthis_node = nuke.thisNode()\n\nwith this_node:\n    input_bbox_node = nuke.toNode(\"getInputBbox\")\n    settings_node = nuke.toNode(\"Settings\")\n\n    # Gather bbox values (left, bottom, right, top)\n    bbox_left, bbox_bottom, bbox_right, bbox_top = \[\n        int(input_bbox_node.knob(\"box\").getValue(i)) for i in range(4)\n    ]\n\n    # Map gradient corner positions to bbox values\n    corner_positions = \{\n        \"topLeft\":     \[bbox_left, bbox_top],\n        \"topRight\":    \[bbox_right, bbox_top],\n        \"bottomLeft\":  \[bbox_left, bbox_bottom],\n        \"bottomRight\": \[bbox_right, bbox_bottom],\n    \}\n\n    # Apply positions to settings knobs\n    for corner_name, position_values in corner_positions.items():\n        corner_knob = settings_node.knob(corner_name)\n        corner_knob.clearAnimated()\n        for position_index, position_value in enumerate(position_values):\n            corner_knob.setValue(position_value, position_index)\n\n    # Execute setRefFrame knob\n    this_node.knob(\"setRefFrame\").execute()" +STARTLINE}
+ addUserKnob {22 setToViewerBBox l "Viewer BBox" t "Sets points to the bbox of whatever is being viewed and is displayed in the viewer" -STARTLINE T "# setToInputBBox\n#\n# Sets the gradient corners to the Active Viewer BBox\n\nthis_node = nuke.thisNode()\nsettings_node = nuke.toNode(\"Settings\")\n\n# Get viewer BBox from the active input\nviewer_node = nuke.activeViewer().node()\ninput_node = viewer_node.input(nuke.activeViewer().activeInput())\nbbox = input_node.bbox()\n\n# Extract bbox coordinates\nbbox_left = bbox.x()\nbbox_bottom = bbox.y()\nbbox_right = bbox.x() + bbox.w()\nbbox_top = bbox.y() + bbox.h()\n\n# Map corner positions to viewer bbox coordinates\ncorner_positions = \{\n    \"topLeft\":     \[bbox_left, bbox_top],\n    \"topRight\":    \[bbox_right, bbox_top],\n    \"bottomLeft\":  \[bbox_left, bbox_bottom],\n    \"bottomRight\": \[bbox_right, bbox_bottom],\n\}\n\n# Apply positions to settings knobs\nwith this_node:\n    for corner_name, position_values in corner_positions.items():\n        corner_knob = settings_node.knob(corner_name)\n        corner_knob.clearAnimated()\n        for position_index, position_value in enumerate(position_values):\n            corner_knob.setValue(position_value, position_index)\n\n    # Execute the setRefFrame knob\n    this_node.knob(\"setRefFrame\").execute()"}
+ addUserKnob {22 setToColorSampleBox l "Color Sample Box" t "Sets points to the color sample box that the user has set" -STARTLINE T "# setToColorSampleBox\n#\n# set the gradient corners to the color sample box in the Viewer\n\nthis_node = nuke.thisNode()\n\n# Get the active viewer and determine the active node/input\nviewer_node = nuke.activeViewer().node()\nviewer_input_number = int(viewer_node.knob('input_number').getValue())\ncanvas = viewer_node.input(viewer_input_number) if viewer_node.input(viewer_input_number) else nuke.root().format()\n\n# Gather color sample bounding box and calculate aspect ratio\nbbox = viewer_node.knob('colour_sample_bbox').value()\nbbox_x_min, bbox_y_min, bbox_x_max, bbox_y_max = bbox\n\naspect_ratio = (canvas.width() * canvas.pixelAspect()) / canvas.height()\n\n# Calculate bottom-left and top-right corners\nbottom_left_x = (bbox_x_min * 0.5 + 0.5) * canvas.width()\nbottom_left_y = ((bbox_y_min * 0.5) + (0.5 / aspect_ratio)) * aspect_ratio * canvas.height()\n\ntop_right_x = (bbox_x_max * 0.5 + 0.5) * canvas.width()\ntop_right_y = ((bbox_y_max * 0.5) + (0.5 / aspect_ratio)) * aspect_ratio * canvas.height()\n\n# Explicitly map the corner positions\ncorner_positions = \{\n    \"bottomLeft\":  \[bottom_left_x, bottom_left_y],\n    \"bottomRight\": \[top_right_x, bottom_left_y],\n    \"topRight\":    \[top_right_x, top_right_y],\n    \"topLeft\":     \[bottom_left_x, top_right_y],\n\}\n\n# Apply positions to the current node\nfor corner_name, position in corner_positions.items():\n    this_node.knob(corner_name).setValue(position)"}
  addUserKnob {26 ""}
- addUserKnob {22 linkCornerPin l "<font color=lightgreen> Link CornerPin" t "Select a corner pin or node with \"to\" points to link animation to" T "n = nuke.thisNode()\nwith nuke.root():\n    try:\n        s = nuke.selectedNode()\n        sn = s.name()\n\n        tl = n.knob(\"topLeft\")\n        tr = n.knob('topRight')\n        bl = n.knob(\"bottomLeft\")\n        br = n.knob(\"bottomRight\")\n        \n        if s.knob(\"to1\") and s.knob(\"to2\") and s.knob(\"to3\") and s.knob(\"to4\"):\n            to1 = s.knob(\"to1\")\n            to1v = to1.getValue()\n            to2 = s.knob(\"to2\")\n            to2v = to2.getValue()\n            to3 = s.knob(\"to3\")\n            to3v = to3.getValue()\n            to4 = s.knob(\"to4\")\n            to4v = to4.getValue()\n            \n            tl.clearAnimated()\n            tl.setExpression( sn + \".\" + to4.name() )\n            \n            tr.clearAnimated()\n            tr.setExpression( sn + \".\" + to3.name() )\n            \n            bl.clearAnimated()\n            bl.setExpression( sn + \".\" + to1.name() )\n            \n            br.clearAnimated()\n            br.setExpression( sn + \".\" + to2.name() )\n        \n        else:\n            nuke.message(\"Please select node with valid 'to' points\")\n\n    except:\n        nuke.message(\"Please select node\")" +STARTLINE}
- addUserKnob {22 bakeCornerPin l "<font color=lightgreen> Bake CornerPin" t "Select a corner pin or node with \"to\" points to bake animation from" -STARTLINE T "n = nuke.thisNode()\nwith nuke.root():\n    try:\n        s = nuke.selectedNode()\n        \n        sn = s.name()\n\n        tl = n.knob(\"topLeft\")\n        tr = n.knob('topRight')\n        bl = n.knob(\"bottomLeft\")\n        br = n.knob(\"bottomRight\")\n        \n        if s.knob(\"to1\") and s.knob(\"to2\") and s.knob(\"to3\") and s.knob(\"to4\"):\n            to1 = s.knob(\"to1\")\n            to1v = to1.getValue()\n            to2 = s.knob(\"to2\")\n            to2v = to2.getValue()\n            to3 = s.knob(\"to3\")\n            to3v = to3.getValue()\n            to4 = s.knob(\"to4\")\n            to4v = to4.getValue()\n            \n            if to1.hasExpression() or to2.hasExpression() or to3.hasExpression() or to4.hasExpression():\n                \n                first_frame = int(nuke.Root()\['first_frame'].getValue())\n                last_frame = int(nuke.Root()\['last_frame'].getValue())\n                # Grab first and last frame from root\n                \n                p = nuke.Panel(\"Execute on FrameRange\")\n                p.addSingleLineInput('First Frame', first_frame)\n                p.addSingleLineInput('Last Frame', last_frame)\n                p.addSingleLineInput('Increment', 1)\n                result = p.show()\n                if result:\n                    \n                    # Create user input panel\n                    \n                    ff = int(p.value(\"First Frame\"))\n                    lf = int(p.value(\"Last Frame\"))\n                    i = int(p.value(\"Increment\"))\n                    # Define first, last, increment from user input panel\n                \n                    tl.clearAnimated()\n                    tl.fromScript(to4.toScript())\n                    \n                    tr.clearAnimated()\n                    tr.fromScript(to3.toScript())\n                    \n                    bl.clearAnimated()\n                    bl.fromScript(to1.toScript())\n                    \n                    br.clearAnimated()\n                    br.fromScript(to2.toScript())\n                    \n                    nuke.animation( n.name() + \".\" + \"topLeft.x\", \"generate\", (str(ff), str(lf), str(i), \"y\", \"topLeft\"))\n                    nuke.animation( n.name() + \".\" + \"topLeft.y\", \"generate\", (str(ff), str(lf), str(i), \"y\", \"topLeft\"))\n                \n                    nuke.animation( n.name() + \".\" + \"topRight.x\", \"generate\", (str(ff), str(lf), str(i), \"y\", \"topRight\"))\n                    nuke.animation( n.name() + \".\" + \"topRight.y\", \"generate\", (str(ff), str(lf), str(i), \"y\", \"topRight\"))\n                \n                    nuke.animation( n.name() + \".\" + \"bottomLeft.x\", \"generate\", (str(ff), str(lf), str(i), \"y\", \"bottomLeft\"))\n                    nuke.animation( n.name() + \".\" + \"bottomLeft.y\", \"generate\", (str(ff), str(lf), str(i), \"y\", \"bottomLeft\"))\n                \n                    nuke.animation( n.name() + \".\" + \"bottomRight.x\", \"generate\", (str(ff), str(lf), str(i), \"y\", \"bottomRight\"))\n                    nuke.animation( n.name() + \".\" + \"bottomRight.y\", \"generate\", (str(ff), str(lf), str(i), \"y\", \"bottomRight\"))\n                else:\n                    pass\n                \n            else:\n                tl.clearAnimated()\n                tl.fromScript(to4.toScript())\n                \n                tr.clearAnimated()\n                tr.fromScript(to3.toScript())\n                \n                bl.clearAnimated()\n                bl.fromScript(to1.toScript())\n                \n                br.clearAnimated()\n                br.fromScript(to2.toScript())\n        else:\n            nuke.message(\"Please select node with valid 'to' points\")\n\n    except:\n        nuke.message(\"Please select node\") \n    \n"}
+ addUserKnob {22 linkCornerPin l "<font color=lightgreen> Link CornerPin" t "Select a corner pin or node with \"to\" points to link animation to" T "# linkCornerPin\n#\n# Select a CornerPin node to link the corners to\n\nthis_node = nuke.thisNode()\n\nwith nuke.root():\n    try:\n        # Check if a node is selected\n        selected_nodes = nuke.selectedNodes()\n        if len(selected_nodes)>1:\n            raise ValueError(\"Please select only 1 node.\")\n\n        selected_node = nuke.selectedNode()\n        if not selected_node:\n            raise ValueError(\"Please select a node.\")\n\n        # Ensure the selected node is not this node\n        if selected_node is this_node:\n            raise ValueError(\"Please select a different node.\")\n\n        # Ensure the selected node has valid 'to' knobs\n        to_knobs = \{f\"to\{i\}\": selected_node.knob(f\"to\{i\}\") for i in range(1, 5)\}\n        if not all(to_knobs.values()):\n            raise ValueError(\"Selected node does not have 4 valid 'to' points.\")\n\n        # Gather gradient corner knobs\n        corner_pins = \{\n            \"topLeft\": this_node.knob(\"topLeft\"),\n            \"topRight\": this_node.knob(\"topRight\"),\n            \"bottomLeft\": this_node.knob(\"bottomLeft\"),\n            \"bottomRight\": this_node.knob(\"bottomRight\"),\n\}\n\n        # Map CornerPin 'to' expressions\n        expressions = \{\n            \"topLeft\": f\"\{selected_node.name()\}.to4\",\n            \"topRight\": f\"\{selected_node.name()\}.to3\",\n            \"bottomLeft\": f\"\{selected_node.name()\}.to1\",\n            \"bottomRight\": f\"\{selected_node.name()\}.to2\",\n        \}\n\n        # Link gradient corners to CornerPin with expressions\n        for corner, expression in expressions.items():\n            corner_pins\[corner].clearAnimated()\n            corner_pins\[corner].setExpression(expression)\n\n    except ValueError as e:\n        nuke.message(str(e))\n        pass" +STARTLINE}
+ addUserKnob {22 bakeCornerPin l "<font color=lightgreen> Bake CornerPin" t "Select a corner pin or node with \"to\" points to bake animation from" -STARTLINE T "# Bake CornerPin expressions into keyframes for a selected node\n\nthis_node = nuke.thisNode()\n\nwith nuke.root():\n    try:\n        # Check if a node is selected\n        selected_nodes = nuke.selectedNodes()\n        if len(selected_nodes)>1:\n            raise ValueError(\"Please select only 1 node.\")\n\n        selected_node = nuke.selectedNode()\n        if not selected_node:\n            raise ValueError(\"Please select a different node.\")\n\n        # Ensure the selected node is not this node\n        if selected_node is this_node:\n            raise ValueError(\"Please select a different node.\")\n\n        # Ensure the selected node has valid 'to' knobs\n        to_knobs = \{f\"to\{index\}\": selected_node.knob(f\"to\{index\}\") for index in range(1, 5)\}\n        if not all(to_knobs.values()):\n            raise ValueError(\"Selected node does not have 4 valid 'to' points.\")\n\n        # Get first/last frame and increment from root\n        first_frame = int(nuke.Root().knob('first_frame').getValue())\n        last_frame = int(nuke.Root().knob('last_frame').getValue())\n\n        # Gather corner knobs\n        corner_pins = \{\n            \"topLeft\":      this_node.knob(\"topLeft\"),\n            \"topRight\":     this_node.knob(\"topRight\"),\n            \"bottomLeft\":   this_node.knob(\"bottomLeft\"),\n            \"bottomRight\":  this_node.knob(\"bottomRight\"),\n        \}\n\n        # Check for expressions in the 'to' knobs\n        has_expressions = any(knob.hasExpression() for knob in to_knobs.values())\n\n        if has_expressions:\n            # User input panel for frame range\n            panel = nuke.Panel(\"Execute on FrameRange\")\n            panel.addSingleLineInput('First Frame', first_frame)\n            panel.addSingleLineInput('Last Frame', last_frame)\n            panel.addSingleLineInput('Increment', 1)\n            panel_open = panel.show()\n\n            if panel_open:\n                user_first_frame = int(panel.value(\"First Frame\"))\n                user_last_frame = int(panel.value(\"Last Frame\"))\n                user_increment = int(panel.value(\"Increment\"))\n\n                # Clear and bake corner pin animations\n                for corner, target in zip(corner_pins.keys(), \['to4', 'to3', 'to1', 'to2']):\n                    corner_pins\[corner].clearAnimated()\n                    corner_pins\[corner].fromScript(to_knobs\[target].toScript())\n\n                    for axis in \[\"x\", \"y\"]:\n                        nuke.animation(\n                            f\"\{this_node.name()\}.\{corner\}.\{axis\}\",\n                            \"generate\",\n                            (str(user_first_frame), str(user_last_frame), str(user_increment), \"y\", corner)\n                        )\n            else:\n                pass\n        else:\n            # Clear and copy expressions for static values\n            for corner, target in zip(corner_pins.keys(), \['to4', 'to3', 'to1', 'to2']):\n                corner_pins\[corner].clearAnimated()\n                corner_pins\[corner].fromScript(to_knobs\[target].toScript())\n\n    except ValueError as e:\n        nuke.message(str(e))\n        pass"}
  addUserKnob {26 adjustPointsDesc l "       " T "<font color=white> If using adjust points, set ref frame to align to main points."}
  addUserKnob {22 setRefFrame l "Set Adjust Ref Frame" t "Set the reference frame to snap the adjust points to where the main points are on the current frame.  This will make it easier to adjust the points from that reference point" T "n = nuke.thisNode()\npo = nuke.toNode(\"PointsOffset\")\n\n# Gather Knobs\nrf    = n.knob('refFrame')\n\nsPosTL  = po.knob('startPosTL')\nfhPosTL = po.knob('frameHoldPosTL')\naPosTL  = n.knob('adjustPosTL')\n\nsPosTR  = po.knob('startPosTR')\nfhPosTR = po.knob('frameHoldPosTR')\naPosTR  = n.knob('adjustPosTR')\n\nsPosBL  = po.knob('startPosBL')\nfhPosBL = po.knob('frameHoldPosBL')\naPosBL  = n.knob('adjustPosBL')\n\nsPosBR  = po.knob('startPosBR')\nfhPosBR = po.knob('frameHoldPosBR')\naPosBR  = n.knob('adjustPosBR')\n\n# Get Current Frame\ncurentFrame = nuke.frame()\n\n# Set frameHold frame from current frame\nrf.setValue(curentFrame)\n\n# grab start position from current frame\nstartPosTL_X = sPosTL.getValueAt( curentFrame, 0 )\nstartPosTL_Y = sPosTL.getValueAt( curentFrame, 1 )\n\nstartPosTR_X = sPosTR.getValueAt( curentFrame, 0 )\nstartPosTR_Y = sPosTR.getValueAt( curentFrame, 1 )\n\nstartPosBL_X = sPosBL.getValueAt( curentFrame, 0 )\nstartPosBL_Y = sPosBL.getValueAt( curentFrame, 1 )\n\nstartPosBR_X = sPosBR.getValueAt( curentFrame, 0 )\nstartPosBR_Y = sPosBR.getValueAt( curentFrame, 1 )\n\n# set frameHold Position\nfhPosTL.setValue(startPosTL_X, 0)\nfhPosTL.setValue(startPosTL_Y, 1)\n\nfhPosTR.setValue(startPosTR_X, 0)\nfhPosTR.setValue(startPosTR_Y, 1)\n\nfhPosBL.setValue(startPosBL_X, 0)\nfhPosBL.setValue(startPosBL_Y, 1)\n\nfhPosBR.setValue(startPosBR_X, 0)\nfhPosBR.setValue(startPosBR_Y, 1)\n\n# set adjusted Position \naPosTL.setValue(startPosTL_X, 0)\naPosTL.setValue(startPosTL_Y+10, 1)\naPosTL.clearAnimated()\n\naPosTR.setValue(startPosTR_X, 0)\naPosTR.setValue(startPosTR_Y+10, 1)\naPosTR.clearAnimated()\n\naPosBL.setValue(startPosBL_X, 0)\naPosBL.setValue(startPosBL_Y+10, 1)\naPosBL.clearAnimated()\n\naPosBR.setValue(startPosBR_X, 0)\naPosBR.setValue(startPosBR_Y+10, 1)\naPosBR.clearAnimated()\n\n\n" +STARTLINE}
  addUserKnob {3 refFrame l "" -STARTLINE +DISABLED}
- refFrame 1001
+ refFrame 1
  addUserKnob {26 viewerUI l "<b> <font color=white>Viewer UI:" T " "}
  addUserKnob {22 toggleMainPoints l "<font color = white>Hide Main Points" t "Toggle the visiblity in viewer of main points UI" -STARTLINE T "n = nuke.thisNode()\n\ntl = n.knob(\"topLeft\")\ntr = n.knob(\"topRight\")\nbl = n.knob(\"bottomLeft\")\nbr = n.knob(\"bottomRight\")\n\ntmp = n.knob(\"toggleMainPoints\")\nts = n.knob(\"mainToggleStatus\")\ncurrState = ts.getValue()\n\nif currState == 0:\n    tl.clearFlag(0x0000000000008000)\n    tr.clearFlag(0x0000000000008000)\n    bl.clearFlag(0x0000000000008000)\n    br.clearFlag(0x0000000000008000)\n    ts.setValue(1)\n    tmp.setLabel(\"<font color = white>Hide Main Points\")\n    \n\nelse:\n    tl.setFlag(0x0000000000008000)\n    tr.setFlag(0x0000000000008000)\n    bl.setFlag(0x0000000000008000)\n    br.setFlag(0x0000000000008000)\n    ts.setValue(0)\n    tmp.setLabel(\"<font color = white>Show Main Points\")"}
  addUserKnob {22 toggleAdjustKnobs l "<font color = skyblue>Show Adjust Points" t "Toggle the visibilty of knobs and viewer UI of adjustment points" -STARTLINE T "n = nuke.thisNode()\n\natl = n.knob(\"adjustPosTL\")\natr = n.knob(\"adjustPosTR\")\nabl = n.knob(\"adjustPosBL\")\nabr = n.knob(\"adjustPosBR\")\n\ntak = n.knob(\"toggleAdjustKnobs\")\ncurrState = atl.visible()\n\nif currState == False:\n    atl.setVisible(True)\n    atr.setVisible(True)\n    abl.setVisible(True)\n    abr.setVisible(True)\n    \n    atl.clearFlag(0x0000000000008000)\n    atr.clearFlag(0x0000000000008000)\n    abl.clearFlag(0x0000000000008000)\n    abr.clearFlag(0x0000000000008000)\n    tak.setLabel(\"<font color = skyblue>Hide Adjust Points\")\n\n\nelse:\n    atl.setVisible(False)\n    atr.setVisible(False)\n    abl.setVisible(False)\n    abr.setVisible(False)\n\n    atl.setFlag(0x0000000000008000)\n    atr.setFlag(0x0000000000008000)\n    abl.setFlag(0x0000000000008000)\n    abr.setFlag(0x0000000000008000)\n    tak.setLabel(\"<font color = skyblue>Show Adjust Points\")"}
  addUserKnob {41 topLeft T Settings.topLeft}
  addUserKnob {12 adjustPosTL l "adjust TL" -STARTLINE +HIDDEN}
- adjustPosTL {100 410}
+ adjustPosTL {192 334}
  addUserKnob {41 topRight T Settings.topRight}
  addUserKnob {12 adjustPosTR l "adjust TR" -STARTLINE +HIDDEN}
- adjustPosTR {400 410}
+ adjustPosTR {408 334}
  addUserKnob {41 bottomLeft T Settings.bottomLeft}
  addUserKnob {12 adjustPosBL l "adjust BL" -STARTLINE +HIDDEN}
- adjustPosBL {100 110}
+ adjustPosBL {192 118}
  addUserKnob {41 bottomRight T Settings.bottomRight}
  addUserKnob {12 adjustPosBR l "adjust BR" -STARTLINE +HIDDEN}
- adjustPosBR {400 110}
+ adjustPosBR {408 118}
  addUserKnob {3 mainToggleStatus +INVISIBLE}
  mainToggleStatus 1
  addUserKnob {20 endGroup n -1}
@@ -51,7 +46,7 @@ Group {
  addUserKnob {22 makeLive l "Make Live" t "make the points sample from input live" T "n = nuke.thisNode()\nbc = nuke.toNode(\"BakeColors\")\nl = \"<b> <font color=lime> Is Live\"\nk = \"status\"\nbcg = n.knob(\"bakeColors\")\n\nct1 = nuke.toNode(\"CurveToolTopLeft\")\nct2 = nuke.toNode(\"CurveToolTopRight\")\nct3 = nuke.toNode(\"CurveToolBottomLeft\")\nct4 = nuke.toNode(\"CurveToolBottomRight\")\n\ncol_tl = nuke.toNode(\"TopLeftColor\").knob(\"value\")\ncol_tr = nuke.toNode(\"TopRightColor\").knob(\"value\")\ncol_bl = nuke.toNode(\"BottomLeftColor\").knob(\"value\")\ncol_br = nuke.toNode(\"BottomRightColor\").knob(\"value\")\n\nn\[k].setValue(l)\n\nwith n:\n    bc.knob(\"makeLive\").execute()\n\nn.knob(\"topLeftColor\").setEnabled(False)\nn.knob(\"topRightColor\").setEnabled(False)\nn.knob(\"bottomLeftColor\").setEnabled(False)\nn.knob(\"bottomRightColor\").setEnabled(False)\n\ncol_tl.setValue(0, 0)\ncol_tl.setValue(0, 1)\ncol_tl.setValue(0, 2)\ncol_tl.setValue(0, 3)\ncol_tl.clearAnimated()\n\ncol_tr.setValue(0, 0)\ncol_tr.setValue(0, 1)\ncol_tr.setValue(0, 2)\ncol_tr.setValue(0, 3)\ncol_tr.clearAnimated()\n\ncol_bl.setValue(0, 0)\ncol_bl.setValue(0, 1)\ncol_bl.setValue(0, 2)\ncol_bl.setValue(0, 3)\n\ncol_bl.clearAnimated()\ncol_br.setValue(0, 0)\ncol_br.setValue(0, 1)\ncol_br.setValue(0, 2)\ncol_br.setValue(0, 3)\ncol_br.clearAnimated()\n\n\nn\[\"bakedColors\"].setValue(False)\n\nct1\[\"intensitydata\"].clearAnimated()\nct1\[\"intensitydata\"].setValue(0, 0)\nct1\[\"intensitydata\"].setValue(0, 1)\nct1\[\"intensitydata\"].setValue(0, 2)\nct1\[\"intensitydata\"].setValue(0, 3)\n\nct2\[\"intensitydata\"].clearAnimated()\nct2\[\"intensitydata\"].setValue(0, 0)\nct2\[\"intensitydata\"].setValue(0, 1)\nct2\[\"intensitydata\"].setValue(0, 2)\nct2\[\"intensitydata\"].setValue(0, 3)\n\nct3\[\"intensitydata\"].clearAnimated()\nct3\[\"intensitydata\"].setValue(0, 0)\nct3\[\"intensitydata\"].setValue(0, 1)\nct3\[\"intensitydata\"].setValue(0, 2)\nct3\[\"intensitydata\"].setValue(0, 3)\n\nct4\[\"intensitydata\"].clearAnimated()\nct4\[\"intensitydata\"].setValue(0, 0)\nct4\[\"intensitydata\"].setValue(0, 1)\nct4\[\"intensitydata\"].setValue(0, 2)\nct4\[\"intensitydata\"].setValue(0, 3)\n" +STARTLINE}
  addUserKnob {26 status l "<b> <font size=4>Status:   " -STARTLINE T "<b> <font color=lime> Is Live"}
  addUserKnob {22 bakeCurrentFrame l "<font color=violet> Bake Current Frame" t "bake a single color for each corner point on this frame" T "n = nuke.thisNode()\nf = nuke.frame()\n\nbcg = n.knob(\"bakeColors\")\n\ncol_tl = nuke.toNode(\"TopLeftColor\")\ncol_tr = nuke.toNode(\"TopRightColor\")\ncol_bl = nuke.toNode(\"BottomLeftColor\")\ncol_br = nuke.toNode(\"BottomRightColor\")\n\nptl = nuke.toNode(\"PickerTL\")\nptr = nuke.toNode(\"PickerTR\")\npbl = nuke.toNode(\"PickerBL\")\npbr = nuke.toNode(\"PickerBR\")\n\nswtl = nuke.toNode(\"LiveSwitchTopLeft\")\nswtr = nuke.toNode(\"LiveSwitchTopRight\")\nswbl = nuke.toNode(\"LiveSwitchBottomLeft\")\nswbr = nuke.toNode(\"LiveSwitchBottomRight\")\n\nk = \"status\"\nl = \"<b> <font color=red> Is Baked on Frame:\" + \" \" + str(f)\n\nwith n:\n    swtl.knob(\"which\").setValue(0)\n    swtr.knob(\"which\").setValue(0)\n    swbl.knob(\"which\").setValue(0)\n    swbr.knob(\"which\").setValue(0)\n\n    col_tl\[\"value\"].clearAnimated()\n    col_tr\[\"value\"].clearAnimated()\n    col_bl\[\"value\"].clearAnimated()\n    col_br\[\"value\"].clearAnimated()\n\n    ptl.knob(\"generateColors\").execute()\n    ptr.knob(\"generateColors\").execute()\n    pbl.knob(\"generateColors\").execute()\n    pbr.knob(\"generateColors\").execute()\n\n    swtl.knob(\"which\").setValue(1)\n    swtr.knob(\"which\").setValue(1)\n    swbl.knob(\"which\").setValue(1)\n    swbr.knob(\"which\").setValue(1)\n\nn\[k].setValue(l)\n\nn\[\"topLeftColor\"].setEnabled(True)\nn\[\"topRightColor\"].setEnabled(True)\nn\[\"bottomLeftColor\"].setEnabled(True)\nn\[\"bottomRightColor\"].setEnabled(True)\n\nn\[\"bakedColors\"].setValue(True)" +STARTLINE}
- addUserKnob {22 bakeFrameRange l "<font color=violet>Bake FrameRange" t "bake a framerange for the cornerpoints" -STARTLINE T "import time\nimport threading\n\nn = nuke.thisNode()\n#Define this node\n\nct1 = nuke.toNode(\"CurveToolTopLeft\")\nct2 = nuke.toNode(\"CurveToolTopRight\")\nct3 = nuke.toNode(\"CurveToolBottomLeft\")\nct4 = nuke.toNode(\"CurveToolBottomRight\")\nctL = \[ct1,ct2,ct3,ct4]\n# Define curveTool nodes\n\nbcg = n.knob(\"bakeColors\")\n\ncol_tl = nuke.toNode(\"TopLeftColor\")\ncol_tr = nuke.toNode(\"TopRightColor\")\ncol_bl = nuke.toNode(\"BottomLeftColor\")\ncol_br = nuke.toNode(\"BottomRightColor\")\n# Define color constant nodes\n\nfirst_frame = int(nuke.Root()\['first_frame'].getValue())\nlast_frame = int(nuke.Root()\['last_frame'].getValue())\n# Grab first and last frame from root\n\np = nuke.Panel(\"Execute on FrameRange\")\np.addSingleLineInput('First Frame', first_frame)\np.addSingleLineInput('Last Frame', last_frame)\np.addSingleLineInput('Increment', 1)\nif p.show():\n    \n    # Create user input panel\n    \n    ff = int(p.value(\"First Frame\"))\n    lf = int(p.value(\"Last Frame\"))\n    i = int(p.value(\"Increment\"))\n    # Define first, last, increment from user input panel\n    \n    k = \"status\"\n    l = \"<b> <font color=red> Is Baked on Frames:\" + \" \" + str(ff) + \"-\" + str(lf)\n    # Change status of node\n    \n    with n:\n        \n        ct1\[\"intensitydata\"].clearAnimated()\n        ct2\[\"intensitydata\"].clearAnimated()\n        ct3\[\"intensitydata\"].clearAnimated()\n        ct4\[\"intensitydata\"].clearAnimated()\n        # Clear any intensitydata from all CurveTool nodes\n    \n        def executeCT(first,last,inc):\n            runMe = True\n            while runMe == True:\n                nuke.execute(ct1,first,last,inc)  \n                nuke.execute(ct2,first,last,inc)\n                nuke.execute(ct3,first,last,inc)\n                nuke.execute(ct4,first,last,inc)\n                stop_event.set()\n                runMe = False\n                print 'CurveTools done'\n                break\n            # Define CurveTool execution function\n    \n    \n        global stop_event \n        stop_event = threading.Event()\n        threading.Thread(target=executeCT, kwargs=dict(first=ff,last=lf,inc=i) ).start() \n        while not stop_event.is_set():\n            time.sleep(0.1)\n        # run CurveTools with threading\n    \n        swtl = nuke.toNode(\"LiveSwitchTopLeft\")\n        swtr = nuke.toNode(\"LiveSwitchTopRight\")\n        swbl = nuke.toNode(\"LiveSwitchBottomLeft\")\n        swbr = nuke.toNode(\"LiveSwitchBottomRight\")\n        # Define Switchs\n    \n        swtl.knob(\"which\").setValue(1)\n        swtr.knob(\"which\").setValue(1)\n        swbl.knob(\"which\").setValue(1)\n        swbr.knob(\"which\").setValue(1)\n        # Switch output type to animated constants\n    \n        col_tl\[\"value\"].copyAnimations(ct1\[\"intensitydata\"].animations())\n        col_tr\[\"value\"].copyAnimations(ct2\[\"intensitydata\"].animations())\n        col_bl\[\"value\"].copyAnimations(ct3\[\"intensitydata\"].animations())\n        col_br\[\"value\"].copyAnimations(ct4\[\"intensitydata\"].animations())\n        # copy curveTool intensity values over to the constant colors\n    \n    n\[k].setValue(l)\n    # Change Status of Node\n    \n    n\[\"topLeftColor\"].setEnabled(True)\n    n\[\"topRightColor\"].setEnabled(True)\n    n\[\"bottomLeftColor\"].setEnabled(True)\n    n\[\"bottomRightColor\"].setEnabled(True)\n    # Unlock Color knobs from property bin\n    \n    n\[\"bakedColors\"].setValue(True)"}
+ addUserKnob {22 bakeFrameRange l "<font color=violet>Bake FrameRange" t "bake a framerange for the cornerpoints" -STARTLINE T "import time\nimport threading\n\nn = nuke.thisNode()\n#Define this node\n\nct1 = nuke.toNode(\"CurveToolTopLeft\")\nct2 = nuke.toNode(\"CurveToolTopRight\")\nct3 = nuke.toNode(\"CurveToolBottomLeft\")\nct4 = nuke.toNode(\"CurveToolBottomRight\")\nctL = \[ct1,ct2,ct3,ct4]\n# Define curveTool nodes\n\nbcg = n.knob(\"bakeColors\")\n\ncol_tl = nuke.toNode(\"TopLeftColor\")\ncol_tr = nuke.toNode(\"TopRightColor\")\ncol_bl = nuke.toNode(\"BottomLeftColor\")\ncol_br = nuke.toNode(\"BottomRightColor\")\n# Define color constant nodes\n\nfirst_frame = int(nuke.Root()\['first_frame'].getValue())\nlast_frame = int(nuke.Root()\['last_frame'].getValue())\n# Grab first and last frame from root\n\np = nuke.Panel(\"Execute on FrameRange\")\np.addSingleLineInput('First Frame', first_frame)\np.addSingleLineInput('Last Frame', last_frame)\np.addSingleLineInput('Increment', 1)\nif p.show():\n    \n    # Create user input panel\n    \n    ff = int(p.value(\"First Frame\"))\n    lf = int(p.value(\"Last Frame\"))\n    i = int(p.value(\"Increment\"))\n    # Define first, last, increment from user input panel\n    \n    k = \"status\"\n    l = \"<b> <font color=red> Is Baked on Frames:\" + \" \" + str(ff) + \"-\" + str(lf)\n    # Change status of node\n    \n    with n:\n        \n        ct1\[\"intensitydata\"].clearAnimated()\n        ct2\[\"intensitydata\"].clearAnimated()\n        ct3\[\"intensitydata\"].clearAnimated()\n        ct4\[\"intensitydata\"].clearAnimated()\n        # Clear any intensitydata from all CurveTool nodes\n    \n        def executeCT(first,last,inc):\n            runMe = True\n            while runMe == True:\n                nuke.execute(ct1,first,last,inc)  \n                nuke.execute(ct2,first,last,inc)\n                nuke.execute(ct3,first,last,inc)\n                nuke.execute(ct4,first,last,inc)\n                stop_event.set()\n                runMe = False\n                #print('CurveTools done')\n                break\n            # Define CurveTool execution function\n    \n    \n        global stop_event \n        stop_event = threading.Event()\n        threading.Thread(target=executeCT, kwargs=dict(first=ff,last=lf,inc=i) ).start() \n        while not stop_event.is_set():\n            time.sleep(0.1)\n        # run CurveTools with threading\n    \n        swtl = nuke.toNode(\"LiveSwitchTopLeft\")\n        swtr = nuke.toNode(\"LiveSwitchTopRight\")\n        swbl = nuke.toNode(\"LiveSwitchBottomLeft\")\n        swbr = nuke.toNode(\"LiveSwitchBottomRight\")\n        # Define Switchs\n    \n        swtl.knob(\"which\").setValue(1)\n        swtr.knob(\"which\").setValue(1)\n        swbl.knob(\"which\").setValue(1)\n        swbr.knob(\"which\").setValue(1)\n        # Switch output type to animated constants\n    \n        col_tl\[\"value\"].copyAnimations(ct1\[\"intensitydata\"].animations())\n        col_tr\[\"value\"].copyAnimations(ct2\[\"intensitydata\"].animations())\n        col_bl\[\"value\"].copyAnimations(ct3\[\"intensitydata\"].animations())\n        col_br\[\"value\"].copyAnimations(ct4\[\"intensitydata\"].animations())\n        # copy curveTool intensity values over to the constant colors\n    \n    n\[k].setValue(l)\n    # Change Status of Node\n    \n    n\[\"topLeftColor\"].setEnabled(True)\n    n\[\"topRightColor\"].setEnabled(True)\n    n\[\"bottomLeftColor\"].setEnabled(True)\n    n\[\"bottomRightColor\"].setEnabled(True)\n    # Unlock Color knobs from property bin\n    \n    n\[\"bakedColors\"].setValue(True)"}
  addUserKnob {20 bakedColors l "Baked Colors:" n 1}
  bakedColors 0
  addUserKnob {41 topLeftColor l "Top Left Color" T TopLeftColor.value}
@@ -106,8 +101,8 @@ Group {
   xpos 174
   ypos 1464
  }
-set N25cc2020 [stack 0]
-push $N25cc2020
+set N1a6dcc00 [stack 0]
+push $N1a6dcc00
 push 0
  Crop {
   inputs 0
@@ -119,12 +114,6 @@ push 0
   ypos 493
   addUserKnob {20 User}
   addUserKnob {22 cropToBbox l "Crop to Bounding Box" -STARTLINE T codeBBox()}
-  addUserKnob {22 cropToBbox_1 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
-  addUserKnob {22 cropToBbox_2 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
-  addUserKnob {22 cropToBbox_3 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
-  addUserKnob {22 cropToBbox_4 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
-  addUserKnob {22 cropToBbox_5 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
-  addUserKnob {22 cropToBbox_6 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
  }
  AddChannels {
   channels rgba
@@ -164,21 +153,21 @@ push 0
   xpos 34
   ypos 122
  }
-set N25d69f30 [stack 0]
+set N1a6e4800 [stack 0]
  Dot {
   name Dot8
   note_font_size 31
   xpos 375
   ypos 122
  }
-set N25e54940 [stack 0]
+set N1a6e4e00 [stack 0]
  Dot {
   name Dot3
   note_font_size 31
   xpos 760
   ypos 122
  }
-set N25e56b30 [stack 0]
+set N1a6e5400 [stack 0]
  Dot {
   name Dot4
   note_font_size 31
@@ -202,12 +191,6 @@ set N25e56b30 [stack 0]
   ypos 299
   addUserKnob {20 User}
   addUserKnob {22 cropToBbox l "Crop to Bounding Box" -STARTLINE T codeBBox()}
-  addUserKnob {22 cropToBbox_1 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
-  addUserKnob {22 cropToBbox_2 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
-  addUserKnob {22 cropToBbox_3 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
-  addUserKnob {22 cropToBbox_4 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
-  addUserKnob {22 cropToBbox_5 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
-  addUserKnob {22 cropToBbox_6 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
  }
  Blur {
   channels rgb
@@ -223,7 +206,7 @@ set N25e56b30 [stack 0]
   xpos 1122
   ypos 396
  }
-set N27a6dc30 [stack 0]
+set N3e603000 [stack 0]
  NoOp {
   name PickerBR
   xpos 1020
@@ -237,38 +220,6 @@ set N27a6dc30 [stack 0]
   addUserKnob {19 brColor l BRColor}
   brColor {0.0574003458 0.0481092073 0.04007726908 0}
   addUserKnob {6 brColor_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 brColor_panelDropped_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 brColor_panelDropped_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 brColor_panelDropped_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 brColor_panelDropped_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 brColor_panelDropped_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 brColor_panelDropped_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 brColor_panelDropped_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 brColor_panelDropped_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 brColor_panelDropped_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 brColor_panelDropped_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 brColor_panelDropped_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 brColor_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 brColor_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 brColor_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 brColor_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 brColor_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 brColor_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 brColor_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 brColor_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 brColor_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 brColor_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 brColor_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 brColor_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 brColor_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 brColor_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 brColor_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 brColor_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 brColor_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 brColor_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 brColor_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 brColor_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 brColor_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
  }
  Crop {
   box {{parent.getInputFormat.box} {parent.getInputFormat.box} {parent.getInputFormat.box} {parent.getInputFormat.box}}
@@ -279,12 +230,6 @@ set N27a6dc30 [stack 0]
   ypos 470
   addUserKnob {20 User}
   addUserKnob {22 cropToBbox l "Crop to Bounding Box" -STARTLINE T codeBBox()}
-  addUserKnob {22 cropToBbox_1 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
-  addUserKnob {22 cropToBbox_2 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
-  addUserKnob {22 cropToBbox_3 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
-  addUserKnob {22 cropToBbox_4 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
-  addUserKnob {22 cropToBbox_5 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
-  addUserKnob {22 cropToBbox_6 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
  }
  Switch {
   inputs 2
@@ -313,12 +258,6 @@ set N27a6dc30 [stack 0]
   ypos 498
   addUserKnob {20 User}
   addUserKnob {22 cropToBbox l "Crop to Bounding Box" -STARTLINE T codeBBox()}
-  addUserKnob {22 cropToBbox_1 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
-  addUserKnob {22 cropToBbox_2 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
-  addUserKnob {22 cropToBbox_3 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
-  addUserKnob {22 cropToBbox_4 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
-  addUserKnob {22 cropToBbox_5 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
-  addUserKnob {22 cropToBbox_6 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
  }
  AddChannels {
   channels rgba
@@ -333,7 +272,7 @@ set N27a6dc30 [stack 0]
   xpos 804
   ypos 546
  }
-push $N25e56b30
+push $N1a6e5400
  Dot {
   name Dot1
   label "Bottom Left"
@@ -351,12 +290,6 @@ push $N25e56b30
   ypos 298
   addUserKnob {20 User}
   addUserKnob {22 cropToBbox l "Crop to Bounding Box" -STARTLINE T codeBBox()}
-  addUserKnob {22 cropToBbox_1 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
-  addUserKnob {22 cropToBbox_2 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
-  addUserKnob {22 cropToBbox_3 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
-  addUserKnob {22 cropToBbox_4 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
-  addUserKnob {22 cropToBbox_5 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
-  addUserKnob {22 cropToBbox_6 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
  }
  Blur {
   channels rgb
@@ -372,7 +305,7 @@ push $N25e56b30
   xpos 760
   ypos 397
  }
-set N279fbc70 [stack 0]
+set N1a6a3e00 [stack 0]
  NoOp {
   name PickerBL
   xpos 664
@@ -386,38 +319,6 @@ set N279fbc70 [stack 0]
   addUserKnob {19 blColor l BLColor}
   blColor {0.03392057866 0.02863720059 0.02191788703 0}
   addUserKnob {6 blColor_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 blColor_panelDropped_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 blColor_panelDropped_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 blColor_panelDropped_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 blColor_panelDropped_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 blColor_panelDropped_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 blColor_panelDropped_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 blColor_panelDropped_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 blColor_panelDropped_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 blColor_panelDropped_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 blColor_panelDropped_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 blColor_panelDropped_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 blColor_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 blColor_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 blColor_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 blColor_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 blColor_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 blColor_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 blColor_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 blColor_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 blColor_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 blColor_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 blColor_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 blColor_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 blColor_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 blColor_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 blColor_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 blColor_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 blColor_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 blColor_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 blColor_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 blColor_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 blColor_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
  }
  Crop {
   box {{parent.getInputFormat.box} {parent.getInputFormat.box} {parent.getInputFormat.box} {parent.getInputFormat.box}}
@@ -428,12 +329,6 @@ set N279fbc70 [stack 0]
   ypos 473
   addUserKnob {20 User}
   addUserKnob {22 cropToBbox l "Crop to Bounding Box" -STARTLINE T codeBBox()}
-  addUserKnob {22 cropToBbox_1 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
-  addUserKnob {22 cropToBbox_2 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
-  addUserKnob {22 cropToBbox_3 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
-  addUserKnob {22 cropToBbox_4 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
-  addUserKnob {22 cropToBbox_5 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
-  addUserKnob {22 cropToBbox_6 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
  }
  Switch {
   inputs 2
@@ -468,12 +363,6 @@ set N279fbc70 [stack 0]
   ypos 483
   addUserKnob {20 User}
   addUserKnob {22 cropToBbox l "Crop to Bounding Box" -STARTLINE T codeBBox()}
-  addUserKnob {22 cropToBbox_1 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
-  addUserKnob {22 cropToBbox_2 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
-  addUserKnob {22 cropToBbox_3 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
-  addUserKnob {22 cropToBbox_4 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
-  addUserKnob {22 cropToBbox_5 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
-  addUserKnob {22 cropToBbox_6 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
  }
  AddChannels {
   channels rgba
@@ -488,7 +377,7 @@ set N279fbc70 [stack 0]
   xpos 428
   ypos 531
  }
-push $N25e54940
+push $N1a6e4e00
  Dot {
   name Dot6
   label "Top Right"
@@ -506,12 +395,6 @@ push $N25e54940
   ypos 297
   addUserKnob {20 User}
   addUserKnob {22 cropToBbox l "Crop to Bounding Box" -STARTLINE T codeBBox()}
-  addUserKnob {22 cropToBbox_1 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
-  addUserKnob {22 cropToBbox_2 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
-  addUserKnob {22 cropToBbox_3 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
-  addUserKnob {22 cropToBbox_4 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
-  addUserKnob {22 cropToBbox_5 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
-  addUserKnob {22 cropToBbox_6 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
  }
  Blur {
   channels rgb
@@ -527,7 +410,7 @@ push $N25e54940
   xpos 375
   ypos 397
  }
-set N27b51f50 [stack 0]
+set N1a73f400 [stack 0]
  NoOp {
   name PickerTR
   xpos 283
@@ -541,38 +424,6 @@ set N27b51f50 [stack 0]
   addUserKnob {19 trColor l TRColor}
   trColor {0.03820500523 0.03160730004 0.02090981975 0}
   addUserKnob {6 trColor_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 trColor_panelDropped_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 trColor_panelDropped_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 trColor_panelDropped_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 trColor_panelDropped_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 trColor_panelDropped_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 trColor_panelDropped_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 trColor_panelDropped_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 trColor_panelDropped_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 trColor_panelDropped_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 trColor_panelDropped_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 trColor_panelDropped_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 trColor_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 trColor_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 trColor_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 trColor_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 trColor_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 trColor_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 trColor_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 trColor_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 trColor_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 trColor_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 trColor_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 trColor_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 trColor_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 trColor_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 trColor_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 trColor_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 trColor_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 trColor_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 trColor_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 trColor_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 trColor_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
  }
  Crop {
   box {{parent.getInputFormat.box} {parent.getInputFormat.box} {parent.getInputFormat.box} {parent.getInputFormat.box}}
@@ -583,12 +434,6 @@ set N27b51f50 [stack 0]
   ypos 492
   addUserKnob {20 User}
   addUserKnob {22 cropToBbox l "Crop to Bounding Box" -STARTLINE T codeBBox()}
-  addUserKnob {22 cropToBbox_1 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
-  addUserKnob {22 cropToBbox_2 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
-  addUserKnob {22 cropToBbox_3 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
-  addUserKnob {22 cropToBbox_4 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
-  addUserKnob {22 cropToBbox_5 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
-  addUserKnob {22 cropToBbox_6 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
  }
  Switch {
   inputs 2
@@ -617,12 +462,6 @@ set N27b51f50 [stack 0]
   ypos 476
   addUserKnob {20 User}
   addUserKnob {22 cropToBbox l "Crop to Bounding Box" -STARTLINE T codeBBox()}
-  addUserKnob {22 cropToBbox_1 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
-  addUserKnob {22 cropToBbox_2 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
-  addUserKnob {22 cropToBbox_3 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
-  addUserKnob {22 cropToBbox_4 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
-  addUserKnob {22 cropToBbox_5 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
-  addUserKnob {22 cropToBbox_6 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
  }
  AddChannels {
   channels rgba
@@ -637,7 +476,7 @@ set N27b51f50 [stack 0]
   xpos 79
   ypos 524
  }
-push $N25d69f30
+push $N1a6e4800
  Dot {
   name Dot5
   label "Top Left"
@@ -654,12 +493,6 @@ push $N25d69f30
   ypos 288
   addUserKnob {20 User}
   addUserKnob {22 cropToBbox l "Crop to Bounding Box" -STARTLINE T codeBBox()}
-  addUserKnob {22 cropToBbox_1 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
-  addUserKnob {22 cropToBbox_2 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
-  addUserKnob {22 cropToBbox_3 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
-  addUserKnob {22 cropToBbox_4 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
-  addUserKnob {22 cropToBbox_5 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
-  addUserKnob {22 cropToBbox_6 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
  }
  Blur {
   channels rgb
@@ -675,7 +508,7 @@ push $N25d69f30
   xpos 34
   ypos 396
  }
-set N27b8f840 [stack 0]
+set N1a745c00 [stack 0]
  NoOp {
   name PickerTL
   xpos -73
@@ -689,38 +522,6 @@ set N27b8f840 [stack 0]
   addUserKnob {19 tlColor l TLColor}
   tlColor {0.04360837862 0.03884135559 0.03016782366 0}
   addUserKnob {6 tlColor_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 tlColor_panelDropped_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 tlColor_panelDropped_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 tlColor_panelDropped_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 tlColor_panelDropped_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 tlColor_panelDropped_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 tlColor_panelDropped_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 tlColor_panelDropped_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 tlColor_panelDropped_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 tlColor_panelDropped_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 tlColor_panelDropped_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 tlColor_panelDropped_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 tlColor_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 tlColor_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 tlColor_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 tlColor_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 tlColor_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 tlColor_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 tlColor_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 tlColor_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 tlColor_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 tlColor_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 tlColor_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 tlColor_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 tlColor_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 tlColor_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 tlColor_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 tlColor_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 tlColor_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 tlColor_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 tlColor_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 tlColor_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
-  addUserKnob {6 tlColor_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
  }
  Crop {
   box {{parent.getInputFormat.box} {parent.getInputFormat.box} {parent.getInputFormat.box} {parent.getInputFormat.box}}
@@ -731,12 +532,6 @@ set N27b8f840 [stack 0]
   ypos 491
   addUserKnob {20 User}
   addUserKnob {22 cropToBbox l "Crop to Bounding Box" -STARTLINE T codeBBox()}
-  addUserKnob {22 cropToBbox_1 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
-  addUserKnob {22 cropToBbox_2 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
-  addUserKnob {22 cropToBbox_3 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
-  addUserKnob {22 cropToBbox_4 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
-  addUserKnob {22 cropToBbox_5 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
-  addUserKnob {22 cropToBbox_6 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
  }
  Switch {
   inputs 2
@@ -803,7 +598,7 @@ set N27b8f840 [stack 0]
   ypos 1468
   disable {{"!\[exists parent.input1]"}}
  }
-set N27bae710 [stack 0]
+set N1a74da00 [stack 0]
  Merge2 {
   inputs 2
   operation mask
@@ -812,7 +607,7 @@ set N27bae710 [stack 0]
   xpos 174
   ypos 1519
  }
-push $N27bae710
+push $N1a74da00
  CopyBBox {
   inputs 2
   name CopyBBox1
@@ -826,15 +621,15 @@ push $N27bae710
   xpos 29
   ypos 1641
  }
-set N27bc12c0 [stack 0]
+set N1a74fc00 [stack 0]
  Dot {
   name Dot15
   note_font_size 31
   xpos 29
   ypos 1730
  }
-push $N27bc12c0
-push $N25d69f30
+push $N1a74fc00
+push $N1a6e4800
  Dot {
   name Dot9
   note_font_size 31
@@ -859,7 +654,7 @@ push $N25d69f30
   xpos -595
   ypos 2064
  }
-push $N279fbc70
+push $N1a6a3e00
  CurveTool {
   avgframes 1
   ROI {0 0 1 1}
@@ -869,7 +664,7 @@ push $N279fbc70
   xpos 806
   ypos 441
  }
-push $N27a6dc30
+push $N3e603000
  CurveTool {
   avgframes 1
   ROI {0 0 1 1}
@@ -879,7 +674,7 @@ push $N27a6dc30
   xpos 1175
   ypos 441
  }
-push $N27b8f840
+push $N1a745c00
  CurveTool {
   avgframes 1
   ROI {0 0 1 1}
@@ -891,24 +686,6 @@ push $N27b8f840
  }
  NoOp {
   inputs 0
-  name Settings
-  xpos -178
-  ypos -13
-  addUserKnob {20 User}
-  addUserKnob {3 sampleSize l "Sample Size"}
-  sampleSize 4
-  addUserKnob {26 ""}
-  addUserKnob {12 topLeft}
-  topLeft {100 400}
-  addUserKnob {12 topRight}
-  topRight {400 400}
-  addUserKnob {12 bottomLeft}
-  bottomLeft {100 100}
-  addUserKnob {12 bottomRight}
-  bottomRight {400 100}
- }
- NoOp {
-  inputs 0
   name PointsOffset
   xpos -445
   ypos -70
@@ -916,7 +693,7 @@ push $N27b8f840
   addUserKnob {12 startPosTL}
   startPosTL {{parent.Settings.topLeft} {parent.Settings.topLeft}}
   addUserKnob {12 frameHoldPosTL}
-  frameHoldPosTL {100 400}
+  frameHoldPosTL {192 324}
   addUserKnob {12 amountMovedTL}
   amountMovedTL {{frameHoldPosTL-adjustPosTL} {frameHoldPosTL-adjustPosTL+10}}
   addUserKnob {12 finalPosTL}
@@ -925,7 +702,7 @@ push $N27b8f840
   addUserKnob {12 startPosTR}
   startPosTR {{parent.Settings.topRight} {parent.Settings.topRight}}
   addUserKnob {12 frameHoldPosTR}
-  frameHoldPosTR {400 400}
+  frameHoldPosTR {408 324}
   addUserKnob {12 amountMovedTR}
   amountMovedTR {{frameHoldPosTR-adjustPosTR} {frameHoldPosTR-adjustPosTR+10}}
   addUserKnob {12 finalPosTR}
@@ -934,7 +711,7 @@ push $N27b8f840
   addUserKnob {12 startPosBL}
   startPosBL {{parent.Settings.bottomLeft} {parent.Settings.bottomLeft}}
   addUserKnob {12 frameHoldPosBL}
-  frameHoldPosBL {100 100}
+  frameHoldPosBL {192 108}
   addUserKnob {12 amountMovedBL}
   amountMovedBL {{frameHoldPosBL-adjustPosBL} {frameHoldPosBL-adjustPosBL+10}}
   addUserKnob {12 finalPosBL}
@@ -943,13 +720,13 @@ push $N27b8f840
   addUserKnob {12 startPosBR}
   startPosBR {{parent.Settings.bottomRight} {parent.Settings.bottomRight}}
   addUserKnob {12 frameHoldPosBR}
-  frameHoldPosBR {400 100}
+  frameHoldPosBR {408 108}
   addUserKnob {12 amountMovedBR}
   amountMovedBR {{frameHoldPosBR-adjustPosBR} {frameHoldPosBR-adjustPosBR+10}}
   addUserKnob {12 finalPosBR}
   finalPosBR {{startPosBR-amountMovedBR} {startPosBR-amountMovedBR}}
  }
-push $N27b51f50
+push $N1a73f400
  CurveTool {
   avgframes 1
   ROI {0 0 1 1}
@@ -967,27 +744,31 @@ push $N27b51f50
   ypos -12
   addUserKnob {20 User}
   addUserKnob {22 cropToBbox l "Crop to Bounding Box" -STARTLINE T codeBBox()}
-  addUserKnob {22 cropToBbox_1 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
-  addUserKnob {22 cropToBbox_2 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
-  addUserKnob {22 cropToBbox_3 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
-  addUserKnob {22 cropToBbox_4 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
-  addUserKnob {22 cropToBbox_5 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
-  addUserKnob {22 cropToBbox_6 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
  }
  Crop {
   inputs 0
   box {{"\[exists parent.input0] == 1 ? parent.input.bbox.x : 0"} {"\[exists parent.input0] == 1 ? parent.input.bbox.y : 0"} {"\[exists parent.input0] == 1 ? parent.input.bbox.r : 0"} {"\[exists parent.input0] == 1 ? parent.input.bbox.t : 0"}}
   name getInputBbox
-  selected true
   xpos 118
   ypos -13
   addUserKnob {20 User}
   addUserKnob {22 cropToBbox l "Crop to Bounding Box" -STARTLINE T codeBBox()}
-  addUserKnob {22 cropToBbox_1 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
-  addUserKnob {22 cropToBbox_2 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
-  addUserKnob {22 cropToBbox_3 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
-  addUserKnob {22 cropToBbox_4 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
-  addUserKnob {22 cropToBbox_5 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
-  addUserKnob {22 cropToBbox_6 l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+ }
+ NoOp {
+  inputs 0
+  name Settings
+  xpos -188
+  ypos -13
+  addUserKnob {20 User}
+  addUserKnob {3 sampleSize l "Sample Size"}
+  sampleSize 4
+  addUserKnob {26 ""}
+  addUserKnob {12 topLeft}
+  topLeft {0 1080}
+  addUserKnob {12 topRight}
+  topRight {1920 1080}
+  addUserKnob {12 bottomLeft}
+  addUserKnob {12 bottomRight}
+  bottomRight {1920 0}
  }
 end_group
